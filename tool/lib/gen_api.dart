@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:logging/logging.dart' as logging;
 
 import 'backend.dart';
 import 'chrome_model.dart';
@@ -38,9 +37,6 @@ void main(List<String> args) {
     overrides = new Overrides();
   }
 
-  logging.Logger.root.onRecord.listen((logging.LogRecord record) {
-    print(record.message);
-  });
 
   GenApiFile generator = new GenApiFile(new File(results.rest.first),
       overrides: overrides);
@@ -60,7 +56,6 @@ class GenApiFile {
       throw new Exception('format not understood: ${inFile.path}');
     }
 
-    _logger.info("generating API for file ${inFile.path}");
 
     if (inFile.path.endsWith(".json")) {
       json_model.JsonNamespace namespace = json_parser.parse(
@@ -80,7 +75,6 @@ class GenApiFile {
   }
 
   void generate(File outFile) {
-    _logger.info("parsing ${inFile.path}...");
 
     String fileName = getFileName(inFile);
 
@@ -127,5 +121,3 @@ void _printUsage(ArgParser parser) {
   print('where <options> is one or more of:');
   print(parser.usage.replaceAll('\n\n', '\n'));
 }
-
-final logging.Logger _logger = new logging.Logger('GenApi');

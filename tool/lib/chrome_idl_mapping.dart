@@ -1,7 +1,5 @@
 library chrome_idl_mapping;
 
-import 'package:persistent/persistent.dart';
-
 import 'chrome_idl_model.dart';
 
 /**

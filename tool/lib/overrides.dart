@@ -21,7 +21,7 @@ class Overrides {
   }
 
   Overrides.fromFile(File file) {
-    _init(JSON.decode(file.readAsStringSync()));
+    _init(json.decode(file.readAsStringSync()));
   }
 
   void _init(Map m) {

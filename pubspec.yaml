@@ -8,3 +8,7 @@ description: A library for accessing the Chrome APIs in a packaged app or extens
 homepage: https://github.com/dart-gde/chrome.dart
 environment:
   sdk: '>=2.0.0 <3.0.0'
+dev_dependencies:
+  args: any
+  logging: any
+  path: any
