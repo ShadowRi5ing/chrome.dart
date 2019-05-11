@@ -30,17 +30,18 @@ class TagMatcher implements Pattern {
   /// Given a string of html or xml, find all attributes for each tag matched by
   /// this [TagMatcher]. Each tag's attributes are given as a [Map].
   Iterable<Map<String, String>> allAttributes(String string, [int start = 0]) {
-    var attributesList = [];
+    List attributesList = [];
     _regExp.allMatches(string, start).forEach((match) {
       var allAttributes = match.group(1);
       attributesList.add(_makeAttributesMap(allAttributes));
     });
-    return attributesList;
+    return attributesList.cast();
   }
 
   /// Given a string of html or other markup, find all of the contents of the
   /// matching tags. For example, given the html '<div>foo</div><div>bar</div>',
   /// calling this on a [TagMatcher] matching the div tag should return
+
   /// ['foo','bar'].
   Iterable<String> allContents(String string, [int start = 0]) =>
       _regExp.allMatches(string, start).map((match) => match.group(2));

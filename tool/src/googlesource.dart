@@ -23,7 +23,7 @@ abstract class GoogleSourceEntity {
 class GoogleSourceFile extends GoogleSourceEntity {
   static const _encodedCharacters = const ['\'', '&', '<', '>', '\"'];
   static final encodings =
-      new Map.fromIterable(_encodedCharacters, key: HTML_ESCAPE.convert);
+      new Map.fromIterable(_encodedCharacters, key: (item) => htmlEscape.convert(item));
 
   GoogleSourceFile(rawHtml, url) : super(rawHtml, url);
 
