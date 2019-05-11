@@ -7,4 +7,4 @@ authors:
 description: A library for accessing the Chrome APIs in a packaged app or extension.
 homepage: https://github.com/dart-gde/chrome.dart
 environment:
-  sdk: '>=2.3.0'
+  sdk: '>=2.0.0 <3.0.0'
