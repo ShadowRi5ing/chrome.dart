@@ -2,8 +2,11 @@
 library chrome.src.common;
 
 import 'dart:convert';
+export 'dart:convert';
 import 'dart:async';
+export 'dart:async';
 import 'dart:js';
+export 'dart:js';
 import 'common_exp.dart';
 export 'common_exp.dart';
 

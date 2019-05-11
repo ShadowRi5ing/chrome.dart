@@ -2,8 +2,11 @@
 library chrome.src.files;
 
 import 'dart:async';
+export 'dart:async';
 import 'dart:js';
+export 'dart:js';
 import 'dart:html';
+export 'dart:html';
 import 'common.dart';
 
 class CrFileSystem extends ChromeObject implements FileSystem {

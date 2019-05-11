@@ -7,6 +7,7 @@
 library chrome.alarms;
 
 import '../src/common.dart';
+import 'dart:js';
 
 /**
  * Accessor for the `chrome.alarms` namespace.
