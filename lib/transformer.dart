@@ -2,8 +2,6 @@ library chrome_transformer;
 
 import 'dart:async';
 
-import 'package:barback/barback.dart';
-
 /**
  * A Pub transformer to re-write html entry-point files to use the CSP safe
  * versions of dart2js' output.

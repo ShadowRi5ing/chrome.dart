@@ -38,7 +38,7 @@ class ChromeSerial extends ChromeApi {
   Future<List<DeviceInfo>> getDevices() {
     if (_serial == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<DeviceInfo>>.oneArg((e) => listify(e, _createDeviceInfo));
+    var completer = new ChromeCompleter<List<DeviceInfo>>.oneArg((e) => toList(e, _createDeviceInfo));
     _serial.callMethod('getDevices', [completer.callback]);
     return completer.future;
   }
@@ -56,7 +56,7 @@ class ChromeSerial extends ChromeApi {
     if (_serial == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ConnectionInfo>.oneArg(_createConnectionInfo);
-    _serial.callMethod('connect', [path, jsify(options), completer.callback]);
+    _serial.callMethod('connect', [path, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -73,7 +73,7 @@ class ChromeSerial extends ChromeApi {
     if (_serial == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _serial.callMethod('update', [connectionId, jsify(options), completer.callback]);
+    _serial.callMethod('update', [connectionId, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -136,7 +136,7 @@ class ChromeSerial extends ChromeApi {
   Future<List<ConnectionInfo>> getConnections() {
     if (_serial == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<ConnectionInfo>>.oneArg((e) => listify(e, _createConnectionInfo));
+    var completer = new ChromeCompleter<List<ConnectionInfo>>.oneArg((e) => toList(e, _createConnectionInfo));
     _serial.callMethod('getConnections', [completer.callback]);
     return completer.future;
   }
@@ -151,7 +151,7 @@ class ChromeSerial extends ChromeApi {
     if (_serial == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<SerialSendInfo>.oneArg(_createSendInfo);
-    _serial.callMethod('send', [connectionId, jsify(data), completer.callback]);
+    _serial.callMethod('send', [connectionId, toJS(data), completer.callback]);
     return completer.future;
   }
 
@@ -195,7 +195,7 @@ class ChromeSerial extends ChromeApi {
     if (_serial == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _serial.callMethod('setControlSignals', [connectionId, jsify(signals), completer.callback]);
+    _serial.callMethod('setControlSignals', [connectionId, toJS(signals), completer.callback]);
     return completer.future;
   }
 
@@ -335,13 +335,13 @@ class ConnectionOptions extends ChromeObject {
   set bitrate(int value) => jsProxy['bitrate'] = value;
 
   DataBits get dataBits => _createDataBits(jsProxy['dataBits']);
-  set dataBits(DataBits value) => jsProxy['dataBits'] = jsify(value);
+  set dataBits(DataBits value) => jsProxy['dataBits'] = toJS(value);
 
   ParityBit get parityBit => _createParityBit(jsProxy['parityBit']);
-  set parityBit(ParityBit value) => jsProxy['parityBit'] = jsify(value);
+  set parityBit(ParityBit value) => jsProxy['parityBit'] = toJS(value);
 
   StopBits get stopBits => _createStopBits(jsProxy['stopBits']);
-  set stopBits(StopBits value) => jsProxy['stopBits'] = jsify(value);
+  set stopBits(StopBits value) => jsProxy['stopBits'] = toJS(value);
 
   bool get ctsFlowControl => jsProxy['ctsFlowControl'];
   set ctsFlowControl(bool value) => jsProxy['ctsFlowControl'] = value;
@@ -398,13 +398,13 @@ class ConnectionInfo extends ChromeObject {
   set bitrate(int value) => jsProxy['bitrate'] = value;
 
   DataBits get dataBits => _createDataBits(jsProxy['dataBits']);
-  set dataBits(DataBits value) => jsProxy['dataBits'] = jsify(value);
+  set dataBits(DataBits value) => jsProxy['dataBits'] = toJS(value);
 
   ParityBit get parityBit => _createParityBit(jsProxy['parityBit']);
-  set parityBit(ParityBit value) => jsProxy['parityBit'] = jsify(value);
+  set parityBit(ParityBit value) => jsProxy['parityBit'] = toJS(value);
 
   StopBits get stopBits => _createStopBits(jsProxy['stopBits']);
-  set stopBits(StopBits value) => jsProxy['stopBits'] = jsify(value);
+  set stopBits(StopBits value) => jsProxy['stopBits'] = toJS(value);
 
   bool get ctsFlowControl => jsProxy['ctsFlowControl'];
   set ctsFlowControl(bool value) => jsProxy['ctsFlowControl'] = value;
@@ -421,7 +421,7 @@ class SerialSendInfo extends ChromeObject {
   set bytesSent(int value) => jsProxy['bytesSent'] = value;
 
   SendError get error => _createSendError(jsProxy['error']);
-  set error(SendError value) => jsProxy['error'] = jsify(value);
+  set error(SendError value) => jsProxy['error'] = toJS(value);
 }
 
 /**
@@ -484,7 +484,7 @@ class SerialReceiveInfo extends ChromeObject {
   set connectionId(int value) => jsProxy['connectionId'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 }
 
 /**
@@ -501,7 +501,7 @@ class SerialReceiveErrorInfo extends ChromeObject {
   set connectionId(int value) => jsProxy['connectionId'] = value;
 
   ReceiveError get error => _createReceiveError(jsProxy['error']);
-  set error(ReceiveError value) => jsProxy['error'] = jsify(value);
+  set error(ReceiveError value) => jsProxy['error'] = toJS(value);
 }
 
 SerialReceiveInfo _createReceiveInfo(JsObject jsProxy) => jsProxy == null ? null : new SerialReceiveInfo.fromProxy(jsProxy);

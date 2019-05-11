@@ -36,7 +36,7 @@ class ChromeDeclarativeWebRequest extends ChromeApi {
   ChromeDeclarativeWebRequest._() {
     var getApi = () => _declarativeWebRequest;
     _onRequest = new ChromeStreamController.noArgs(getApi, 'onRequest');
-    _onMessage = new ChromeStreamController<Map>.oneArg(getApi, 'onMessage', mapify);
+    _onMessage = new ChromeStreamController<Map>.oneArg(getApi, 'onMessage', toMap);
   }
 
   bool get available => _declarativeWebRequest != null;
@@ -230,7 +230,7 @@ class HeaderFilter extends ChromeObject {
    * Matches if the header name contains all of the specified strings.
    */
   dynamic get nameContains => jsProxy['nameContains'];
-  set nameContains(var value) => jsProxy['nameContains'] = jsify(value);
+  set nameContains(var value) => jsProxy['nameContains'] = toJS(value);
 
   /**
    * Matches if the header name is equal to the specified string.
@@ -254,7 +254,7 @@ class HeaderFilter extends ChromeObject {
    * Matches if the header value contains all of the specified strings.
    */
   dynamic get valueContains => jsProxy['valueContains'];
-  set valueContains(var value) => jsProxy['valueContains'] = jsify(value);
+  set valueContains(var value) => jsProxy['valueContains'] = toJS(value);
 
   /**
    * Matches if the header value is equal to the specified string.
@@ -287,7 +287,7 @@ class RequestMatcher extends ChromeObject {
    * request.
    */
   UrlFilter get url => _createUrlFilter(jsProxy['url']);
-  set url(UrlFilter value) => jsProxy['url'] = jsify(value);
+  set url(UrlFilter value) => jsProxy['url'] = toJS(value);
 
   /**
    * Matches if the conditions of the UrlFilter are fulfilled for the 'first
@@ -296,56 +296,56 @@ class RequestMatcher extends ChromeObject {
    * is considered 'first party' for the sake of third-party checks for cookies.
    */
   UrlFilter get firstPartyForCookiesUrl => _createUrlFilter(jsProxy['firstPartyForCookiesUrl']);
-  set firstPartyForCookiesUrl(UrlFilter value) => jsProxy['firstPartyForCookiesUrl'] = jsify(value);
+  set firstPartyForCookiesUrl(UrlFilter value) => jsProxy['firstPartyForCookiesUrl'] = toJS(value);
 
   /**
    * Matches if the request type of a request is contained in the list. Requests
    * that cannot match any of the types will be filtered out.
    */
-  List<ResourceType> get resourceType => listify(jsProxy['resourceType'], _createResourceType);
-  set resourceType(List<ResourceType> value) => jsProxy['resourceType'] = jsify(value);
+  List<ResourceType> get resourceType => toList(jsProxy['resourceType'], _createResourceType);
+  set resourceType(List<ResourceType> value) => jsProxy['resourceType'] = toJS(value);
 
   /**
    * Matches if the MIME media type of a response (from the HTTP Content-Type
    * header) is contained in the list.
    */
-  List<String> get contentType => listify(jsProxy['contentType']);
-  set contentType(List<String> value) => jsProxy['contentType'] = jsify(value);
+  List<String> get contentType => toList(jsProxy['contentType']);
+  set contentType(List<String> value) => jsProxy['contentType'] = toJS(value);
 
   /**
    * Matches if the MIME media type of a response (from the HTTP Content-Type
    * header) is _not_ contained in the list.
    */
-  List<String> get excludeContentType => listify(jsProxy['excludeContentType']);
-  set excludeContentType(List<String> value) => jsProxy['excludeContentType'] = jsify(value);
+  List<String> get excludeContentType => toList(jsProxy['excludeContentType']);
+  set excludeContentType(List<String> value) => jsProxy['excludeContentType'] = toJS(value);
 
   /**
    * Matches if some of the request headers is matched by one of the
    * HeaderFilters.
    */
-  List<HeaderFilter> get requestHeaders => listify(jsProxy['requestHeaders'], _createHeaderFilter);
-  set requestHeaders(List<HeaderFilter> value) => jsProxy['requestHeaders'] = jsify(value);
+  List<HeaderFilter> get requestHeaders => toList(jsProxy['requestHeaders'], _createHeaderFilter);
+  set requestHeaders(List<HeaderFilter> value) => jsProxy['requestHeaders'] = toJS(value);
 
   /**
    * Matches if none of the request headers is matched by any of the
    * HeaderFilters.
    */
-  List<HeaderFilter> get excludeRequestHeaders => listify(jsProxy['excludeRequestHeaders'], _createHeaderFilter);
-  set excludeRequestHeaders(List<HeaderFilter> value) => jsProxy['excludeRequestHeaders'] = jsify(value);
+  List<HeaderFilter> get excludeRequestHeaders => toList(jsProxy['excludeRequestHeaders'], _createHeaderFilter);
+  set excludeRequestHeaders(List<HeaderFilter> value) => jsProxy['excludeRequestHeaders'] = toJS(value);
 
   /**
    * Matches if some of the response headers is matched by one of the
    * HeaderFilters.
    */
-  List<HeaderFilter> get responseHeaders => listify(jsProxy['responseHeaders'], _createHeaderFilter);
-  set responseHeaders(List<HeaderFilter> value) => jsProxy['responseHeaders'] = jsify(value);
+  List<HeaderFilter> get responseHeaders => toList(jsProxy['responseHeaders'], _createHeaderFilter);
+  set responseHeaders(List<HeaderFilter> value) => jsProxy['responseHeaders'] = toJS(value);
 
   /**
    * Matches if none of the response headers is matched by any of the
    * HeaderFilters.
    */
-  List<HeaderFilter> get excludeResponseHeaders => listify(jsProxy['excludeResponseHeaders'], _createHeaderFilter);
-  set excludeResponseHeaders(List<HeaderFilter> value) => jsProxy['excludeResponseHeaders'] = jsify(value);
+  List<HeaderFilter> get excludeResponseHeaders => toList(jsProxy['excludeResponseHeaders'], _createHeaderFilter);
+  set excludeResponseHeaders(List<HeaderFilter> value) => jsProxy['excludeResponseHeaders'] = toJS(value);
 
   /**
    * If set to true, matches requests that are subject to third-party cookie
@@ -361,8 +361,8 @@ class RequestMatcher extends ChromeObject {
    * applicable stages to those listed. Note that the whole condition is only
    * applicable in stages compatible with all attributes.
    */
-  List<Stage> get stages => listify(jsProxy['stages'], _createStage);
-  set stages(List<Stage> value) => jsProxy['stages'] = jsify(value);
+  List<Stage> get stages => toList(jsProxy['stages'], _createStage);
+  set stages(List<Stage> value) => jsProxy['stages'] = toJS(value);
 }
 
 /**
@@ -633,7 +633,7 @@ class ResponseCookie extends ChromeObject {
    * Value of the Max-Age cookie attribute
    */
   dynamic get maxAge => jsProxy['maxAge'];
-  set maxAge(var value) => jsProxy['maxAge'] = jsify(value);
+  set maxAge(var value) => jsProxy['maxAge'] = toJS(value);
 
   /**
    * Value of the Domain cookie attribute.
@@ -701,7 +701,7 @@ class FilterResponseCookie extends ChromeObject {
    * Value of the Max-Age cookie attribute
    */
   dynamic get maxAge => jsProxy['maxAge'];
-  set maxAge(var value) => jsProxy['maxAge'] = jsify(value);
+  set maxAge(var value) => jsProxy['maxAge'] = toJS(value);
 
   /**
    * Value of the Domain cookie attribute.
@@ -773,7 +773,7 @@ class AddRequestCookie extends ChromeObject {
    * Cookie to be added to the request. No field may be undefined.
    */
   RequestCookie get cookie => _createRequestCookie(jsProxy['cookie']);
-  set cookie(RequestCookie value) => jsProxy['cookie'] = jsify(value);
+  set cookie(RequestCookie value) => jsProxy['cookie'] = toJS(value);
 }
 
 /**
@@ -792,7 +792,7 @@ class AddResponseCookie extends ChromeObject {
    * specified.
    */
   ResponseCookie get cookie => _createResponseCookie(jsProxy['cookie']);
-  set cookie(ResponseCookie value) => jsProxy['cookie'] = jsify(value);
+  set cookie(ResponseCookie value) => jsProxy['cookie'] = toJS(value);
 }
 
 /**
@@ -810,14 +810,14 @@ class EditRequestCookie extends ChromeObject {
    * Filter for cookies that will be modified. All empty entries are ignored.
    */
   RequestCookie get filter => _createRequestCookie(jsProxy['filter']);
-  set filter(RequestCookie value) => jsProxy['filter'] = jsify(value);
+  set filter(RequestCookie value) => jsProxy['filter'] = toJS(value);
 
   /**
    * Attributes that shall be overridden in cookies that machted the filter.
    * Attributes that are set to an empty string are removed.
    */
   RequestCookie get modification => _createRequestCookie(jsProxy['modification']);
-  set modification(RequestCookie value) => jsProxy['modification'] = jsify(value);
+  set modification(RequestCookie value) => jsProxy['modification'] = toJS(value);
 }
 
 /**
@@ -835,14 +835,14 @@ class EditResponseCookie extends ChromeObject {
    * Filter for cookies that will be modified. All empty entries are ignored.
    */
   FilterResponseCookie get filter => _createFilterResponseCookie(jsProxy['filter']);
-  set filter(FilterResponseCookie value) => jsProxy['filter'] = jsify(value);
+  set filter(FilterResponseCookie value) => jsProxy['filter'] = toJS(value);
 
   /**
    * Attributes that shall be overridden in cookies that machted the filter.
    * Attributes that are set to an empty string are removed.
    */
   ResponseCookie get modification => _createResponseCookie(jsProxy['modification']);
-  set modification(ResponseCookie value) => jsProxy['modification'] = jsify(value);
+  set modification(ResponseCookie value) => jsProxy['modification'] = toJS(value);
 }
 
 /**
@@ -859,7 +859,7 @@ class RemoveRequestCookie extends ChromeObject {
    * Filter for cookies that will be removed. All empty entries are ignored.
    */
   RequestCookie get filter => _createRequestCookie(jsProxy['filter']);
-  set filter(RequestCookie value) => jsProxy['filter'] = jsify(value);
+  set filter(RequestCookie value) => jsProxy['filter'] = toJS(value);
 }
 
 /**
@@ -876,7 +876,7 @@ class RemoveResponseCookie extends ChromeObject {
    * Filter for cookies that will be removed. All empty entries are ignored.
    */
   FilterResponseCookie get filter => _createFilterResponseCookie(jsProxy['filter']);
-  set filter(FilterResponseCookie value) => jsProxy['filter'] = jsify(value);
+  set filter(FilterResponseCookie value) => jsProxy['filter'] = toJS(value);
 }
 
 UrlFilter _createUrlFilter(JsObject jsProxy) => jsProxy == null ? null : new UrlFilter.fromProxy(jsProxy);

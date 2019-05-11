@@ -44,7 +44,7 @@ class ChromeLocation extends ChromeApi {
   void watchLocation(String name, WatchLocationRequestInfo requestInfo) {
     if (_location == null) _throwNotAvailable();
 
-    _location.callMethod('watchLocation', [name, jsify(requestInfo)]);
+    _location.callMethod('watchLocation', [name, toJS(requestInfo)]);
   }
 
   /**
@@ -79,25 +79,25 @@ class Coordinates extends ChromeObject {
   Coordinates.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   num get latitude => jsProxy['latitude'];
-  set latitude(num value) => jsProxy['latitude'] = jsify(value);
+  set latitude(num value) => jsProxy['latitude'] = toJS(value);
 
   num get longitude => jsProxy['longitude'];
-  set longitude(num value) => jsProxy['longitude'] = jsify(value);
+  set longitude(num value) => jsProxy['longitude'] = toJS(value);
 
   num get altitude => jsProxy['altitude'];
-  set altitude(num value) => jsProxy['altitude'] = jsify(value);
+  set altitude(num value) => jsProxy['altitude'] = toJS(value);
 
   num get accuracy => jsProxy['accuracy'];
-  set accuracy(num value) => jsProxy['accuracy'] = jsify(value);
+  set accuracy(num value) => jsProxy['accuracy'] = toJS(value);
 
   num get altitudeAccuracy => jsProxy['altitudeAccuracy'];
-  set altitudeAccuracy(num value) => jsProxy['altitudeAccuracy'] = jsify(value);
+  set altitudeAccuracy(num value) => jsProxy['altitudeAccuracy'] = toJS(value);
 
   num get heading => jsProxy['heading'];
-  set heading(num value) => jsProxy['heading'] = jsify(value);
+  set heading(num value) => jsProxy['heading'] = toJS(value);
 
   num get speed => jsProxy['speed'];
-  set speed(num value) => jsProxy['speed'] = jsify(value);
+  set speed(num value) => jsProxy['speed'] = toJS(value);
 }
 
 /**
@@ -115,10 +115,10 @@ class Location extends ChromeObject {
   set name(String value) => jsProxy['name'] = value;
 
   Coordinates get coords => _createCoordinates(jsProxy['coords']);
-  set coords(Coordinates value) => jsProxy['coords'] = jsify(value);
+  set coords(Coordinates value) => jsProxy['coords'] = toJS(value);
 
   num get timestamp => jsProxy['timestamp'];
-  set timestamp(num value) => jsProxy['timestamp'] = jsify(value);
+  set timestamp(num value) => jsProxy['timestamp'] = toJS(value);
 }
 
 /**
@@ -133,10 +133,10 @@ class WatchLocationRequestInfo extends ChromeObject {
   WatchLocationRequestInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   num get minDistanceInMeters => jsProxy['minDistanceInMeters'];
-  set minDistanceInMeters(num value) => jsProxy['minDistanceInMeters'] = jsify(value);
+  set minDistanceInMeters(num value) => jsProxy['minDistanceInMeters'] = toJS(value);
 
   num get minTimeInMilliseconds => jsProxy['minTimeInMilliseconds'];
-  set minTimeInMilliseconds(num value) => jsProxy['minTimeInMilliseconds'] = jsify(value);
+  set minTimeInMilliseconds(num value) => jsProxy['minTimeInMilliseconds'] = toJS(value);
 
   int get maximumAge => jsProxy['maximumAge'];
   set maximumAge(int value) => jsProxy['maximumAge'] = value;

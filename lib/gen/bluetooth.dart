@@ -84,7 +84,7 @@ class ChromeBluetooth extends ChromeApi {
   Future<List<BluetoothDevice>> getDevices() {
     if (_bluetooth == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BluetoothDevice>>.oneArg((e) => listify(e, _createDevice));
+    var completer = new ChromeCompleter<List<BluetoothDevice>>.oneArg((e) => toList(e, _createDevice));
     _bluetooth.callMethod('getDevices', [completer.callback]);
     return completer.future;
   }
@@ -223,7 +223,7 @@ class BluetoothDevice extends ChromeObject {
   set deviceClass(int value) => jsProxy['deviceClass'] = value;
 
   VendorIdSource get vendorIdSource => _createVendorIdSource(jsProxy['vendorIdSource']);
-  set vendorIdSource(VendorIdSource value) => jsProxy['vendorIdSource'] = jsify(value);
+  set vendorIdSource(VendorIdSource value) => jsProxy['vendorIdSource'] = toJS(value);
 
   int get vendorId => jsProxy['vendorId'];
   set vendorId(int value) => jsProxy['vendorId'] = value;
@@ -235,7 +235,7 @@ class BluetoothDevice extends ChromeObject {
   set deviceId(int value) => jsProxy['deviceId'] = value;
 
   BluetoothDeviceType get type => _createDeviceType(jsProxy['type']);
-  set type(BluetoothDeviceType value) => jsProxy['type'] = jsify(value);
+  set type(BluetoothDeviceType value) => jsProxy['type'] = toJS(value);
 
   bool get paired => jsProxy['paired'];
   set paired(bool value) => jsProxy['paired'] = value;
@@ -249,8 +249,8 @@ class BluetoothDevice extends ChromeObject {
   bool get connectable => jsProxy['connectable'];
   set connectable(bool value) => jsProxy['connectable'] = value;
 
-  List<String> get uuids => listify(jsProxy['uuids']);
-  set uuids(List<String> value) => jsProxy['uuids'] = jsify(value);
+  List<String> get uuids => toList(jsProxy['uuids']);
+  set uuids(List<String> value) => jsProxy['uuids'] = toJS(value);
 
   int get inquiryRssi => jsProxy['inquiryRssi'];
   set inquiryRssi(int value) => jsProxy['inquiryRssi'] = value;

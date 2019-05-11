@@ -73,7 +73,7 @@ class ChromeInstanceID extends ChromeApi {
     if (_instanceID == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _instanceID.callMethod('getToken', [jsify(getTokenParams), completer.callback]);
+    _instanceID.callMethod('getToken', [toJS(getTokenParams), completer.callback]);
     return completer.future;
   }
 
@@ -86,7 +86,7 @@ class ChromeInstanceID extends ChromeApi {
     if (_instanceID == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _instanceID.callMethod('deleteToken', [jsify(deleteTokenParams), completer.callback]);
+    _instanceID.callMethod('deleteToken', [toJS(deleteTokenParams), completer.callback]);
     return completer.future;
   }
 
@@ -134,8 +134,8 @@ class InstanceIDGetTokenParams extends ChromeObject {
    * Allows including a small number of string key/value pairs that will be
    * associated with the token and may be used in processing the request.
    */
-  Map get options => mapify(jsProxy['options']);
-  set options(Map value) => jsProxy['options'] = jsify(value);
+  Map get options => toMap(jsProxy['options']);
+  set options(Map value) => jsProxy['options'] = toJS(value);
 }
 
 class InstanceIDDeleteTokenParams extends ChromeObject {

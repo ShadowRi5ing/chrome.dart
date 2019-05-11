@@ -116,14 +116,14 @@ class ChromeTabs extends ChromeApi {
     _onMoved = new ChromeStreamController<TabsOnMovedEvent>.twoArgs(getApi, 'onMoved', _createOnMovedEvent);
     _onSelectionChanged = new ChromeStreamController<OnSelectionChangedEvent>.twoArgs(getApi, 'onSelectionChanged', _createOnSelectionChangedEvent);
     _onActiveChanged = new ChromeStreamController<OnActiveChangedEvent>.twoArgs(getApi, 'onActiveChanged', _createOnActiveChangedEvent);
-    _onActivated = new ChromeStreamController<Map>.oneArg(getApi, 'onActivated', mapify);
-    _onHighlightChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onHighlightChanged', mapify);
-    _onHighlighted = new ChromeStreamController<Map>.oneArg(getApi, 'onHighlighted', mapify);
+    _onActivated = new ChromeStreamController<Map>.oneArg(getApi, 'onActivated', toMap);
+    _onHighlightChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onHighlightChanged', toMap);
+    _onHighlighted = new ChromeStreamController<Map>.oneArg(getApi, 'onHighlighted', toMap);
     _onDetached = new ChromeStreamController<OnDetachedEvent>.twoArgs(getApi, 'onDetached', _createOnDetachedEvent);
     _onAttached = new ChromeStreamController<OnAttachedEvent>.twoArgs(getApi, 'onAttached', _createOnAttachedEvent);
     _onRemoved = new ChromeStreamController<TabsOnRemovedEvent>.twoArgs(getApi, 'onRemoved', _createOnRemovedEvent);
     _onReplaced = new ChromeStreamController<OnReplacedEvent>.twoArgs(getApi, 'onReplaced', _createOnReplacedEvent);
-    _onZoomChange = new ChromeStreamController<Map>.oneArg(getApi, 'onZoomChange', mapify);
+    _onZoomChange = new ChromeStreamController<Map>.oneArg(getApi, 'onZoomChange', toMap);
   }
 
   bool get available => _tabs != null;
@@ -171,7 +171,7 @@ class ChromeTabs extends ChromeApi {
   Port connect(int tabId, [TabsConnectParams connectInfo]) {
     if (_tabs == null) _throwNotAvailable();
 
-    return _createPort(_tabs.callMethod('connect', [tabId, jsify(connectInfo)]));
+    return _createPort(_tabs.callMethod('connect', [tabId, toJS(connectInfo)]));
   }
 
   /**
@@ -189,7 +189,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _tabs.callMethod('sendRequest', [tabId, jsify(request), completer.callback]);
+    _tabs.callMethod('sendRequest', [tabId, toJS(request), completer.callback]);
     return completer.future;
   }
 
@@ -211,7 +211,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _tabs.callMethod('sendMessage', [tabId, jsify(message), jsify(options), completer.callback]);
+    _tabs.callMethod('sendMessage', [tabId, toJS(message), toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -236,7 +236,7 @@ class ChromeTabs extends ChromeApi {
   Future<List<Tab>> getAllInWindow([int windowId]) {
     if (_tabs == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Tab>>.oneArg((e) => listify(e, _createTab));
+    var completer = new ChromeCompleter<List<Tab>>.oneArg((e) => toList(e, _createTab));
     _tabs.callMethod('getAllInWindow', [windowId, completer.callback]);
     return completer.future;
   }
@@ -251,7 +251,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Tab>.oneArg(_createTab);
-    _tabs.callMethod('create', [jsify(createProperties), completer.callback]);
+    _tabs.callMethod('create', [toJS(createProperties), completer.callback]);
     return completer.future;
   }
 
@@ -280,8 +280,8 @@ class ChromeTabs extends ChromeApi {
   Future<List<Tab>> query(TabsQueryParams queryInfo) {
     if (_tabs == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Tab>>.oneArg((e) => listify(e, _createTab));
-    _tabs.callMethod('query', [jsify(queryInfo), completer.callback]);
+    var completer = new ChromeCompleter<List<Tab>>.oneArg((e) => toList(e, _createTab));
+    _tabs.callMethod('query', [toJS(queryInfo), completer.callback]);
     return completer.future;
   }
 
@@ -295,7 +295,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Window>.oneArg(_createWindow);
-    _tabs.callMethod('highlight', [jsify(highlightInfo), completer.callback]);
+    _tabs.callMethod('highlight', [toJS(highlightInfo), completer.callback]);
     return completer.future;
   }
 
@@ -314,7 +314,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Tab>.oneArg(_createTab);
-    _tabs.callMethod('update', [tabId, jsify(updateProperties), completer.callback]);
+    _tabs.callMethod('update', [tabId, toJS(updateProperties), completer.callback]);
     return completer.future;
   }
 
@@ -332,7 +332,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _tabs.callMethod('move', [jsify(tabIds), jsify(moveProperties), completer.callback]);
+    _tabs.callMethod('move', [toJS(tabIds), toJS(moveProperties), completer.callback]);
     return completer.future;
   }
 
@@ -346,7 +346,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _tabs.callMethod('reload', [tabId, jsify(reloadProperties), completer.callback]);
+    _tabs.callMethod('reload', [tabId, toJS(reloadProperties), completer.callback]);
     return completer.future;
   }
 
@@ -359,7 +359,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _tabs.callMethod('remove', [jsify(tabIds), completer.callback]);
+    _tabs.callMethod('remove', [toJS(tabIds), completer.callback]);
     return completer.future;
   }
 
@@ -401,7 +401,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _tabs.callMethod('captureVisibleTab', [windowId, jsify(options), completer.callback]);
+    _tabs.callMethod('captureVisibleTab', [windowId, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -421,8 +421,8 @@ class ChromeTabs extends ChromeApi {
   Future<List<dynamic>> executeScript(InjectDetails details, [int tabId]) {
     if (_tabs == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<dynamic>>.oneArg(listify);
-    _tabs.callMethod('executeScript', [tabId, jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<List<dynamic>>.oneArg(toList);
+    _tabs.callMethod('executeScript', [tabId, toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -440,7 +440,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _tabs.callMethod('insertCSS', [tabId, jsify(details), completer.callback]);
+    _tabs.callMethod('insertCSS', [tabId, toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -458,7 +458,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _tabs.callMethod('setZoom', [tabId, jsify(zoomFactor), completer.callback]);
+    _tabs.callMethod('setZoom', [tabId, toJS(zoomFactor), completer.callback]);
     return completer.future;
   }
 
@@ -492,7 +492,7 @@ class ChromeTabs extends ChromeApi {
     if (_tabs == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _tabs.callMethod('setZoomSettings', [tabId, jsify(zoomSettings), completer.callback]);
+    _tabs.callMethod('setZoomSettings', [tabId, toJS(zoomSettings), completer.callback]);
     return completer.future;
   }
 
@@ -777,7 +777,7 @@ class MutedInfo extends ChromeObject {
    * has never been changed.
    */
   MutedInfoReason get reason => _createMutedInfoReason(jsProxy['reason']);
-  set reason(MutedInfoReason value) => jsProxy['reason'] = jsify(value);
+  set reason(MutedInfoReason value) => jsProxy['reason'] = toJS(value);
 
   /**
    * The ID of the extension that changed the muted state. Not set if an
@@ -893,7 +893,7 @@ class Tab extends ChromeObject {
    * Current tab muted state and the reason for the last state change.
    */
   MutedInfo get mutedInfo => _createMutedInfo(jsProxy['mutedInfo']);
-  set mutedInfo(MutedInfo value) => jsProxy['mutedInfo'] = jsify(value);
+  set mutedInfo(MutedInfo value) => jsProxy['mutedInfo'] = toJS(value);
 
   /**
    * The URL the tab is displaying. This property is only present if the
@@ -965,7 +965,7 @@ class ZoomSettings extends ChromeObject {
    * the actual scaling of the page; defaults to `automatic`.
    */
   ZoomSettingsMode get mode => _createZoomSettingsMode(jsProxy['mode']);
-  set mode(ZoomSettingsMode value) => jsProxy['mode'] = jsify(value);
+  set mode(ZoomSettingsMode value) => jsProxy['mode'] = toJS(value);
 
   /**
    * Defines whether zoom changes will persist for the page's origin, or only
@@ -973,14 +973,14 @@ class ZoomSettings extends ChromeObject {
    * and `per-tab` otherwise.
    */
   ZoomSettingsScope get scope => _createZoomSettingsScope(jsProxy['scope']);
-  set scope(ZoomSettingsScope value) => jsProxy['scope'] = jsify(value);
+  set scope(ZoomSettingsScope value) => jsProxy['scope'] = toJS(value);
 
   /**
    * Used to return the default zoom level for the current tab in calls to
    * tabs.getZoomSettings.
    */
   dynamic get defaultZoomFactor => jsProxy['defaultZoomFactor'];
-  set defaultZoomFactor(var value) => jsProxy['defaultZoomFactor'] = jsify(value);
+  set defaultZoomFactor(var value) => jsProxy['defaultZoomFactor'] = toJS(value);
 }
 
 class TabsConnectParams extends ChromeObject {
@@ -1163,7 +1163,7 @@ class TabsQueryParams extends ChromeObject {
    * Whether the tabs have completed loading.
    */
   TabStatus get status => _createTabStatus(jsProxy['status']);
-  set status(TabStatus value) => jsProxy['status'] = jsify(value);
+  set status(TabStatus value) => jsProxy['status'] = toJS(value);
 
   /**
    * Match page titles against a pattern. Note that this property is ignored if
@@ -1178,7 +1178,7 @@ class TabsQueryParams extends ChromeObject {
    * the extension doesn't have the `"tabs"` permission.
    */
   dynamic get url => jsProxy['url'];
-  set url(var value) => jsProxy['url'] = jsify(value);
+  set url(var value) => jsProxy['url'] = toJS(value);
 
   /**
    * The ID of the parent window, or [windows.WINDOW_ID_CURRENT] for the
@@ -1191,7 +1191,7 @@ class TabsQueryParams extends ChromeObject {
    * The type of window the tabs are in.
    */
   TabsWindowType get windowType => _createWindowType(jsProxy['windowType']);
-  set windowType(TabsWindowType value) => jsProxy['windowType'] = jsify(value);
+  set windowType(TabsWindowType value) => jsProxy['windowType'] = toJS(value);
 
   /**
    * The position of the tabs within their windows.
@@ -1217,7 +1217,7 @@ class TabsHighlightParams extends ChromeObject {
    * One or more tab indices to highlight.
    */
   dynamic get tabs => jsProxy['tabs'];
-  set tabs(var value) => jsProxy['tabs'] = jsify(value);
+  set tabs(var value) => jsProxy['tabs'] = toJS(value);
 }
 
 class TabsUpdateParams extends ChromeObject {
@@ -1321,19 +1321,19 @@ class TabsReloadParams extends ChromeObject {
 
 Tab _createTab(JsObject jsProxy) => jsProxy == null ? null : new Tab.fromProxy(jsProxy);
 OnUpdatedEvent _createOnUpdatedEvent(int tabId, JsObject changeInfo, JsObject tab) =>
-    new OnUpdatedEvent(tabId, mapify(changeInfo), _createTab(tab));
+    new OnUpdatedEvent(tabId, toMap(changeInfo), _createTab(tab));
 TabsOnMovedEvent _createOnMovedEvent(int tabId, JsObject moveInfo) =>
-    new TabsOnMovedEvent(tabId, mapify(moveInfo));
+    new TabsOnMovedEvent(tabId, toMap(moveInfo));
 OnSelectionChangedEvent _createOnSelectionChangedEvent(int tabId, JsObject selectInfo) =>
-    new OnSelectionChangedEvent(tabId, mapify(selectInfo));
+    new OnSelectionChangedEvent(tabId, toMap(selectInfo));
 OnActiveChangedEvent _createOnActiveChangedEvent(int tabId, JsObject selectInfo) =>
-    new OnActiveChangedEvent(tabId, mapify(selectInfo));
+    new OnActiveChangedEvent(tabId, toMap(selectInfo));
 OnDetachedEvent _createOnDetachedEvent(int tabId, JsObject detachInfo) =>
-    new OnDetachedEvent(tabId, mapify(detachInfo));
+    new OnDetachedEvent(tabId, toMap(detachInfo));
 OnAttachedEvent _createOnAttachedEvent(int tabId, JsObject attachInfo) =>
-    new OnAttachedEvent(tabId, mapify(attachInfo));
+    new OnAttachedEvent(tabId, toMap(attachInfo));
 TabsOnRemovedEvent _createOnRemovedEvent(int tabId, JsObject removeInfo) =>
-    new TabsOnRemovedEvent(tabId, mapify(removeInfo));
+    new TabsOnRemovedEvent(tabId, toMap(removeInfo));
 OnReplacedEvent _createOnReplacedEvent(int addedTabId, int removedTabId) =>
     new OnReplacedEvent(addedTabId, removedTabId);
 Port _createPort(JsObject jsProxy) => jsProxy == null ? null : new Port.fromProxy(jsProxy);

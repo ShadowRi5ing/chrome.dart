@@ -39,7 +39,7 @@ class ChromeDesktopCapture extends ChromeApi {
   int chooseDesktopMedia(List<DesktopCaptureSourceType> sources, dynamic callback, [Tab targetTab]) {
     if (_desktopCapture == null) _throwNotAvailable();
 
-    return _desktopCapture.callMethod('chooseDesktopMedia', [jsify(sources), jsify(targetTab), jsify(callback)]);
+    return _desktopCapture.callMethod('chooseDesktopMedia', [toJS(sources), toJS(targetTab), toJS(callback)]);
   }
 
   /**

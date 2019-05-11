@@ -87,7 +87,7 @@ class ChromeVpnProvider extends ChromeApi {
     if (_vpnProvider == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _vpnProvider.callMethod('setParameters', [jsify(parameters), completer.callback]);
+    _vpnProvider.callMethod('setParameters', [toJS(parameters), completer.callback]);
     return completer.future;
   }
 
@@ -101,7 +101,7 @@ class ChromeVpnProvider extends ChromeApi {
     if (_vpnProvider == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _vpnProvider.callMethod('sendPacket', [jsify(data), completer.callback]);
+    _vpnProvider.callMethod('sendPacket', [toJS(data), completer.callback]);
     return completer.future;
   }
 
@@ -116,7 +116,7 @@ class ChromeVpnProvider extends ChromeApi {
     if (_vpnProvider == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _vpnProvider.callMethod('notifyConnectionStateChanged', [jsify(state), completer.callback]);
+    _vpnProvider.callMethod('notifyConnectionStateChanged', [toJS(state), completer.callback]);
     return completer.future;
   }
 
@@ -226,17 +226,17 @@ class Parameters extends ChromeObject {
   String get mtu => jsProxy['mtu'];
   set mtu(String value) => jsProxy['mtu'] = value;
 
-  List<String> get exclusionList => listify(jsProxy['exclusionList']);
-  set exclusionList(List<String> value) => jsProxy['exclusionList'] = jsify(value);
+  List<String> get exclusionList => toList(jsProxy['exclusionList']);
+  set exclusionList(List<String> value) => jsProxy['exclusionList'] = toJS(value);
 
-  List<String> get inclusionList => listify(jsProxy['inclusionList']);
-  set inclusionList(List<String> value) => jsProxy['inclusionList'] = jsify(value);
+  List<String> get inclusionList => toList(jsProxy['inclusionList']);
+  set inclusionList(List<String> value) => jsProxy['inclusionList'] = toJS(value);
 
-  List<String> get domainSearch => listify(jsProxy['domainSearch']);
-  set domainSearch(List<String> value) => jsProxy['domainSearch'] = jsify(value);
+  List<String> get domainSearch => toList(jsProxy['domainSearch']);
+  set domainSearch(List<String> value) => jsProxy['domainSearch'] = toJS(value);
 
-  List<String> get dnsServers => listify(jsProxy['dnsServers']);
-  set dnsServers(List<String> value) => jsProxy['dnsServers'] = jsify(value);
+  List<String> get dnsServers => toList(jsProxy['dnsServers']);
+  set dnsServers(List<String> value) => jsProxy['dnsServers'] = toJS(value);
 
   String get reconnect => jsProxy['reconnect'];
   set reconnect(String value) => jsProxy['reconnect'] = value;

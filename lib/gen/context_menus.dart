@@ -48,7 +48,7 @@ class ChromeContextMenus extends ChromeApi {
   dynamic create(ContextMenusCreateParams createProperties, [dynamic callback]) {
     if (_contextMenus == null) _throwNotAvailable();
 
-    return _contextMenus.callMethod('create', [jsify(createProperties), jsify(callback)]);
+    return _contextMenus.callMethod('create', [toJS(createProperties), toJS(callback)]);
   }
 
   /**
@@ -63,7 +63,7 @@ class ChromeContextMenus extends ChromeApi {
     if (_contextMenus == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _contextMenus.callMethod('update', [jsify(id), jsify(updateProperties), completer.callback]);
+    _contextMenus.callMethod('update', [toJS(id), toJS(updateProperties), completer.callback]);
     return completer.future;
   }
 
@@ -76,7 +76,7 @@ class ChromeContextMenus extends ChromeApi {
     if (_contextMenus == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _contextMenus.callMethod('remove', [jsify(menuItemId), completer.callback]);
+    _contextMenus.callMethod('remove', [toJS(menuItemId), completer.callback]);
     return completer.future;
   }
 
@@ -156,7 +156,7 @@ class ContextMenusCreateParams extends ChromeObject {
    * The type of menu item. Defaults to 'normal' if not specified.
    */
   ItemType get type => _createItemType(jsProxy['type']);
-  set type(ItemType value) => jsProxy['type'] = jsify(value);
+  set type(ItemType value) => jsProxy['type'] = toJS(value);
 
   /**
    * The unique ID to assign to this item. Mandatory for event pages. Cannot be
@@ -187,8 +187,8 @@ class ContextMenusCreateParams extends ChromeObject {
    * List of contexts this menu item will appear in. Defaults to ['page'] if not
    * specified.
    */
-  List<ContextType> get contexts => listify(jsProxy['contexts'], _createContextType);
-  set contexts(List<ContextType> value) => jsProxy['contexts'] = jsify(value);
+  List<ContextType> get contexts => toList(jsProxy['contexts'], _createContextType);
+  set contexts(List<ContextType> value) => jsProxy['contexts'] = toJS(value);
 
   /**
    * Whether the item is visible in the menu.
@@ -197,29 +197,29 @@ class ContextMenusCreateParams extends ChromeObject {
   set visible(bool value) => jsProxy['visible'] = value;
 
   void onclick([var arg1]) =>
-         jsProxy.callMethod('onclick', [jsify(arg1)]);
+         jsProxy.callMethod('onclick', [toJS(arg1)]);
 
   /**
    * The ID of a parent menu item; this makes the item a child of a previously
    * added item.
    */
   dynamic get parentId => jsProxy['parentId'];
-  set parentId(var value) => jsProxy['parentId'] = jsify(value);
+  set parentId(var value) => jsProxy['parentId'] = toJS(value);
 
   /**
    * Lets you restrict the item to apply only to documents whose URL matches one
    * of the given patterns. (This applies to frames as well.) For details on the
    * format of a pattern, see [Match Patterns](match_patterns).
    */
-  List<String> get documentUrlPatterns => listify(jsProxy['documentUrlPatterns']);
-  set documentUrlPatterns(List<String> value) => jsProxy['documentUrlPatterns'] = jsify(value);
+  List<String> get documentUrlPatterns => toList(jsProxy['documentUrlPatterns']);
+  set documentUrlPatterns(List<String> value) => jsProxy['documentUrlPatterns'] = toJS(value);
 
   /**
    * Similar to documentUrlPatterns, but lets you filter based on the src
    * attribute of img/audio/video tags and the href of anchor tags.
    */
-  List<String> get targetUrlPatterns => listify(jsProxy['targetUrlPatterns']);
-  set targetUrlPatterns(List<String> value) => jsProxy['targetUrlPatterns'] = jsify(value);
+  List<String> get targetUrlPatterns => toList(jsProxy['targetUrlPatterns']);
+  set targetUrlPatterns(List<String> value) => jsProxy['targetUrlPatterns'] = toJS(value);
 
   /**
    * Whether this context menu item is enabled or disabled. Defaults to true.
@@ -243,7 +243,7 @@ class ContextMenusUpdateParams extends ChromeObject {
   ContextMenusUpdateParams.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   ItemType get type => _createItemType(jsProxy['type']);
-  set type(ItemType value) => jsProxy['type'] = jsify(value);
+  set type(ItemType value) => jsProxy['type'] = toJS(value);
 
   String get title => jsProxy['title'];
   set title(String value) => jsProxy['title'] = value;
@@ -251,8 +251,8 @@ class ContextMenusUpdateParams extends ChromeObject {
   bool get checked => jsProxy['checked'];
   set checked(bool value) => jsProxy['checked'] = value;
 
-  List<ContextType> get contexts => listify(jsProxy['contexts'], _createContextType);
-  set contexts(List<ContextType> value) => jsProxy['contexts'] = jsify(value);
+  List<ContextType> get contexts => toList(jsProxy['contexts'], _createContextType);
+  set contexts(List<ContextType> value) => jsProxy['contexts'] = toJS(value);
 
   /**
    * Whether the item is visible in the menu.
@@ -261,20 +261,20 @@ class ContextMenusUpdateParams extends ChromeObject {
   set visible(bool value) => jsProxy['visible'] = value;
 
   void onclick([var arg1]) =>
-         jsProxy.callMethod('onclick', [jsify(arg1)]);
+         jsProxy.callMethod('onclick', [toJS(arg1)]);
 
   /**
    * Note: You cannot change an item to be a child of one of its own
    * descendants.
    */
   dynamic get parentId => jsProxy['parentId'];
-  set parentId(var value) => jsProxy['parentId'] = jsify(value);
+  set parentId(var value) => jsProxy['parentId'] = toJS(value);
 
-  List<String> get documentUrlPatterns => listify(jsProxy['documentUrlPatterns']);
-  set documentUrlPatterns(List<String> value) => jsProxy['documentUrlPatterns'] = jsify(value);
+  List<String> get documentUrlPatterns => toList(jsProxy['documentUrlPatterns']);
+  set documentUrlPatterns(List<String> value) => jsProxy['documentUrlPatterns'] = toJS(value);
 
-  List<String> get targetUrlPatterns => listify(jsProxy['targetUrlPatterns']);
-  set targetUrlPatterns(List<String> value) => jsProxy['targetUrlPatterns'] = jsify(value);
+  List<String> get targetUrlPatterns => toList(jsProxy['targetUrlPatterns']);
+  set targetUrlPatterns(List<String> value) => jsProxy['targetUrlPatterns'] = toJS(value);
 
   bool get enabled => jsProxy['enabled'];
   set enabled(bool value) => jsProxy['enabled'] = value;

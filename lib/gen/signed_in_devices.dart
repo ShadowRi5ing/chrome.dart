@@ -21,7 +21,7 @@ class ChromeSignedInDevices extends ChromeApi {
 
   ChromeSignedInDevices._() {
     var getApi = () => _signedInDevices;
-    _onDeviceInfoChange = new ChromeStreamController<List<DeviceInfo>>.oneArg(getApi, 'onDeviceInfoChange', (e) => listify(e, _createDeviceInfo));
+    _onDeviceInfoChange = new ChromeStreamController<List<DeviceInfo>>.oneArg(getApi, 'onDeviceInfoChange', (e) => toList(e, _createDeviceInfo));
   }
 
   bool get available => _signedInDevices != null;
@@ -37,7 +37,7 @@ class ChromeSignedInDevices extends ChromeApi {
   Future<List<DeviceInfo>> get([bool isLocal]) {
     if (_signedInDevices == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<DeviceInfo>>.oneArg((e) => listify(e, _createDeviceInfo));
+    var completer = new ChromeCompleter<List<DeviceInfo>>.oneArg((e) => toList(e, _createDeviceInfo));
     _signedInDevices.callMethod('get', [isLocal, completer.callback]);
     return completer.future;
   }
@@ -89,10 +89,10 @@ class DeviceInfo extends ChromeObject {
   set id(String value) => jsProxy['id'] = value;
 
   OS get os => _createOS(jsProxy['os']);
-  set os(OS value) => jsProxy['os'] = jsify(value);
+  set os(OS value) => jsProxy['os'] = toJS(value);
 
   DeviceType get type => _createDeviceType(jsProxy['type']);
-  set type(DeviceType value) => jsProxy['type'] = jsify(value);
+  set type(DeviceType value) => jsProxy['type'] = toJS(value);
 
   String get chromeVersion => jsProxy['chromeVersion'];
   set chromeVersion(String value) => jsProxy['chromeVersion'] = value;

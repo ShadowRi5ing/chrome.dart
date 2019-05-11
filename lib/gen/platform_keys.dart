@@ -40,8 +40,8 @@ class ChromePlatformKeys extends ChromeApi {
   Future<List<Match>> selectClientCertificates(SelectDetails details) {
     if (_platformKeys == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Match>>.oneArg((e) => listify(e, _createMatch));
-    _platformKeys.callMethod('selectClientCertificates', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<List<Match>>.oneArg((e) => toList(e, _createMatch));
+    _platformKeys.callMethod('selectClientCertificates', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -69,7 +69,7 @@ class ChromePlatformKeys extends ChromeApi {
     if (_platformKeys == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<GetKeyPairResult>.twoArgs(GetKeyPairResult._create);
-    _platformKeys.callMethod('getKeyPair', [jsify(certificate), jsify(parameters), completer.callback]);
+    _platformKeys.callMethod('getKeyPair', [toJS(certificate), toJS(parameters), completer.callback]);
     return completer.future;
   }
 
@@ -98,7 +98,7 @@ class ChromePlatformKeys extends ChromeApi {
     if (_platformKeys == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<VerificationResult>.oneArg(_createVerificationResult);
-    _platformKeys.callMethod('verifyTLSServerCertificate', [jsify(details), completer.callback]);
+    _platformKeys.callMethod('verifyTLSServerCertificate', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -124,10 +124,10 @@ class Match extends ChromeObject {
   Match.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   ArrayBuffer get certificate => _createArrayBuffer(jsProxy['certificate']);
-  set certificate(ArrayBuffer value) => jsProxy['certificate'] = jsify(value);
+  set certificate(ArrayBuffer value) => jsProxy['certificate'] = toJS(value);
 
   dynamic get keyAlgorithm => jsProxy['keyAlgorithm'];
-  set keyAlgorithm(var value) => jsProxy['keyAlgorithm'] = jsify(value);
+  set keyAlgorithm(var value) => jsProxy['keyAlgorithm'] = toJS(value);
 }
 
 /**
@@ -141,11 +141,11 @@ class ClientCertificateRequest extends ChromeObject {
   }
   ClientCertificateRequest.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<ClientCertificateType> get certificateTypes => listify(jsProxy['certificateTypes'], _createClientCertificateType);
-  set certificateTypes(List<ClientCertificateType> value) => jsProxy['certificateTypes'] = jsify(value);
+  List<ClientCertificateType> get certificateTypes => toList(jsProxy['certificateTypes'], _createClientCertificateType);
+  set certificateTypes(List<ClientCertificateType> value) => jsProxy['certificateTypes'] = toJS(value);
 
-  List<ArrayBuffer> get certificateAuthorities => listify(jsProxy['certificateAuthorities'], _createArrayBuffer);
-  set certificateAuthorities(List<ArrayBuffer> value) => jsProxy['certificateAuthorities'] = jsify(value);
+  List<ArrayBuffer> get certificateAuthorities => toList(jsProxy['certificateAuthorities'], _createArrayBuffer);
+  set certificateAuthorities(List<ArrayBuffer> value) => jsProxy['certificateAuthorities'] = toJS(value);
 }
 
 class SelectDetails extends ChromeObject {
@@ -157,10 +157,10 @@ class SelectDetails extends ChromeObject {
   SelectDetails.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   ClientCertificateRequest get request => _createClientCertificateRequest(jsProxy['request']);
-  set request(ClientCertificateRequest value) => jsProxy['request'] = jsify(value);
+  set request(ClientCertificateRequest value) => jsProxy['request'] = toJS(value);
 
-  List<ArrayBuffer> get clientCerts => listify(jsProxy['clientCerts'], _createArrayBuffer);
-  set clientCerts(List<ArrayBuffer> value) => jsProxy['clientCerts'] = jsify(value);
+  List<ArrayBuffer> get clientCerts => toList(jsProxy['clientCerts'], _createArrayBuffer);
+  set clientCerts(List<ArrayBuffer> value) => jsProxy['clientCerts'] = toJS(value);
 
   bool get interactive => jsProxy['interactive'];
   set interactive(bool value) => jsProxy['interactive'] = value;
@@ -173,8 +173,8 @@ class VerificationDetails extends ChromeObject {
   }
   VerificationDetails.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<ArrayBuffer> get serverCertificateChain => listify(jsProxy['serverCertificateChain'], _createArrayBuffer);
-  set serverCertificateChain(List<ArrayBuffer> value) => jsProxy['serverCertificateChain'] = jsify(value);
+  List<ArrayBuffer> get serverCertificateChain => toList(jsProxy['serverCertificateChain'], _createArrayBuffer);
+  set serverCertificateChain(List<ArrayBuffer> value) => jsProxy['serverCertificateChain'] = toJS(value);
 
   String get hostname => jsProxy['hostname'];
   set hostname(String value) => jsProxy['hostname'] = value;
@@ -190,8 +190,8 @@ class VerificationResult extends ChromeObject {
   bool get trusted => jsProxy['trusted'];
   set trusted(bool value) => jsProxy['trusted'] = value;
 
-  List<String> get debug_errors => listify(jsProxy['debug_errors']);
-  set debug_errors(List<String> value) => jsProxy['debug_errors'] = jsify(value);
+  List<String> get debug_errors => toList(jsProxy['debug_errors']);
+  set debug_errors(List<String> value) => jsProxy['debug_errors'] = toJS(value);
 }
 
 /**

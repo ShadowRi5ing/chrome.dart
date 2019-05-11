@@ -75,16 +75,16 @@ class CpuTime extends ChromeObject {
   CpuTime.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   num get user => jsProxy['user'];
-  set user(num value) => jsProxy['user'] = jsify(value);
+  set user(num value) => jsProxy['user'] = toJS(value);
 
   num get kernel => jsProxy['kernel'];
-  set kernel(num value) => jsProxy['kernel'] = jsify(value);
+  set kernel(num value) => jsProxy['kernel'] = toJS(value);
 
   num get idle => jsProxy['idle'];
-  set idle(num value) => jsProxy['idle'] = jsify(value);
+  set idle(num value) => jsProxy['idle'] = toJS(value);
 
   num get total => jsProxy['total'];
-  set total(num value) => jsProxy['total'] = jsify(value);
+  set total(num value) => jsProxy['total'] = toJS(value);
 }
 
 class ProcessorInfo extends ChromeObject {
@@ -94,7 +94,7 @@ class ProcessorInfo extends ChromeObject {
   ProcessorInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   CpuTime get usage => _createCpuTime(jsProxy['usage']);
-  set usage(CpuTime value) => jsProxy['usage'] = jsify(value);
+  set usage(CpuTime value) => jsProxy['usage'] = toJS(value);
 }
 
 class CpuInfo extends ChromeObject {
@@ -117,14 +117,14 @@ class CpuInfo extends ChromeObject {
   String get modelName => jsProxy['modelName'];
   set modelName(String value) => jsProxy['modelName'] = value;
 
-  List<String> get features => listify(jsProxy['features']);
-  set features(List<String> value) => jsProxy['features'] = jsify(value);
+  List<String> get features => toList(jsProxy['features']);
+  set features(List<String> value) => jsProxy['features'] = toJS(value);
 
-  List<ProcessorInfo> get processors => listify(jsProxy['processors'], _createProcessorInfo);
-  set processors(List<ProcessorInfo> value) => jsProxy['processors'] = jsify(value);
+  List<ProcessorInfo> get processors => toList(jsProxy['processors'], _createProcessorInfo);
+  set processors(List<ProcessorInfo> value) => jsProxy['processors'] = toJS(value);
 
-  List<num> get temperatures => listify(jsProxy['temperatures']);
-  set temperatures(List<num> value) => jsProxy['temperatures'] = jsify(value);
+  List<num> get temperatures => toList(jsProxy['temperatures']);
+  set temperatures(List<num> value) => jsProxy['temperatures'] = toJS(value);
 }
 
 CpuInfo _createCpuInfo(JsObject jsProxy) => jsProxy == null ? null : new CpuInfo.fromProxy(jsProxy);
@@ -155,8 +155,8 @@ class ChromeSystemDisplay extends ChromeApi {
   Future<List<DisplayUnitInfo>> getInfo([GetInfoFlags flags]) {
     if (_system_display == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<DisplayUnitInfo>>.oneArg((e) => listify(e, _createDisplayUnitInfo));
-    _system_display.callMethod('getInfo', [jsify(flags), completer.callback]);
+    var completer = new ChromeCompleter<List<DisplayUnitInfo>>.oneArg((e) => toList(e, _createDisplayUnitInfo));
+    _system_display.callMethod('getInfo', [toJS(flags), completer.callback]);
     return completer.future;
   }
 
@@ -168,7 +168,7 @@ class ChromeSystemDisplay extends ChromeApi {
   Future<List<DisplayLayout>> getDisplayLayout() {
     if (_system_display == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<DisplayLayout>>.oneArg((e) => listify(e, _createDisplayLayout));
+    var completer = new ChromeCompleter<List<DisplayLayout>>.oneArg((e) => toList(e, _createDisplayLayout));
     _system_display.callMethod('getDisplayLayout', [completer.callback]);
     return completer.future;
   }
@@ -187,7 +187,7 @@ class ChromeSystemDisplay extends ChromeApi {
     if (_system_display == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _system_display.callMethod('setDisplayProperties', [id, jsify(info), completer.callback]);
+    _system_display.callMethod('setDisplayProperties', [id, toJS(info), completer.callback]);
     return completer.future;
   }
 
@@ -206,7 +206,7 @@ class ChromeSystemDisplay extends ChromeApi {
     if (_system_display == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _system_display.callMethod('setDisplayLayout', [jsify(layouts), completer.callback]);
+    _system_display.callMethod('setDisplayLayout', [toJS(layouts), completer.callback]);
     return completer.future;
   }
 
@@ -246,7 +246,7 @@ class ChromeSystemDisplay extends ChromeApi {
   void overscanCalibrationAdjust(String id, Insets delta) {
     if (_system_display == null) _throwNotAvailable();
 
-    _system_display.callMethod('overscanCalibrationAdjust', [id, jsify(delta)]);
+    _system_display.callMethod('overscanCalibrationAdjust', [id, toJS(delta)]);
   }
 
   /**
@@ -315,7 +315,7 @@ class ChromeSystemDisplay extends ChromeApi {
   void completeCustomTouchCalibration(TouchCalibrationPairQuad pairs, Bounds bounds) {
     if (_system_display == null) _throwNotAvailable();
 
-    _system_display.callMethod('completeCustomTouchCalibration', [jsify(pairs), jsify(bounds)]);
+    _system_display.callMethod('completeCustomTouchCalibration', [toJS(pairs), toJS(bounds)]);
   }
 
   /**
@@ -344,7 +344,7 @@ class ChromeSystemDisplay extends ChromeApi {
     if (_system_display == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _system_display.callMethod('setMirrorMode', [jsify(info), completer.callback]);
+    _system_display.callMethod('setMirrorMode', [toJS(info), completer.callback]);
     return completer.future;
   }
 
@@ -425,10 +425,10 @@ class TouchCalibrationPair extends ChromeObject {
   TouchCalibrationPair.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   Point get displayPoint => _createPoint(jsProxy['displayPoint']);
-  set displayPoint(Point value) => jsProxy['displayPoint'] = jsify(value);
+  set displayPoint(Point value) => jsProxy['displayPoint'] = toJS(value);
 
   Point get touchPoint => _createPoint(jsProxy['touchPoint']);
-  set touchPoint(Point value) => jsProxy['touchPoint'] = jsify(value);
+  set touchPoint(Point value) => jsProxy['touchPoint'] = toJS(value);
 }
 
 class TouchCalibrationPairQuad extends ChromeObject {
@@ -441,16 +441,16 @@ class TouchCalibrationPairQuad extends ChromeObject {
   TouchCalibrationPairQuad.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   TouchCalibrationPair get pair1 => _createTouchCalibrationPair(jsProxy['pair1']);
-  set pair1(TouchCalibrationPair value) => jsProxy['pair1'] = jsify(value);
+  set pair1(TouchCalibrationPair value) => jsProxy['pair1'] = toJS(value);
 
   TouchCalibrationPair get pair2 => _createTouchCalibrationPair(jsProxy['pair2']);
-  set pair2(TouchCalibrationPair value) => jsProxy['pair2'] = jsify(value);
+  set pair2(TouchCalibrationPair value) => jsProxy['pair2'] = toJS(value);
 
   TouchCalibrationPair get pair3 => _createTouchCalibrationPair(jsProxy['pair3']);
-  set pair3(TouchCalibrationPair value) => jsProxy['pair3'] = jsify(value);
+  set pair3(TouchCalibrationPair value) => jsProxy['pair3'] = toJS(value);
 
   TouchCalibrationPair get pair4 => _createTouchCalibrationPair(jsProxy['pair4']);
-  set pair4(TouchCalibrationPair value) => jsProxy['pair4'] = jsify(value);
+  set pair4(TouchCalibrationPair value) => jsProxy['pair4'] = toJS(value);
 }
 
 class DisplayMode extends ChromeObject {
@@ -479,10 +479,10 @@ class DisplayMode extends ChromeObject {
   set heightInNativePixels(int value) => jsProxy['heightInNativePixels'] = value;
 
   num get uiScale => jsProxy['uiScale'];
-  set uiScale(num value) => jsProxy['uiScale'] = jsify(value);
+  set uiScale(num value) => jsProxy['uiScale'] = toJS(value);
 
   num get deviceScaleFactor => jsProxy['deviceScaleFactor'];
-  set deviceScaleFactor(num value) => jsProxy['deviceScaleFactor'] = jsify(value);
+  set deviceScaleFactor(num value) => jsProxy['deviceScaleFactor'] = toJS(value);
 
   bool get isNative => jsProxy['isNative'];
   set isNative(bool value) => jsProxy['isNative'] = value;
@@ -507,7 +507,7 @@ class DisplayLayout extends ChromeObject {
   set parentId(String value) => jsProxy['parentId'] = value;
 
   LayoutPosition get position => _createLayoutPosition(jsProxy['position']);
-  set position(LayoutPosition value) => jsProxy['position'] = jsify(value);
+  set position(LayoutPosition value) => jsProxy['position'] = toJS(value);
 
   int get offset => jsProxy['offset'];
   set offset(int value) => jsProxy['offset'] = value;
@@ -546,8 +546,8 @@ class DisplayUnitInfo extends ChromeObject {
   String get mirroringSourceId => jsProxy['mirroringSourceId'];
   set mirroringSourceId(String value) => jsProxy['mirroringSourceId'] = value;
 
-  List<String> get mirroringDestinationIds => listify(jsProxy['mirroringDestinationIds']);
-  set mirroringDestinationIds(List<String> value) => jsProxy['mirroringDestinationIds'] = jsify(value);
+  List<String> get mirroringDestinationIds => toList(jsProxy['mirroringDestinationIds']);
+  set mirroringDestinationIds(List<String> value) => jsProxy['mirroringDestinationIds'] = toJS(value);
 
   bool get isPrimary => jsProxy['isPrimary'];
   set isPrimary(bool value) => jsProxy['isPrimary'] = value;
@@ -565,25 +565,25 @@ class DisplayUnitInfo extends ChromeObject {
   set isTabletMode(bool value) => jsProxy['isTabletMode'] = value;
 
   num get dpiX => jsProxy['dpiX'];
-  set dpiX(num value) => jsProxy['dpiX'] = jsify(value);
+  set dpiX(num value) => jsProxy['dpiX'] = toJS(value);
 
   num get dpiY => jsProxy['dpiY'];
-  set dpiY(num value) => jsProxy['dpiY'] = jsify(value);
+  set dpiY(num value) => jsProxy['dpiY'] = toJS(value);
 
   int get rotation => jsProxy['rotation'];
   set rotation(int value) => jsProxy['rotation'] = value;
 
   Bounds get bounds => _createBounds(jsProxy['bounds']);
-  set bounds(Bounds value) => jsProxy['bounds'] = jsify(value);
+  set bounds(Bounds value) => jsProxy['bounds'] = toJS(value);
 
   Insets get overscan => _createInsets(jsProxy['overscan']);
-  set overscan(Insets value) => jsProxy['overscan'] = jsify(value);
+  set overscan(Insets value) => jsProxy['overscan'] = toJS(value);
 
   Bounds get workArea => _createBounds(jsProxy['workArea']);
-  set workArea(Bounds value) => jsProxy['workArea'] = jsify(value);
+  set workArea(Bounds value) => jsProxy['workArea'] = toJS(value);
 
-  List<DisplayMode> get modes => listify(jsProxy['modes'], _createDisplayMode);
-  set modes(List<DisplayMode> value) => jsProxy['modes'] = jsify(value);
+  List<DisplayMode> get modes => toList(jsProxy['modes'], _createDisplayMode);
+  set modes(List<DisplayMode> value) => jsProxy['modes'] = toJS(value);
 
   bool get hasTouchSupport => jsProxy['hasTouchSupport'];
   set hasTouchSupport(bool value) => jsProxy['hasTouchSupport'] = value;
@@ -592,7 +592,7 @@ class DisplayUnitInfo extends ChromeObject {
   set hasAccelerometerSupport(bool value) => jsProxy['hasAccelerometerSupport'] = value;
 
   num get displayZoomFactor => jsProxy['displayZoomFactor'];
-  set displayZoomFactor(num value) => jsProxy['displayZoomFactor'] = jsify(value);
+  set displayZoomFactor(num value) => jsProxy['displayZoomFactor'] = toJS(value);
 }
 
 class DisplayProperties extends ChromeObject {
@@ -619,7 +619,7 @@ class DisplayProperties extends ChromeObject {
   set isPrimary(bool value) => jsProxy['isPrimary'] = value;
 
   Insets get overscan => _createInsets(jsProxy['overscan']);
-  set overscan(Insets value) => jsProxy['overscan'] = jsify(value);
+  set overscan(Insets value) => jsProxy['overscan'] = toJS(value);
 
   int get rotation => jsProxy['rotation'];
   set rotation(int value) => jsProxy['rotation'] = value;
@@ -631,10 +631,10 @@ class DisplayProperties extends ChromeObject {
   set boundsOriginY(int value) => jsProxy['boundsOriginY'] = value;
 
   DisplayMode get displayMode => _createDisplayMode(jsProxy['displayMode']);
-  set displayMode(DisplayMode value) => jsProxy['displayMode'] = jsify(value);
+  set displayMode(DisplayMode value) => jsProxy['displayMode'] = toJS(value);
 
   num get displayZoomFactor => jsProxy['displayZoomFactor'];
-  set displayZoomFactor(num value) => jsProxy['displayZoomFactor'] = jsify(value);
+  set displayZoomFactor(num value) => jsProxy['displayZoomFactor'] = toJS(value);
 }
 
 class GetInfoFlags extends ChromeObject {
@@ -656,13 +656,13 @@ class MirrorModeInfo extends ChromeObject {
   MirrorModeInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   MirrorMode get mode => _createMirrorMode(jsProxy['mode']);
-  set mode(MirrorMode value) => jsProxy['mode'] = jsify(value);
+  set mode(MirrorMode value) => jsProxy['mode'] = toJS(value);
 
   String get mirroringSourceId => jsProxy['mirroringSourceId'];
   set mirroringSourceId(String value) => jsProxy['mirroringSourceId'] = value;
 
-  List<String> get mirroringDestinationIds => listify(jsProxy['mirroringDestinationIds']);
-  set mirroringDestinationIds(List<String> value) => jsProxy['mirroringDestinationIds'] = jsify(value);
+  List<String> get mirroringDestinationIds => toList(jsProxy['mirroringDestinationIds']);
+  set mirroringDestinationIds(List<String> value) => jsProxy['mirroringDestinationIds'] = toJS(value);
 }
 
 DisplayUnitInfo _createDisplayUnitInfo(JsObject jsProxy) => jsProxy == null ? null : new DisplayUnitInfo.fromProxy(jsProxy);
@@ -709,10 +709,10 @@ class MemoryInfo extends ChromeObject {
   MemoryInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   num get capacity => jsProxy['capacity'];
-  set capacity(num value) => jsProxy['capacity'] = jsify(value);
+  set capacity(num value) => jsProxy['capacity'] = toJS(value);
 
   num get availableCapacity => jsProxy['availableCapacity'];
-  set availableCapacity(num value) => jsProxy['availableCapacity'] = jsify(value);
+  set availableCapacity(num value) => jsProxy['availableCapacity'] = toJS(value);
 }
 
 MemoryInfo _createMemoryInfo(JsObject jsProxy) => jsProxy == null ? null : new MemoryInfo.fromProxy(jsProxy);
@@ -739,7 +739,7 @@ class ChromeSystemNetwork extends ChromeApi {
   Future<List<NetworkInterface>> getNetworkInterfaces() {
     if (_system_network == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<NetworkInterface>>.oneArg((e) => listify(e, _createNetworkInterface));
+    var completer = new ChromeCompleter<List<NetworkInterface>>.oneArg((e) => toList(e, _createNetworkInterface));
     _system_network.callMethod('getNetworkInterfaces', [completer.callback]);
     return completer.future;
   }
@@ -797,7 +797,7 @@ class ChromeSystemStorage extends ChromeApi {
   Future<List<StorageUnitInfo>> getInfo() {
     if (_system_storage == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<StorageUnitInfo>>.oneArg((e) => listify(e, _createStorageUnitInfo));
+    var completer = new ChromeCompleter<List<StorageUnitInfo>>.oneArg((e) => toList(e, _createStorageUnitInfo));
     _system_storage.callMethod('getInfo', [completer.callback]);
     return completer.future;
   }
@@ -867,10 +867,10 @@ class StorageUnitInfo extends ChromeObject {
   set name(String value) => jsProxy['name'] = value;
 
   StorageUnitType get type => _createStorageUnitType(jsProxy['type']);
-  set type(StorageUnitType value) => jsProxy['type'] = jsify(value);
+  set type(StorageUnitType value) => jsProxy['type'] = toJS(value);
 
   num get capacity => jsProxy['capacity'];
-  set capacity(num value) => jsProxy['capacity'] = jsify(value);
+  set capacity(num value) => jsProxy['capacity'] = toJS(value);
 }
 
 class StorageAvailableCapacityInfo extends ChromeObject {
@@ -884,7 +884,7 @@ class StorageAvailableCapacityInfo extends ChromeObject {
   set id(String value) => jsProxy['id'] = value;
 
   num get availableCapacity => jsProxy['availableCapacity'];
-  set availableCapacity(num value) => jsProxy['availableCapacity'] = jsify(value);
+  set availableCapacity(num value) => jsProxy['availableCapacity'] = toJS(value);
 }
 
 StorageUnitInfo _createStorageUnitInfo(JsObject jsProxy) => jsProxy == null ? null : new StorageUnitInfo.fromProxy(jsProxy);

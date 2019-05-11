@@ -73,7 +73,7 @@ class ChromeExtension extends ChromeApi {
     if (_extension == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _extension.callMethod('sendRequest', [extensionId, jsify(request), completer.callback]);
+    _extension.callMethod('sendRequest', [extensionId, toJS(request), completer.callback]);
     return completer.future;
   }
 
@@ -103,7 +103,7 @@ class ChromeExtension extends ChromeApi {
   List<Window> getViews([ExtensionGetViewsParams fetchProperties]) {
     if (_extension == null) _throwNotAvailable();
 
-    var ret = _extension.callMethod('getViews', [jsify(fetchProperties)]);
+    var ret = _extension.callMethod('getViews', [toJS(fetchProperties)]);
     return ret;
   }
 
@@ -263,7 +263,7 @@ class ExtensionGetViewsParams extends ChromeObject {
    * background pages and tabs). Valid values: 'tab', 'notification', 'popup'.
    */
   ViewType get type => _createViewType(jsProxy['type']);
-  set type(ViewType value) => jsProxy['type'] = jsify(value);
+  set type(ViewType value) => jsProxy['type'] = toJS(value);
 
   /**
    * The window to restrict the search to. If omitted, returns all views.

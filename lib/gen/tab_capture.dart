@@ -42,7 +42,7 @@ class ChromeTabCapture extends ChromeApi {
     if (_tabCapture == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<LocalMediaStream>.oneArg(_createLocalMediaStream);
-    _tabCapture.callMethod('capture', [jsify(options), completer.callback]);
+    _tabCapture.callMethod('capture', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -57,7 +57,7 @@ class ChromeTabCapture extends ChromeApi {
   Future<List<CaptureInfo>> getCapturedTabs() {
     if (_tabCapture == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<CaptureInfo>>.oneArg((e) => listify(e, _createCaptureInfo));
+    var completer = new ChromeCompleter<List<CaptureInfo>>.oneArg((e) => toList(e, _createCaptureInfo));
     _tabCapture.callMethod('getCapturedTabs', [completer.callback]);
     return completer.future;
   }
@@ -93,7 +93,7 @@ class ChromeTabCapture extends ChromeApi {
     if (_tabCapture == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<LocalMediaStream>.oneArg(_createLocalMediaStream);
-    _tabCapture.callMethod('captureOffscreenTab', [startUrl, jsify(options), completer.callback]);
+    _tabCapture.callMethod('captureOffscreenTab', [startUrl, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -125,7 +125,7 @@ class CaptureInfo extends ChromeObject {
   set tabId(int value) => jsProxy['tabId'] = value;
 
   TabCaptureState get status => _createTabCaptureState(jsProxy['status']);
-  set status(TabCaptureState value) => jsProxy['status'] = jsify(value);
+  set status(TabCaptureState value) => jsProxy['status'] = toJS(value);
 
   bool get fullscreen => jsProxy['fullscreen'];
   set fullscreen(bool value) => jsProxy['fullscreen'] = value;
@@ -144,10 +144,10 @@ class MediaStreamConstraint extends ChromeObject {
   MediaStreamConstraint.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   dynamic get mandatory => jsProxy['mandatory'];
-  set mandatory(var value) => jsProxy['mandatory'] = jsify(value);
+  set mandatory(var value) => jsProxy['mandatory'] = toJS(value);
 
   dynamic get optional => jsProxy['_optional'];
-  set optional(var value) => jsProxy['_optional'] = jsify(value);
+  set optional(var value) => jsProxy['_optional'] = toJS(value);
 }
 
 /**
@@ -171,10 +171,10 @@ class CaptureOptions extends ChromeObject {
   set video(bool value) => jsProxy['video'] = value;
 
   MediaStreamConstraint get audioConstraints => _createMediaStreamConstraint(jsProxy['audioConstraints']);
-  set audioConstraints(MediaStreamConstraint value) => jsProxy['audioConstraints'] = jsify(value);
+  set audioConstraints(MediaStreamConstraint value) => jsProxy['audioConstraints'] = toJS(value);
 
   MediaStreamConstraint get videoConstraints => _createMediaStreamConstraint(jsProxy['videoConstraints']);
-  set videoConstraints(MediaStreamConstraint value) => jsProxy['videoConstraints'] = jsify(value);
+  set videoConstraints(MediaStreamConstraint value) => jsProxy['videoConstraints'] = toJS(value);
 
   String get presentationId => jsProxy['presentationId'];
   set presentationId(String value) => jsProxy['presentationId'] = value;

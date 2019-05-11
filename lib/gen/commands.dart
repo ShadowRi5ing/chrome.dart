@@ -37,7 +37,7 @@ class ChromeCommands extends ChromeApi {
   Future<List<Command>> getAll() {
     if (_commands == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Command>>.oneArg((e) => listify(e, _createCommand));
+    var completer = new ChromeCompleter<List<Command>>.oneArg((e) => toList(e, _createCommand));
     _commands.callMethod('getAll', [completer.callback]);
     return completer.future;
   }

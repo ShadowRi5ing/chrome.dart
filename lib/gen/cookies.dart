@@ -28,7 +28,7 @@ class ChromeCookies extends ChromeApi {
 
   ChromeCookies._() {
     var getApi = () => _cookies;
-    _onChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onChanged', mapify);
+    _onChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onChanged', toMap);
   }
 
   bool get available => _cookies != null;
@@ -49,7 +49,7 @@ class ChromeCookies extends ChromeApi {
     if (_cookies == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Cookie>.oneArg(_createCookie);
-    _cookies.callMethod('get', [jsify(details), completer.callback]);
+    _cookies.callMethod('get', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -67,8 +67,8 @@ class ChromeCookies extends ChromeApi {
   Future<List<Cookie>> getAll(CookiesGetAllParams details) {
     if (_cookies == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Cookie>>.oneArg((e) => listify(e, _createCookie));
-    _cookies.callMethod('getAll', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<List<Cookie>>.oneArg((e) => toList(e, _createCookie));
+    _cookies.callMethod('getAll', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -87,7 +87,7 @@ class ChromeCookies extends ChromeApi {
     if (_cookies == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Cookie>.oneArg(_createCookie);
-    _cookies.callMethod('set', [jsify(details), completer.callback]);
+    _cookies.callMethod('set', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -104,8 +104,8 @@ class ChromeCookies extends ChromeApi {
   Future<Map> remove(CookiesRemoveParams details) {
     if (_cookies == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _cookies.callMethod('remove', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _cookies.callMethod('remove', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -118,7 +118,7 @@ class ChromeCookies extends ChromeApi {
   Future<List<CookieStore>> getAllCookieStores() {
     if (_cookies == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<CookieStore>>.oneArg((e) => listify(e, _createCookieStore));
+    var completer = new ChromeCompleter<List<CookieStore>>.oneArg((e) => toList(e, _createCookieStore));
     _cookies.callMethod('getAllCookieStores', [completer.callback]);
     return completer.future;
   }
@@ -235,7 +235,7 @@ class Cookie extends ChromeObject {
    * cross-site requests).
    */
   SameSiteStatus get sameSite => _createSameSiteStatus(jsProxy['sameSite']);
-  set sameSite(SameSiteStatus value) => jsProxy['sameSite'] = jsify(value);
+  set sameSite(SameSiteStatus value) => jsProxy['sameSite'] = toJS(value);
 
   /**
    * True if the cookie is a session cookie, as opposed to a persistent cookie
@@ -249,7 +249,7 @@ class Cookie extends ChromeObject {
    * epoch. Not provided for session cookies.
    */
   dynamic get expirationDate => jsProxy['expirationDate'];
-  set expirationDate(var value) => jsProxy['expirationDate'] = jsify(value);
+  set expirationDate(var value) => jsProxy['expirationDate'] = toJS(value);
 
   /**
    * The ID of the cookie store containing this cookie, as provided in
@@ -279,8 +279,8 @@ class CookieStore extends ChromeObject {
   /**
    * Identifiers of all the browser tabs that share this cookie store.
    */
-  List<int> get tabIds => listify(jsProxy['tabIds']);
-  set tabIds(List<int> value) => jsProxy['tabIds'] = jsify(value);
+  List<int> get tabIds => toList(jsProxy['tabIds']);
+  set tabIds(List<int> value) => jsProxy['tabIds'] = toJS(value);
 }
 
 class CookiesGetParams extends ChromeObject {
@@ -437,14 +437,14 @@ class CookiesSetParams extends ChromeObject {
    * The cookie's same-site status: defaults to 'no_restriction'.
    */
   SameSiteStatus get sameSite => _createSameSiteStatus(jsProxy['sameSite']);
-  set sameSite(SameSiteStatus value) => jsProxy['sameSite'] = jsify(value);
+  set sameSite(SameSiteStatus value) => jsProxy['sameSite'] = toJS(value);
 
   /**
    * The expiration date of the cookie as the number of seconds since the UNIX
    * epoch. If omitted, the cookie becomes a session cookie.
    */
   dynamic get expirationDate => jsProxy['expirationDate'];
-  set expirationDate(var value) => jsProxy['expirationDate'] = jsify(value);
+  set expirationDate(var value) => jsProxy['expirationDate'] = toJS(value);
 
   /**
    * The ID of the cookie store in which to set the cookie. By default, the

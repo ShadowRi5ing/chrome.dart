@@ -64,7 +64,7 @@ class ChromePageAction extends ChromeApi {
   void setTitle(PageActionSetTitleParams details) {
     if (_pageAction == null) _throwNotAvailable();
 
-    _pageAction.callMethod('setTitle', [jsify(details)]);
+    _pageAction.callMethod('setTitle', [toJS(details)]);
   }
 
   /**
@@ -74,7 +74,7 @@ class ChromePageAction extends ChromeApi {
     if (_pageAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _pageAction.callMethod('getTitle', [jsify(details), completer.callback]);
+    _pageAction.callMethod('getTitle', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -88,7 +88,7 @@ class ChromePageAction extends ChromeApi {
     if (_pageAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _pageAction.callMethod('setIcon', [jsify(details), completer.callback]);
+    _pageAction.callMethod('setIcon', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -99,7 +99,7 @@ class ChromePageAction extends ChromeApi {
   void setPopup(PageActionSetPopupParams details) {
     if (_pageAction == null) _throwNotAvailable();
 
-    _pageAction.callMethod('setPopup', [jsify(details)]);
+    _pageAction.callMethod('setPopup', [toJS(details)]);
   }
 
   /**
@@ -109,7 +109,7 @@ class ChromePageAction extends ChromeApi {
     if (_pageAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _pageAction.callMethod('getPopup', [jsify(details), completer.callback]);
+    _pageAction.callMethod('getPopup', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -176,7 +176,7 @@ class PageActionSetIconParams extends ChromeObject {
    * = foo' is equivalent to 'details.imageData = {'16': foo}'
    */
   dynamic get imageData => jsProxy['imageData'];
-  set imageData(var value) => jsProxy['imageData'] = jsify(value);
+  set imageData(var value) => jsProxy['imageData'] = toJS(value);
 
   /**
    * Either a relative image path or a dictionary {size -> relative image path}
@@ -188,7 +188,7 @@ class PageActionSetIconParams extends ChromeObject {
    * 'details.path = foo' is equivalent to 'details.path = {'16': foo}'
    */
   dynamic get path => jsProxy['path'];
-  set path(var value) => jsProxy['path'] = jsify(value);
+  set path(var value) => jsProxy['path'] = toJS(value);
 
   /**
    * <b>Deprecated.</b> This argument is ignored.

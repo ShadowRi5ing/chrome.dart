@@ -57,7 +57,7 @@ class ChromeManagement extends ChromeApi {
   Future<List<ExtensionInfo>> getAll() {
     if (_management == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<ExtensionInfo>>.oneArg((e) => listify(e, _createExtensionInfo));
+    var completer = new ChromeCompleter<List<ExtensionInfo>>.oneArg((e) => toList(e, _createExtensionInfo));
     _management.callMethod('getAll', [completer.callback]);
     return completer.future;
   }
@@ -98,7 +98,7 @@ class ChromeManagement extends ChromeApi {
   Future<List<String>> getPermissionWarningsById(String id) {
     if (_management == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<String>>.oneArg(listify);
+    var completer = new ChromeCompleter<List<String>>.oneArg(toList);
     _management.callMethod('getPermissionWarningsById', [id, completer.callback]);
     return completer.future;
   }
@@ -113,7 +113,7 @@ class ChromeManagement extends ChromeApi {
   Future<List<String>> getPermissionWarningsByManifest(String manifestStr) {
     if (_management == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<String>>.oneArg(listify);
+    var completer = new ChromeCompleter<List<String>>.oneArg(toList);
     _management.callMethod('getPermissionWarningsByManifest', [manifestStr, completer.callback]);
     return completer.future;
   }
@@ -145,7 +145,7 @@ class ChromeManagement extends ChromeApi {
     if (_management == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _management.callMethod('uninstall', [id, jsify(options), completer.callback]);
+    _management.callMethod('uninstall', [id, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -157,7 +157,7 @@ class ChromeManagement extends ChromeApi {
     if (_management == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _management.callMethod('uninstallSelf', [jsify(options), completer.callback]);
+    _management.callMethod('uninstallSelf', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -201,7 +201,7 @@ class ChromeManagement extends ChromeApi {
     if (_management == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _management.callMethod('setLaunchType', [id, jsify(launchType), completer.callback]);
+    _management.callMethod('setLaunchType', [id, toJS(launchType), completer.callback]);
     return completer.future;
   }
 
@@ -404,7 +404,7 @@ class ExtensionInfo extends ChromeObject {
    * A reason the item is disabled.
    */
   ExtensionDisabledReason get disabledReason => _createExtensionDisabledReason(jsProxy['disabledReason']);
-  set disabledReason(ExtensionDisabledReason value) => jsProxy['disabledReason'] = jsify(value);
+  set disabledReason(ExtensionDisabledReason value) => jsProxy['disabledReason'] = toJS(value);
 
   /**
    * True if this is an app.
@@ -416,7 +416,7 @@ class ExtensionInfo extends ChromeObject {
    * The type of this extension, app, or theme.
    */
   ExtensionType get type => _createExtensionType(jsProxy['type']);
-  set type(ExtensionType value) => jsProxy['type'] = jsify(value);
+  set type(ExtensionType value) => jsProxy['type'] = toJS(value);
 
   /**
    * The launch url (only present for apps).
@@ -455,38 +455,38 @@ class ExtensionInfo extends ChromeObject {
    * height attributes on img tags referencing these images. See the [manifest
    * documentation on icons](manifest/icons) for more details.
    */
-  List<IconInfo> get icons => listify(jsProxy['icons'], _createIconInfo);
-  set icons(List<IconInfo> value) => jsProxy['icons'] = jsify(value);
+  List<IconInfo> get icons => toList(jsProxy['icons'], _createIconInfo);
+  set icons(List<IconInfo> value) => jsProxy['icons'] = toJS(value);
 
   /**
    * Returns a list of API based permissions.
    */
-  List<String> get permissions => listify(jsProxy['permissions']);
-  set permissions(List<String> value) => jsProxy['permissions'] = jsify(value);
+  List<String> get permissions => toList(jsProxy['permissions']);
+  set permissions(List<String> value) => jsProxy['permissions'] = toJS(value);
 
   /**
    * Returns a list of host based permissions.
    */
-  List<String> get hostPermissions => listify(jsProxy['hostPermissions']);
-  set hostPermissions(List<String> value) => jsProxy['hostPermissions'] = jsify(value);
+  List<String> get hostPermissions => toList(jsProxy['hostPermissions']);
+  set hostPermissions(List<String> value) => jsProxy['hostPermissions'] = toJS(value);
 
   /**
    * How the extension was installed.
    */
   ExtensionInstallType get installType => _createExtensionInstallType(jsProxy['installType']);
-  set installType(ExtensionInstallType value) => jsProxy['installType'] = jsify(value);
+  set installType(ExtensionInstallType value) => jsProxy['installType'] = toJS(value);
 
   /**
    * The app launch type (only present for apps).
    */
   LaunchType get launchType => _createLaunchType(jsProxy['launchType']);
-  set launchType(LaunchType value) => jsProxy['launchType'] = jsify(value);
+  set launchType(LaunchType value) => jsProxy['launchType'] = toJS(value);
 
   /**
    * The currently available launch types (only present for apps).
    */
-  List<LaunchType> get availableLaunchTypes => listify(jsProxy['availableLaunchTypes'], _createLaunchType);
-  set availableLaunchTypes(List<LaunchType> value) => jsProxy['availableLaunchTypes'] = jsify(value);
+  List<LaunchType> get availableLaunchTypes => toList(jsProxy['availableLaunchTypes'], _createLaunchType);
+  set availableLaunchTypes(List<LaunchType> value) => jsProxy['availableLaunchTypes'] = toJS(value);
 }
 
 class ManagementUninstallParams extends ChromeObject {

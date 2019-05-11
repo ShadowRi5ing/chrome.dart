@@ -43,20 +43,20 @@ class Rule extends ChromeObject {
   /**
    * Tags can be used to annotate rules and perform operations on sets of rules.
    */
-  List<String> get tags => listify(jsProxy['tags']);
-  set tags(List<String> value) => jsProxy['tags'] = jsify(value);
+  List<String> get tags => toList(jsProxy['tags']);
+  set tags(List<String> value) => jsProxy['tags'] = toJS(value);
 
   /**
    * List of conditions that can trigger the actions.
    */
-  List<dynamic> get conditions => listify(jsProxy['conditions']);
-  set conditions(List<dynamic> value) => jsProxy['conditions'] = jsify(value);
+  List<dynamic> get conditions => toList(jsProxy['conditions']);
+  set conditions(List<dynamic> value) => jsProxy['conditions'] = toJS(value);
 
   /**
    * List of actions that are triggered if one of the conditions is fulfilled.
    */
-  List<dynamic> get actions => listify(jsProxy['actions']);
-  set actions(List<dynamic> value) => jsProxy['actions'] = jsify(value);
+  List<dynamic> get actions => toList(jsProxy['actions']);
+  set actions(List<dynamic> value) => jsProxy['actions'] = toJS(value);
 
   /**
    * Optional priority of this rule. Defaults to 100.
@@ -92,7 +92,7 @@ class ChromeEvent extends ChromeObject {
   }
 
   bool hasListener(dynamic callback) {
-    return jsProxy.callMethod('hasListener', [jsify(callback)]);
+    return jsProxy.callMethod('hasListener', [toJS(callback)]);
   }
 
   bool hasListeners() {
@@ -114,8 +114,8 @@ class ChromeEvent extends ChromeObject {
    * Rules that were registered, the optional parameters are filled with values.
    */
   Future<List<Rule>> addRules(String eventName, int webViewInstanceId, List<Rule> rules) {
-    var completer = new ChromeCompleter<List<Rule>>.oneArg((e) => listify(e, _createRule));
-    jsProxy.callMethod('addRules', [eventName, webViewInstanceId, jsify(rules), completer.callback]);
+    var completer = new ChromeCompleter<List<Rule>>.oneArg((e) => toList(e, _createRule));
+    jsProxy.callMethod('addRules', [eventName, webViewInstanceId, toJS(rules), completer.callback]);
     return completer.future;
   }
 
@@ -134,8 +134,8 @@ class ChromeEvent extends ChromeObject {
    * Rules that were registered, the optional parameters are filled with values.
    */
   Future<List<Rule>> getRules(String eventName, int webViewInstanceId, [List<String> ruleIdentifiers]) {
-    var completer = new ChromeCompleter<List<Rule>>.oneArg((e) => listify(e, _createRule));
-    jsProxy.callMethod('getRules', [eventName, webViewInstanceId, jsify(ruleIdentifiers), completer.callback]);
+    var completer = new ChromeCompleter<List<Rule>>.oneArg((e) => toList(e, _createRule));
+    jsProxy.callMethod('getRules', [eventName, webViewInstanceId, toJS(ruleIdentifiers), completer.callback]);
     return completer.future;
   }
 
@@ -152,7 +152,7 @@ class ChromeEvent extends ChromeObject {
    */
   Future removeRules(String eventName, int webViewInstanceId, [List<String> ruleIdentifiers]) {
     var completer = new ChromeCompleter.noArgs();
-    jsProxy.callMethod('removeRules', [eventName, webViewInstanceId, jsify(ruleIdentifiers), completer.callback]);
+    jsProxy.callMethod('removeRules', [eventName, webViewInstanceId, toJS(ruleIdentifiers), completer.callback]);
     return completer.future;
   }
 }
@@ -319,16 +319,16 @@ class UrlFilter extends ChromeObject {
    * Matches if the scheme of the URL is equal to any of the schemes specified
    * in the array.
    */
-  List<String> get schemes => listify(jsProxy['schemes']);
-  set schemes(List<String> value) => jsProxy['schemes'] = jsify(value);
+  List<String> get schemes => toList(jsProxy['schemes']);
+  set schemes(List<String> value) => jsProxy['schemes'] = toJS(value);
 
   /**
    * Matches if the port of the URL is contained in any of the specified port
    * lists. For example `[80, 443, [1000, 1200]]` matches all requests on port
    * 80, 443 and in the range 1000-1200.
    */
-  List<dynamic> get ports => listify(jsProxy['ports']);
-  set ports(List<dynamic> value) => jsProxy['ports'] = jsify(value);
+  List<dynamic> get ports => toList(jsProxy['ports']);
+  set ports(List<dynamic> value) => jsProxy['ports'] = toJS(value);
 }
 
 Rule _createRule(JsObject jsProxy) => jsProxy == null ? null : new Rule.fromProxy(jsProxy);

@@ -186,7 +186,7 @@ class CrDirectoryReader extends ChromeObject implements DirectoryReader {
       if (result['length'] == 0) {
         completer.complete(entries);
       } else {
-        entries.addAll(listify(result).map((e) => new CrEntry.fromProxy(e)));
+        entries.addAll(toList(result).map((e) => new CrEntry.fromProxy(e)));
         jsProxy.callMethod('readEntries', [entriesCallback, errorCallback]);
       }
     };

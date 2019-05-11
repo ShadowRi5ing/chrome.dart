@@ -49,8 +49,8 @@ class ChromeSessions extends ChromeApi {
   Future<List<Session>> getRecentlyClosed([Filter filter]) {
     if (_sessions == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Session>>.oneArg((e) => listify(e, _createSession));
-    _sessions.callMethod('getRecentlyClosed', [jsify(filter), completer.callback]);
+    var completer = new ChromeCompleter<List<Session>>.oneArg((e) => toList(e, _createSession));
+    _sessions.callMethod('getRecentlyClosed', [toJS(filter), completer.callback]);
     return completer.future;
   }
 
@@ -66,8 +66,8 @@ class ChromeSessions extends ChromeApi {
   Future<List<Device>> getDevices([Filter filter]) {
     if (_sessions == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Device>>.oneArg((e) => listify(e, _createDevice));
-    _sessions.callMethod('getDevices', [jsify(filter), completer.callback]);
+    var completer = new ChromeCompleter<List<Device>>.oneArg((e) => toList(e, _createDevice));
+    _sessions.callMethod('getDevices', [toJS(filter), completer.callback]);
     return completer.future;
   }
 
@@ -131,14 +131,14 @@ class Session extends ChromeObject {
    * [sessions.Session.window] will be set.
    */
   Tab get tab => _createTab(jsProxy['tab']);
-  set tab(Tab value) => jsProxy['tab'] = jsify(value);
+  set tab(Tab value) => jsProxy['tab'] = toJS(value);
 
   /**
    * The [windows.Window], if this entry describes a window. Either this or
    * [sessions.Session.tab] will be set.
    */
   Window get window => _createWindow(jsProxy['window']);
-  set window(Window value) => jsProxy['window'] = jsify(value);
+  set window(Window value) => jsProxy['window'] = toJS(value);
 }
 
 class Device extends ChromeObject {
@@ -158,8 +158,8 @@ class Device extends ChromeObject {
    * A list of open window sessions for the foreign device, sorted from most
    * recently to least recently modified session.
    */
-  List<Session> get sessions => listify(jsProxy['sessions'], _createSession);
-  set sessions(List<Session> value) => jsProxy['sessions'] = jsify(value);
+  List<Session> get sessions => toList(jsProxy['sessions'], _createSession);
+  set sessions(List<Session> value) => jsProxy['sessions'] = toJS(value);
 }
 
 Session _createSession(JsObject jsProxy) => jsProxy == null ? null : new Session.fromProxy(jsProxy);

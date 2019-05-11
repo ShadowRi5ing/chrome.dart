@@ -44,7 +44,7 @@ class ChromeTts extends ChromeApi {
     if (_tts == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _tts.callMethod('speak', [utterance, jsify(options), completer.callback]);
+    _tts.callMethod('speak', [utterance, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -104,7 +104,7 @@ class ChromeTts extends ChromeApi {
   Future<List<TtsVoice>> getVoices() {
     if (_tts == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<TtsVoice>>.oneArg((e) => listify(e, _createTtsVoice));
+    var completer = new ChromeCompleter<List<TtsVoice>>.oneArg((e) => toList(e, _createTtsVoice));
     _tts.callMethod('getVoices', [completer.callback]);
     return completer.future;
   }
@@ -164,7 +164,7 @@ class TtsEvent extends ChromeObject {
    * in-between utterances.
    */
   EventType get type => _createEventType(jsProxy['type']);
-  set type(EventType value) => jsProxy['type'] = jsify(value);
+  set type(EventType value) => jsProxy['type'] = toJS(value);
 
   /**
    * The index of the current character in the utterance.
@@ -210,7 +210,7 @@ class TtsVoice extends ChromeObject {
    * This voice's gender.
    */
   VoiceGender get gender => _createVoiceGender(jsProxy['gender']);
-  set gender(VoiceGender value) => jsProxy['gender'] = jsify(value);
+  set gender(VoiceGender value) => jsProxy['gender'] = toJS(value);
 
   /**
    * If true, the synthesis engine is a remote network resource. It may be
@@ -228,8 +228,8 @@ class TtsVoice extends ChromeObject {
   /**
    * All of the callback event types that this voice is capable of sending.
    */
-  List<EventType> get eventTypes => listify(jsProxy['eventTypes'], _createEventType);
-  set eventTypes(List<EventType> value) => jsProxy['eventTypes'] = jsify(value);
+  List<EventType> get eventTypes => toList(jsProxy['eventTypes'], _createEventType);
+  set eventTypes(List<EventType> value) => jsProxy['eventTypes'] = toJS(value);
 }
 
 class TtsSpeakParams extends ChromeObject {
@@ -279,7 +279,7 @@ class TtsSpeakParams extends ChromeObject {
    * Gender of voice for synthesized speech.
    */
   VoiceGender get gender => _createVoiceGender(jsProxy['gender']);
-  set gender(VoiceGender value) => jsProxy['gender'] = jsify(value);
+  set gender(VoiceGender value) => jsProxy['gender'] = toJS(value);
 
   /**
    * Speaking rate relative to the default rate for this voice. 1.0 is the
@@ -290,37 +290,37 @@ class TtsSpeakParams extends ChromeObject {
    * times normal even if you specify a value larger than 3.0.
    */
   dynamic get rate => jsProxy['rate'];
-  set rate(var value) => jsProxy['rate'] = jsify(value);
+  set rate(var value) => jsProxy['rate'] = toJS(value);
 
   /**
    * Speaking pitch between 0 and 2 inclusive, with 0 being lowest and 2 being
    * highest. 1.0 corresponds to a voice's default pitch.
    */
   dynamic get pitch => jsProxy['pitch'];
-  set pitch(var value) => jsProxy['pitch'] = jsify(value);
+  set pitch(var value) => jsProxy['pitch'] = toJS(value);
 
   /**
    * Speaking volume between 0 and 1 inclusive, with 0 being lowest and 1 being
    * highest, with a default of 1.0.
    */
   dynamic get volume => jsProxy['volume'];
-  set volume(var value) => jsProxy['volume'] = jsify(value);
+  set volume(var value) => jsProxy['volume'] = toJS(value);
 
   /**
    * The TTS event types the voice must support.
    */
-  List<String> get requiredEventTypes => listify(jsProxy['requiredEventTypes']);
-  set requiredEventTypes(List<String> value) => jsProxy['requiredEventTypes'] = jsify(value);
+  List<String> get requiredEventTypes => toList(jsProxy['requiredEventTypes']);
+  set requiredEventTypes(List<String> value) => jsProxy['requiredEventTypes'] = toJS(value);
 
   /**
    * The TTS event types that you are interested in listening to. If missing,
    * all event types may be sent.
    */
-  List<String> get desiredEventTypes => listify(jsProxy['desiredEventTypes']);
-  set desiredEventTypes(List<String> value) => jsProxy['desiredEventTypes'] = jsify(value);
+  List<String> get desiredEventTypes => toList(jsProxy['desiredEventTypes']);
+  set desiredEventTypes(List<String> value) => jsProxy['desiredEventTypes'] = toJS(value);
 
   void onEvent([var arg1]) =>
-         jsProxy.callMethod('onEvent', [jsify(arg1)]);
+         jsProxy.callMethod('onEvent', [toJS(arg1)]);
 }
 
 TtsEvent _createTtsEvent(JsObject jsProxy) => jsProxy == null ? null : new TtsEvent.fromProxy(jsProxy);

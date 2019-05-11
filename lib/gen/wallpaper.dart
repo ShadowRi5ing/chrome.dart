@@ -31,7 +31,7 @@ class ChromeWallpaper extends ChromeApi {
     if (_wallpaper == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _wallpaper.callMethod('setWallpaper', [jsify(details), completer.callback]);
+    _wallpaper.callMethod('setWallpaper', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -67,7 +67,7 @@ class WallpaperSetWallpaperParams extends ChromeObject {
    * The jpeg or png encoded wallpaper image as an ArrayBuffer.
    */
   dynamic get data => jsProxy['data'];
-  set data(var value) => jsProxy['data'] = jsify(value);
+  set data(var value) => jsProxy['data'] = toJS(value);
 
   /**
    * The URL of the wallpaper to be set (can be relative).
@@ -79,7 +79,7 @@ class WallpaperSetWallpaperParams extends ChromeObject {
    * The supported wallpaper layouts.
    */
   WallpaperLayout get layout => _createWallpaperLayout(jsProxy['layout']);
-  set layout(WallpaperLayout value) => jsProxy['layout'] = jsify(value);
+  set layout(WallpaperLayout value) => jsProxy['layout'] = toJS(value);
 
   /**
    * The file name of the saved wallpaper.

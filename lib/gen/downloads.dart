@@ -55,7 +55,7 @@ class ChromeDownloads extends ChromeApi {
     if (_downloads == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<int>.oneArg();
-    _downloads.callMethod('download', [jsify(options), completer.callback]);
+    _downloads.callMethod('download', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -69,8 +69,8 @@ class ChromeDownloads extends ChromeApi {
   Future<List<DownloadItem>> search(DownloadQuery query) {
     if (_downloads == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<DownloadItem>>.oneArg((e) => listify(e, _createDownloadItem));
-    _downloads.callMethod('search', [jsify(query), completer.callback]);
+    var completer = new ChromeCompleter<List<DownloadItem>>.oneArg((e) => toList(e, _createDownloadItem));
+    _downloads.callMethod('search', [toJS(query), completer.callback]);
     return completer.future;
   }
 
@@ -135,7 +135,7 @@ class ChromeDownloads extends ChromeApi {
     if (_downloads == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _downloads.callMethod('getFileIcon', [downloadId, jsify(options), completer.callback]);
+    _downloads.callMethod('getFileIcon', [downloadId, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -179,8 +179,8 @@ class ChromeDownloads extends ChromeApi {
   Future<List<int>> erase(DownloadQuery query) {
     if (_downloads == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<int>>.oneArg(listify);
-    _downloads.callMethod('erase', [jsify(query), completer.callback]);
+    var completer = new ChromeCompleter<List<int>>.oneArg(toList);
+    _downloads.callMethod('erase', [toJS(query), completer.callback]);
     return completer.future;
   }
 
@@ -382,7 +382,7 @@ class FilenameSuggestion extends ChromeObject {
   set filename(String value) => jsProxy['filename'] = value;
 
   FilenameConflictAction get conflictAction => _createFilenameConflictAction(jsProxy['conflictAction']);
-  set conflictAction(FilenameConflictAction value) => jsProxy['conflictAction'] = jsify(value);
+  set conflictAction(FilenameConflictAction value) => jsProxy['conflictAction'] = toJS(value);
 }
 
 class DownloadOptions extends ChromeObject {
@@ -404,16 +404,16 @@ class DownloadOptions extends ChromeObject {
   set filename(String value) => jsProxy['filename'] = value;
 
   FilenameConflictAction get conflictAction => _createFilenameConflictAction(jsProxy['conflictAction']);
-  set conflictAction(FilenameConflictAction value) => jsProxy['conflictAction'] = jsify(value);
+  set conflictAction(FilenameConflictAction value) => jsProxy['conflictAction'] = toJS(value);
 
   bool get saveAs => jsProxy['saveAs'];
   set saveAs(bool value) => jsProxy['saveAs'] = value;
 
   HttpMethod get method => _createHttpMethod(jsProxy['method']);
-  set method(HttpMethod value) => jsProxy['method'] = jsify(value);
+  set method(HttpMethod value) => jsProxy['method'] = toJS(value);
 
-  List<HeaderNameValuePair> get headers => listify(jsProxy['headers'], _createHeaderNameValuePair);
-  set headers(List<HeaderNameValuePair> value) => jsProxy['headers'] = jsify(value);
+  List<HeaderNameValuePair> get headers => toList(jsProxy['headers'], _createHeaderNameValuePair);
+  set headers(List<HeaderNameValuePair> value) => jsProxy['headers'] = toJS(value);
 
   String get body => jsProxy['body'];
   set body(String value) => jsProxy['body'] = value;
@@ -467,7 +467,7 @@ class DownloadItem extends ChromeObject {
   set incognito(bool value) => jsProxy['incognito'] = value;
 
   DangerType get danger => _createDangerType(jsProxy['danger']);
-  set danger(DangerType value) => jsProxy['danger'] = jsify(value);
+  set danger(DangerType value) => jsProxy['danger'] = toJS(value);
 
   String get mime => jsProxy['mime'];
   set mime(String value) => jsProxy['mime'] = value;
@@ -482,7 +482,7 @@ class DownloadItem extends ChromeObject {
   set estimatedEndTime(String value) => jsProxy['estimatedEndTime'] = value;
 
   State get state => _createState(jsProxy['state']);
-  set state(State value) => jsProxy['state'] = jsify(value);
+  set state(State value) => jsProxy['state'] = toJS(value);
 
   bool get paused => jsProxy['paused'];
   set paused(bool value) => jsProxy['paused'] = value;
@@ -491,16 +491,16 @@ class DownloadItem extends ChromeObject {
   set canResume(bool value) => jsProxy['canResume'] = value;
 
   InterruptReason get error => _createInterruptReason(jsProxy['error']);
-  set error(InterruptReason value) => jsProxy['error'] = jsify(value);
+  set error(InterruptReason value) => jsProxy['error'] = toJS(value);
 
   num get bytesReceived => jsProxy['bytesReceived'];
-  set bytesReceived(num value) => jsProxy['bytesReceived'] = jsify(value);
+  set bytesReceived(num value) => jsProxy['bytesReceived'] = toJS(value);
 
   num get totalBytes => jsProxy['totalBytes'];
-  set totalBytes(num value) => jsProxy['totalBytes'] = jsify(value);
+  set totalBytes(num value) => jsProxy['totalBytes'] = toJS(value);
 
   num get fileSize => jsProxy['fileSize'];
-  set fileSize(num value) => jsProxy['fileSize'] = jsify(value);
+  set fileSize(num value) => jsProxy['fileSize'] = toJS(value);
 
   bool get exists => jsProxy['exists'];
   set exists(bool value) => jsProxy['exists'] = value;
@@ -544,8 +544,8 @@ class DownloadQuery extends ChromeObject {
   }
   DownloadQuery.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<String> get query => listify(jsProxy['query']);
-  set query(List<String> value) => jsProxy['query'] = jsify(value);
+  List<String> get query => toList(jsProxy['query']);
+  set query(List<String> value) => jsProxy['query'] = toJS(value);
 
   String get startedBefore => jsProxy['startedBefore'];
   set startedBefore(String value) => jsProxy['startedBefore'] = value;
@@ -560,10 +560,10 @@ class DownloadQuery extends ChromeObject {
   set endedAfter(String value) => jsProxy['endedAfter'] = value;
 
   num get totalBytesGreater => jsProxy['totalBytesGreater'];
-  set totalBytesGreater(num value) => jsProxy['totalBytesGreater'] = jsify(value);
+  set totalBytesGreater(num value) => jsProxy['totalBytesGreater'] = toJS(value);
 
   num get totalBytesLess => jsProxy['totalBytesLess'];
-  set totalBytesLess(num value) => jsProxy['totalBytesLess'] = jsify(value);
+  set totalBytesLess(num value) => jsProxy['totalBytesLess'] = toJS(value);
 
   String get filenameRegex => jsProxy['filenameRegex'];
   set filenameRegex(String value) => jsProxy['filenameRegex'] = value;
@@ -577,8 +577,8 @@ class DownloadQuery extends ChromeObject {
   int get limit => jsProxy['limit'];
   set limit(int value) => jsProxy['limit'] = value;
 
-  List<String> get orderBy => listify(jsProxy['orderBy']);
-  set orderBy(List<String> value) => jsProxy['orderBy'] = jsify(value);
+  List<String> get orderBy => toList(jsProxy['orderBy']);
+  set orderBy(List<String> value) => jsProxy['orderBy'] = toJS(value);
 
   int get id => jsProxy['id'];
   set id(int value) => jsProxy['id'] = value;
@@ -593,7 +593,7 @@ class DownloadQuery extends ChromeObject {
   set filename(String value) => jsProxy['filename'] = value;
 
   DangerType get danger => _createDangerType(jsProxy['danger']);
-  set danger(DangerType value) => jsProxy['danger'] = jsify(value);
+  set danger(DangerType value) => jsProxy['danger'] = toJS(value);
 
   String get mime => jsProxy['mime'];
   set mime(String value) => jsProxy['mime'] = value;
@@ -605,22 +605,22 @@ class DownloadQuery extends ChromeObject {
   set endTime(String value) => jsProxy['endTime'] = value;
 
   State get state => _createState(jsProxy['state']);
-  set state(State value) => jsProxy['state'] = jsify(value);
+  set state(State value) => jsProxy['state'] = toJS(value);
 
   bool get paused => jsProxy['paused'];
   set paused(bool value) => jsProxy['paused'] = value;
 
   InterruptReason get error => _createInterruptReason(jsProxy['error']);
-  set error(InterruptReason value) => jsProxy['error'] = jsify(value);
+  set error(InterruptReason value) => jsProxy['error'] = toJS(value);
 
   num get bytesReceived => jsProxy['bytesReceived'];
-  set bytesReceived(num value) => jsProxy['bytesReceived'] = jsify(value);
+  set bytesReceived(num value) => jsProxy['bytesReceived'] = toJS(value);
 
   num get totalBytes => jsProxy['totalBytes'];
-  set totalBytes(num value) => jsProxy['totalBytes'] = jsify(value);
+  set totalBytes(num value) => jsProxy['totalBytes'] = toJS(value);
 
   num get fileSize => jsProxy['fileSize'];
-  set fileSize(num value) => jsProxy['fileSize'] = jsify(value);
+  set fileSize(num value) => jsProxy['fileSize'] = toJS(value);
 
   bool get exists => jsProxy['exists'];
   set exists(bool value) => jsProxy['exists'] = value;
@@ -648,10 +648,10 @@ class DoubleDelta extends ChromeObject {
   DoubleDelta.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   num get previous => jsProxy['previous'];
-  set previous(num value) => jsProxy['previous'] = jsify(value);
+  set previous(num value) => jsProxy['previous'] = toJS(value);
 
   num get current => jsProxy['current'];
-  set current(num value) => jsProxy['current'] = jsify(value);
+  set current(num value) => jsProxy['current'] = toJS(value);
 }
 
 class BooleanDelta extends ChromeObject {
@@ -695,46 +695,46 @@ class DownloadDelta extends ChromeObject {
   set id(int value) => jsProxy['id'] = value;
 
   StringDelta get url => _createStringDelta(jsProxy['url']);
-  set url(StringDelta value) => jsProxy['url'] = jsify(value);
+  set url(StringDelta value) => jsProxy['url'] = toJS(value);
 
   StringDelta get finalUrl => _createStringDelta(jsProxy['finalUrl']);
-  set finalUrl(StringDelta value) => jsProxy['finalUrl'] = jsify(value);
+  set finalUrl(StringDelta value) => jsProxy['finalUrl'] = toJS(value);
 
   StringDelta get filename => _createStringDelta(jsProxy['filename']);
-  set filename(StringDelta value) => jsProxy['filename'] = jsify(value);
+  set filename(StringDelta value) => jsProxy['filename'] = toJS(value);
 
   StringDelta get danger => _createStringDelta(jsProxy['danger']);
-  set danger(StringDelta value) => jsProxy['danger'] = jsify(value);
+  set danger(StringDelta value) => jsProxy['danger'] = toJS(value);
 
   StringDelta get mime => _createStringDelta(jsProxy['mime']);
-  set mime(StringDelta value) => jsProxy['mime'] = jsify(value);
+  set mime(StringDelta value) => jsProxy['mime'] = toJS(value);
 
   StringDelta get startTime => _createStringDelta(jsProxy['startTime']);
-  set startTime(StringDelta value) => jsProxy['startTime'] = jsify(value);
+  set startTime(StringDelta value) => jsProxy['startTime'] = toJS(value);
 
   StringDelta get endTime => _createStringDelta(jsProxy['endTime']);
-  set endTime(StringDelta value) => jsProxy['endTime'] = jsify(value);
+  set endTime(StringDelta value) => jsProxy['endTime'] = toJS(value);
 
   StringDelta get state => _createStringDelta(jsProxy['state']);
-  set state(StringDelta value) => jsProxy['state'] = jsify(value);
+  set state(StringDelta value) => jsProxy['state'] = toJS(value);
 
   BooleanDelta get canResume => _createBooleanDelta(jsProxy['canResume']);
-  set canResume(BooleanDelta value) => jsProxy['canResume'] = jsify(value);
+  set canResume(BooleanDelta value) => jsProxy['canResume'] = toJS(value);
 
   BooleanDelta get paused => _createBooleanDelta(jsProxy['paused']);
-  set paused(BooleanDelta value) => jsProxy['paused'] = jsify(value);
+  set paused(BooleanDelta value) => jsProxy['paused'] = toJS(value);
 
   StringDelta get error => _createStringDelta(jsProxy['error']);
-  set error(StringDelta value) => jsProxy['error'] = jsify(value);
+  set error(StringDelta value) => jsProxy['error'] = toJS(value);
 
   DoubleDelta get totalBytes => _createDoubleDelta(jsProxy['totalBytes']);
-  set totalBytes(DoubleDelta value) => jsProxy['totalBytes'] = jsify(value);
+  set totalBytes(DoubleDelta value) => jsProxy['totalBytes'] = toJS(value);
 
   DoubleDelta get fileSize => _createDoubleDelta(jsProxy['fileSize']);
-  set fileSize(DoubleDelta value) => jsProxy['fileSize'] = jsify(value);
+  set fileSize(DoubleDelta value) => jsProxy['fileSize'] = toJS(value);
 
   BooleanDelta get exists => _createBooleanDelta(jsProxy['exists']);
-  set exists(BooleanDelta value) => jsProxy['exists'] = jsify(value);
+  set exists(BooleanDelta value) => jsProxy['exists'] = toJS(value);
 }
 
 class GetFileIconOptions extends ChromeObject {

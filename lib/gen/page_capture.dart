@@ -29,7 +29,7 @@ class ChromePageCapture extends ChromeApi {
     if (_pageCapture == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _pageCapture.callMethod('saveAsMHTML', [jsify(details), completer.callback]);
+    _pageCapture.callMethod('saveAsMHTML', [toJS(details), completer.callback]);
     return completer.future;
   }
 

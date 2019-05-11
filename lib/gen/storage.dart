@@ -144,13 +144,13 @@ class StorageChange extends ChromeObject {
    * The old value of the item, if there was an old value.
    */
   dynamic get oldValue => jsProxy['oldValue'];
-  set oldValue(var value) => jsProxy['oldValue'] = jsify(value);
+  set oldValue(var value) => jsProxy['oldValue'] = toJS(value);
 
   /**
    * The new value of the item, if there is a new value.
    */
   dynamic get newValue => jsProxy['newValue'];
-  set newValue(var value) => jsProxy['newValue'] = jsify(value);
+  set newValue(var value) => jsProxy['newValue'] = toJS(value);
 }
 
 class StorageArea extends ChromeObject {
@@ -169,8 +169,8 @@ class StorageArea extends ChromeObject {
    * Object with items in their key-value mappings.
    */
   Future<Map<String, dynamic>> get([dynamic keys]) {
-    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(mapify);
-    jsProxy.callMethod('get', [jsify(keys), completer.callback]);
+    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(toMap);
+    jsProxy.callMethod('get', [toJS(keys), completer.callback]);
     return completer.future;
   }
 
@@ -186,7 +186,7 @@ class StorageArea extends ChromeObject {
    */
   Future<int> getBytesInUse([dynamic keys]) {
     var completer = new ChromeCompleter<int>.oneArg();
-    jsProxy.callMethod('getBytesInUse', [jsify(keys), completer.callback]);
+    jsProxy.callMethod('getBytesInUse', [toJS(keys), completer.callback]);
     return completer.future;
   }
 
@@ -203,7 +203,7 @@ class StorageArea extends ChromeObject {
    */
   Future set(Map<String, dynamic> items) {
     var completer = new ChromeCompleter.noArgs();
-    jsProxy.callMethod('set', [jsify(items), completer.callback]);
+    jsProxy.callMethod('set', [toJS(items), completer.callback]);
     return completer.future;
   }
 
@@ -214,7 +214,7 @@ class StorageArea extends ChromeObject {
    */
   Future remove(dynamic keys) {
     var completer = new ChromeCompleter.noArgs();
-    jsProxy.callMethod('remove', [jsify(keys), completer.callback]);
+    jsProxy.callMethod('remove', [toJS(keys), completer.callback]);
     return completer.future;
   }
 
@@ -229,7 +229,7 @@ class StorageArea extends ChromeObject {
 }
 
 StorageOnChangedEvent _createOnChangedEvent(JsObject changes, String areaName) =>
-    new StorageOnChangedEvent(mapify(changes), areaName);
+    new StorageOnChangedEvent(toMap(changes), areaName);
 SyncStorageArea _createSyncStorageArea(JsObject jsProxy) => jsProxy == null ? null : new SyncStorageArea.fromProxy(jsProxy);
 LocalStorageArea _createLocalStorageArea(JsObject jsProxy) => jsProxy == null ? null : new LocalStorageArea.fromProxy(jsProxy);
 StorageArea _createStorageArea(JsObject jsProxy) => jsProxy == null ? null : new StorageArea.fromProxy(jsProxy);

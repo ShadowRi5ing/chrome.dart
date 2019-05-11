@@ -54,8 +54,8 @@ class ChromeProcesses extends ChromeApi {
 
   ChromeProcesses._() {
     var getApi = () => _processes;
-    _onUpdated = new ChromeStreamController<Map>.oneArg(getApi, 'onUpdated', mapify);
-    _onUpdatedWithMemory = new ChromeStreamController<Map>.oneArg(getApi, 'onUpdatedWithMemory', mapify);
+    _onUpdated = new ChromeStreamController<Map>.oneArg(getApi, 'onUpdated', toMap);
+    _onUpdatedWithMemory = new ChromeStreamController<Map>.oneArg(getApi, 'onUpdatedWithMemory', toMap);
     _onCreated = new ChromeStreamController<Process>.oneArg(getApi, 'onCreated', _createProcess);
     _onUnresponsive = new ChromeStreamController<Process>.oneArg(getApi, 'onUnresponsive', _createProcess);
     _onExited = new ChromeStreamController<OnExitedEvent>.threeArgs(getApi, 'onExited', _createOnExitedEvent);
@@ -117,8 +117,8 @@ class ChromeProcesses extends ChromeApi {
   Future<Map> getProcessInfo(dynamic processIds, bool includeMemory) {
     if (_processes == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _processes.callMethod('getProcessInfo', [jsify(processIds), includeMemory, completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _processes.callMethod('getProcessInfo', [toJS(processIds), includeMemory, completer.callback]);
     return completer.future;
   }
 
@@ -218,8 +218,8 @@ class Process extends ChromeObject {
    * Array of Tab IDs that have a page rendered by this process. The list will
    * be non-empty for renderer processes only.
    */
-  List<int> get tabs => listify(jsProxy['tabs']);
-  set tabs(List<int> value) => jsProxy['tabs'] = jsify(value);
+  List<int> get tabs => toList(jsProxy['tabs']);
+  set tabs(List<int> value) => jsProxy['tabs'] = toJS(value);
 
   /**
    * The most recent measurement of the process CPU usage, between 0 and 100%.
@@ -227,7 +227,7 @@ class Process extends ChromeObject {
    * onUpdated or onUpdatedWithMemory.
    */
   dynamic get cpu => jsProxy['cpu'];
-  set cpu(var value) => jsProxy['cpu'] = jsify(value);
+  set cpu(var value) => jsProxy['cpu'] = toJS(value);
 
   /**
    * The most recent measurement of the process network usage, in bytes per
@@ -235,7 +235,7 @@ class Process extends ChromeObject {
    * onUpdated or onUpdatedWithMemory.
    */
   dynamic get network => jsProxy['network'];
-  set network(var value) => jsProxy['network'] = jsify(value);
+  set network(var value) => jsProxy['network'] = toJS(value);
 
   /**
    * The most recent measurement of the process private memory usage, in bytes.
@@ -243,7 +243,7 @@ class Process extends ChromeObject {
    * onUpdatedWithMemory or getProcessInfo with the includeMemory flag.
    */
   dynamic get privateMemory => jsProxy['privateMemory'];
-  set privateMemory(var value) => jsProxy['privateMemory'] = jsify(value);
+  set privateMemory(var value) => jsProxy['privateMemory'] = toJS(value);
 
   /**
    * The most recent measurement of the process JavaScript allocated memory, in
@@ -251,7 +251,7 @@ class Process extends ChromeObject {
    * onUpdated or onUpdatedWithMemory.
    */
   dynamic get jsMemoryAllocated => jsProxy['jsMemoryAllocated'];
-  set jsMemoryAllocated(var value) => jsProxy['jsMemoryAllocated'] = jsify(value);
+  set jsMemoryAllocated(var value) => jsProxy['jsMemoryAllocated'] = toJS(value);
 
   /**
    * The most recent measurement of the process JavaScript memory used, in
@@ -259,7 +259,7 @@ class Process extends ChromeObject {
    * onUpdated or onUpdatedWithMemory.
    */
   dynamic get jsMemoryUsed => jsProxy['jsMemoryUsed'];
-  set jsMemoryUsed(var value) => jsProxy['jsMemoryUsed'] = jsify(value);
+  set jsMemoryUsed(var value) => jsProxy['jsMemoryUsed'] = toJS(value);
 
   /**
    * The most recent measurement of the process’s SQLite memory usage, in bytes.
@@ -267,7 +267,7 @@ class Process extends ChromeObject {
    * onUpdated or onUpdatedWithMemory.
    */
   dynamic get sqliteMemory => jsProxy['sqliteMemory'];
-  set sqliteMemory(var value) => jsProxy['sqliteMemory'] = jsify(value);
+  set sqliteMemory(var value) => jsProxy['sqliteMemory'] = toJS(value);
 
   /**
    * The most recent information about the image cache for the process. Only
@@ -275,7 +275,7 @@ class Process extends ChromeObject {
    * onUpdatedWithMemory.
    */
   Cache get imageCache => _createCache(jsProxy['imageCache']);
-  set imageCache(Cache value) => jsProxy['imageCache'] = jsify(value);
+  set imageCache(Cache value) => jsProxy['imageCache'] = toJS(value);
 
   /**
    * The most recent information about the script cache for the process. Only
@@ -283,7 +283,7 @@ class Process extends ChromeObject {
    * onUpdatedWithMemory.
    */
   Cache get scriptCache => _createCache(jsProxy['scriptCache']);
-  set scriptCache(Cache value) => jsProxy['scriptCache'] = jsify(value);
+  set scriptCache(Cache value) => jsProxy['scriptCache'] = toJS(value);
 
   /**
    * The most recent information about the CSS cache for the process. Only
@@ -291,7 +291,7 @@ class Process extends ChromeObject {
    * onUpdatedWithMemory.
    */
   Cache get cssCache => _createCache(jsProxy['cssCache']);
-  set cssCache(Cache value) => jsProxy['cssCache'] = jsify(value);
+  set cssCache(Cache value) => jsProxy['cssCache'] = toJS(value);
 }
 
 /**
@@ -309,13 +309,13 @@ class Cache extends ChromeObject {
    * The size of the cache, in bytes.
    */
   dynamic get size => jsProxy['size'];
-  set size(var value) => jsProxy['size'] = jsify(value);
+  set size(var value) => jsProxy['size'] = toJS(value);
 
   /**
    * The part of the cache that is utilized, in bytes.
    */
   dynamic get liveSize => jsProxy['liveSize'];
-  set liveSize(var value) => jsProxy['liveSize'] = jsify(value);
+  set liveSize(var value) => jsProxy['liveSize'] = toJS(value);
 }
 
 Process _createProcess(JsObject jsProxy) => jsProxy == null ? null : new Process.fromProxy(jsProxy);

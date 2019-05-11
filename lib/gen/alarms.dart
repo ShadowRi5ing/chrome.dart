@@ -53,7 +53,7 @@ class ChromeAlarms extends ChromeApi {
   void create(AlarmCreateInfo alarmInfo, [String name]) {
     if (_alarms == null) _throwNotAvailable();
 
-    _alarms.callMethod('create', [name, jsify(alarmInfo)]);
+    _alarms.callMethod('create', [name, toJS(alarmInfo)]);
   }
 
   /**
@@ -74,7 +74,7 @@ class ChromeAlarms extends ChromeApi {
   Future<List<Alarm>> getAll() {
     if (_alarms == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Alarm>>.oneArg((e) => listify(e, _createAlarm));
+    var completer = new ChromeCompleter<List<Alarm>>.oneArg((e) => toList(e, _createAlarm));
     _alarms.callMethod('getAll', [completer.callback]);
     return completer.future;
   }
@@ -119,10 +119,10 @@ class Alarm extends ChromeObject {
   set name(String value) => jsProxy['name'] = value;
 
   num get scheduledTime => jsProxy['scheduledTime'];
-  set scheduledTime(num value) => jsProxy['scheduledTime'] = jsify(value);
+  set scheduledTime(num value) => jsProxy['scheduledTime'] = toJS(value);
 
   num get periodInMinutes => jsProxy['periodInMinutes'];
-  set periodInMinutes(num value) => jsProxy['periodInMinutes'] = jsify(value);
+  set periodInMinutes(num value) => jsProxy['periodInMinutes'] = toJS(value);
 }
 
 /**
@@ -137,13 +137,13 @@ class AlarmCreateInfo extends ChromeObject {
   AlarmCreateInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   num get when => jsProxy['when'];
-  set when(num value) => jsProxy['when'] = jsify(value);
+  set when(num value) => jsProxy['when'] = toJS(value);
 
   num get delayInMinutes => jsProxy['delayInMinutes'];
-  set delayInMinutes(num value) => jsProxy['delayInMinutes'] = jsify(value);
+  set delayInMinutes(num value) => jsProxy['delayInMinutes'] = toJS(value);
 
   num get periodInMinutes => jsProxy['periodInMinutes'];
-  set periodInMinutes(num value) => jsProxy['periodInMinutes'] = jsify(value);
+  set periodInMinutes(num value) => jsProxy['periodInMinutes'] = toJS(value);
 }
 
 Alarm _createAlarm(JsObject jsProxy) => jsProxy == null ? null : new Alarm.fromProxy(jsProxy);

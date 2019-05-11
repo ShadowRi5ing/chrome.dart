@@ -41,10 +41,10 @@ class ChromeFontSettings extends ChromeApi {
 
   ChromeFontSettings._() {
     var getApi = () => _fontSettings;
-    _onFontChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onFontChanged', mapify);
-    _onDefaultFontSizeChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onDefaultFontSizeChanged', mapify);
-    _onDefaultFixedFontSizeChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onDefaultFixedFontSizeChanged', mapify);
-    _onMinimumFontSizeChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onMinimumFontSizeChanged', mapify);
+    _onFontChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onFontChanged', toMap);
+    _onDefaultFontSizeChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onDefaultFontSizeChanged', toMap);
+    _onDefaultFixedFontSizeChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onDefaultFixedFontSizeChanged', toMap);
+    _onMinimumFontSizeChanged = new ChromeStreamController<Map>.oneArg(getApi, 'onMinimumFontSizeChanged', toMap);
   }
 
   bool get available => _fontSettings != null;
@@ -56,7 +56,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('clearFont', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('clearFont', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -66,8 +66,8 @@ class ChromeFontSettings extends ChromeApi {
   Future<Map> getFont(FontSettingsGetFontParams details) {
     if (_fontSettings == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _fontSettings.callMethod('getFont', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _fontSettings.callMethod('getFont', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -78,7 +78,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('setFont', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('setFont', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -88,7 +88,7 @@ class ChromeFontSettings extends ChromeApi {
   Future<List<FontName>> getFontList() {
     if (_fontSettings == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<FontName>>.oneArg((e) => listify(e, _createFontName));
+    var completer = new ChromeCompleter<List<FontName>>.oneArg((e) => toList(e, _createFontName));
     _fontSettings.callMethod('getFontList', [completer.callback]);
     return completer.future;
   }
@@ -102,7 +102,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('clearDefaultFontSize', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('clearDefaultFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -114,8 +114,8 @@ class ChromeFontSettings extends ChromeApi {
   Future<Map> getDefaultFontSize([FontSettingsGetDefaultFontSizeParams details]) {
     if (_fontSettings == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _fontSettings.callMethod('getDefaultFontSize', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _fontSettings.callMethod('getDefaultFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -126,7 +126,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('setDefaultFontSize', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('setDefaultFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -139,7 +139,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('clearDefaultFixedFontSize', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('clearDefaultFixedFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -151,8 +151,8 @@ class ChromeFontSettings extends ChromeApi {
   Future<Map> getDefaultFixedFontSize([FontSettingsGetDefaultFixedFontSizeParams details]) {
     if (_fontSettings == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _fontSettings.callMethod('getDefaultFixedFontSize', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _fontSettings.callMethod('getDefaultFixedFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -163,7 +163,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('setDefaultFixedFontSize', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('setDefaultFixedFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -176,7 +176,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('clearMinimumFontSize', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('clearMinimumFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -188,8 +188,8 @@ class ChromeFontSettings extends ChromeApi {
   Future<Map> getMinimumFontSize([FontSettingsGetMinimumFontSizeParams details]) {
     if (_fontSettings == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _fontSettings.callMethod('getMinimumFontSize', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _fontSettings.callMethod('getMinimumFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -200,7 +200,7 @@ class ChromeFontSettings extends ChromeApi {
     if (_fontSettings == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fontSettings.callMethod('setMinimumFontSize', [jsify(details), completer.callback]);
+    _fontSettings.callMethod('setMinimumFontSize', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -441,13 +441,13 @@ class FontSettingsClearFontParams extends ChromeObject {
    * script font setting is cleared.
    */
   ScriptCode get script => _createScriptCode(jsProxy['script']);
-  set script(ScriptCode value) => jsProxy['script'] = jsify(value);
+  set script(ScriptCode value) => jsProxy['script'] = toJS(value);
 
   /**
    * The generic font family for which the font should be cleared.
    */
   GenericFamily get genericFamily => _createGenericFamily(jsProxy['genericFamily']);
-  set genericFamily(GenericFamily value) => jsProxy['genericFamily'] = jsify(value);
+  set genericFamily(GenericFamily value) => jsProxy['genericFamily'] = toJS(value);
 }
 
 class FontSettingsGetFontParams extends ChromeObject {
@@ -462,13 +462,13 @@ class FontSettingsGetFontParams extends ChromeObject {
    * setting for the global script (script code "Zyyy") is retrieved.
    */
   ScriptCode get script => _createScriptCode(jsProxy['script']);
-  set script(ScriptCode value) => jsProxy['script'] = jsify(value);
+  set script(ScriptCode value) => jsProxy['script'] = toJS(value);
 
   /**
    * The generic font family for which the font should be retrieved.
    */
   GenericFamily get genericFamily => _createGenericFamily(jsProxy['genericFamily']);
-  set genericFamily(GenericFamily value) => jsProxy['genericFamily'] = jsify(value);
+  set genericFamily(GenericFamily value) => jsProxy['genericFamily'] = toJS(value);
 }
 
 class FontSettingsSetFontParams extends ChromeObject {
@@ -484,13 +484,13 @@ class FontSettingsSetFontParams extends ChromeObject {
    * for the global script (script code "Zyyy") is set.
    */
   ScriptCode get script => _createScriptCode(jsProxy['script']);
-  set script(ScriptCode value) => jsProxy['script'] = jsify(value);
+  set script(ScriptCode value) => jsProxy['script'] = toJS(value);
 
   /**
    * The generic font family for which the font should be set.
    */
   GenericFamily get genericFamily => _createGenericFamily(jsProxy['genericFamily']);
-  set genericFamily(GenericFamily value) => jsProxy['genericFamily'] = jsify(value);
+  set genericFamily(GenericFamily value) => jsProxy['genericFamily'] = toJS(value);
 
   /**
    * The font ID. The empty string means to fallback to the global script font

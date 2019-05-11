@@ -120,7 +120,7 @@ class LaunchItem extends ChromeObject {
   LaunchItem.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   Entry get entry => _createEntry(jsProxy['entry']);
-  set entry(Entry value) => jsProxy['entry'] = jsify(value);
+  set entry(Entry value) => jsProxy['entry'] = toJS(value);
 
   String get type => jsProxy['type'];
   set type(String value) => jsProxy['type'] = value;
@@ -138,7 +138,7 @@ class ActionData extends ChromeObject {
   ActionData.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   AppRuntimeActionType get actionType => _createActionType(jsProxy['actionType']);
-  set actionType(AppRuntimeActionType value) => jsProxy['actionType'] = jsify(value);
+  set actionType(AppRuntimeActionType value) => jsProxy['actionType'] = toJS(value);
 
   bool get isLockScreenAction => jsProxy['isLockScreenAction'];
   set isLockScreenAction(bool value) => jsProxy['isLockScreenAction'] = value;
@@ -168,8 +168,8 @@ class LaunchData extends ChromeObject {
   String get id => jsProxy['id'];
   set id(String value) => jsProxy['id'] = value;
 
-  List<LaunchItem> get items => listify(jsProxy['items'], _createLaunchItem);
-  set items(List<LaunchItem> value) => jsProxy['items'] = jsify(value);
+  List<LaunchItem> get items => toList(jsProxy['items'], _createLaunchItem);
+  set items(List<LaunchItem> value) => jsProxy['items'] = toJS(value);
 
   String get url => jsProxy['url'];
   set url(String value) => jsProxy['url'] = value;
@@ -184,13 +184,13 @@ class LaunchData extends ChromeObject {
   set isPublicSession(bool value) => jsProxy['isPublicSession'] = value;
 
   LaunchSource get source => _createLaunchSource(jsProxy['source']);
-  set source(LaunchSource value) => jsProxy['source'] = jsify(value);
+  set source(LaunchSource value) => jsProxy['source'] = toJS(value);
 
   ActionData get actionData => _createActionData(jsProxy['actionData']);
-  set actionData(ActionData value) => jsProxy['actionData'] = jsify(value);
+  set actionData(ActionData value) => jsProxy['actionData'] = toJS(value);
 
   PlayStoreStatus get playStoreStatus => _createPlayStoreStatus(jsProxy['playStoreStatus']);
-  set playStoreStatus(PlayStoreStatus value) => jsProxy['playStoreStatus'] = jsify(value);
+  set playStoreStatus(PlayStoreStatus value) => jsProxy['playStoreStatus'] = toJS(value);
 }
 
 /**
@@ -210,7 +210,7 @@ class EmbedRequest extends ChromeObject {
   set embedderId(String value) => jsProxy['embedderId'] = value;
 
   dynamic get data => jsProxy['data'];
-  set data(dynamic value) => jsProxy['data'] = jsify(value);
+  set data(dynamic value) => jsProxy['data'] = toJS(value);
 
   /**
    * Allows `embedderId` to embed this app in an <appview> element. The `url`
@@ -318,7 +318,7 @@ class _ChromeAppWindow extends ChromeApi {
     if (_app_window == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<AppWindow>.oneArg(_createAppWindow);
-    _app_window.callMethod('create', [url, jsify(options), completer.callback]);
+    _app_window.callMethod('create', [url, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -336,7 +336,7 @@ class _ChromeAppWindow extends ChromeApi {
   void initializeAppWindow(dynamic state) {
     if (_app_window == null) _throwNotAvailable();
 
-    _app_window.callMethod('initializeAppWindow', [jsify(state)]);
+    _app_window.callMethod('initializeAppWindow', [toJS(state)]);
   }
 
   /**
@@ -524,10 +524,10 @@ class CreateWindowOptions extends ChromeObject {
   set id(String value) => jsProxy['id'] = value;
 
   BoundsSpecification get innerBounds => _createBoundsSpecification(jsProxy['innerBounds']);
-  set innerBounds(BoundsSpecification value) => jsProxy['innerBounds'] = jsify(value);
+  set innerBounds(BoundsSpecification value) => jsProxy['innerBounds'] = toJS(value);
 
   BoundsSpecification get outerBounds => _createBoundsSpecification(jsProxy['outerBounds']);
-  set outerBounds(BoundsSpecification value) => jsProxy['outerBounds'] = jsify(value);
+  set outerBounds(BoundsSpecification value) => jsProxy['outerBounds'] = toJS(value);
 
   int get defaultWidth => jsProxy['defaultWidth'];
   set defaultWidth(int value) => jsProxy['defaultWidth'] = value;
@@ -566,7 +566,7 @@ class CreateWindowOptions extends ChromeObject {
   set maxHeight(int value) => jsProxy['maxHeight'] = value;
 
   WindowType get type => _createWindowType(jsProxy['type']);
-  set type(WindowType value) => jsProxy['type'] = jsify(value);
+  set type(WindowType value) => jsProxy['type'] = toJS(value);
 
   bool get ime => jsProxy['ime'];
   set ime(bool value) => jsProxy['ime'] = value;
@@ -578,16 +578,16 @@ class CreateWindowOptions extends ChromeObject {
   set icon(String value) => jsProxy['icon'] = value;
 
   dynamic get frame => jsProxy['frame'];
-  set frame(var value) => jsProxy['frame'] = jsify(value);
+  set frame(var value) => jsProxy['frame'] = toJS(value);
 
   ContentBounds get bounds => _createContentBounds(jsProxy['bounds']);
-  set bounds(ContentBounds value) => jsProxy['bounds'] = jsify(value);
+  set bounds(ContentBounds value) => jsProxy['bounds'] = toJS(value);
 
   bool get alphaEnabled => jsProxy['alphaEnabled'];
   set alphaEnabled(bool value) => jsProxy['alphaEnabled'] = value;
 
   State get state => _createState(jsProxy['state']);
-  set state(State value) => jsProxy['state'] = jsify(value);
+  set state(State value) => jsProxy['state'] = toJS(value);
 
   bool get hidden => jsProxy['hidden'];
   set hidden(bool value) => jsProxy['hidden'] = value;
@@ -630,16 +630,16 @@ class _AppWindow extends ChromeObject {
   set inactiveFrameColor(int value) => jsProxy['inactiveFrameColor'] = value;
 
   Window get contentWindow => _createWindow(jsProxy['contentWindow']);
-  set contentWindow(Window value) => jsProxy['contentWindow'] = jsify(value);
+  set contentWindow(Window value) => jsProxy['contentWindow'] = toJS(value);
 
   String get id => jsProxy['id'];
   set id(String value) => jsProxy['id'] = value;
 
   Bounds get innerBounds => _createBounds(jsProxy['innerBounds']);
-  set innerBounds(Bounds value) => jsProxy['innerBounds'] = jsify(value);
+  set innerBounds(Bounds value) => jsProxy['innerBounds'] = toJS(value);
 
   Bounds get outerBounds => _createBounds(jsProxy['outerBounds']);
-  set outerBounds(Bounds value) => jsProxy['outerBounds'] = jsify(value);
+  set outerBounds(Bounds value) => jsProxy['outerBounds'] = toJS(value);
 
   /**
    * Focus the window.
@@ -775,7 +775,7 @@ class _AppWindow extends ChromeObject {
    * Set the window's inner bounds.
    */
   void setBounds(ContentBounds bounds) {
-    jsProxy.callMethod('setBounds', [jsify(bounds)]);
+    jsProxy.callMethod('setBounds', [toJS(bounds)]);
   }
 
   /**

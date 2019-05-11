@@ -77,7 +77,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothLowEnergy.callMethod('connect', [deviceAddress, jsify(properties), completer.callback]);
+    _bluetoothLowEnergy.callMethod('connect', [deviceAddress, toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -122,7 +122,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _bluetoothLowEnergy.callMethod('createService', [jsify(service), completer.callback]);
+    _bluetoothLowEnergy.callMethod('createService', [toJS(service), completer.callback]);
     return completer.future;
   }
 
@@ -136,7 +136,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
   Future<List<Service>> getServices(String deviceAddress) {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Service>>.oneArg((e) => listify(e, _createService));
+    var completer = new ChromeCompleter<List<Service>>.oneArg((e) => toList(e, _createService));
     _bluetoothLowEnergy.callMethod('getServices', [deviceAddress, completer.callback]);
     return completer.future;
   }
@@ -169,7 +169,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _bluetoothLowEnergy.callMethod('createCharacteristic', [jsify(characteristic), serviceId, completer.callback]);
+    _bluetoothLowEnergy.callMethod('createCharacteristic', [toJS(characteristic), serviceId, completer.callback]);
     return completer.future;
   }
 
@@ -184,7 +184,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
   Future<List<Characteristic>> getCharacteristics(String serviceId) {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Characteristic>>.oneArg((e) => listify(e, _createCharacteristic));
+    var completer = new ChromeCompleter<List<Characteristic>>.oneArg((e) => toList(e, _createCharacteristic));
     _bluetoothLowEnergy.callMethod('getCharacteristics', [serviceId, completer.callback]);
     return completer.future;
   }
@@ -199,7 +199,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
   Future<List<Service>> getIncludedServices(String serviceId) {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Service>>.oneArg((e) => listify(e, _createService));
+    var completer = new ChromeCompleter<List<Service>>.oneArg((e) => toList(e, _createService));
     _bluetoothLowEnergy.callMethod('getIncludedServices', [serviceId, completer.callback]);
     return completer.future;
   }
@@ -232,7 +232,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _bluetoothLowEnergy.callMethod('createDescriptor', [jsify(descriptor), characteristicId, completer.callback]);
+    _bluetoothLowEnergy.callMethod('createDescriptor', [toJS(descriptor), characteristicId, completer.callback]);
     return completer.future;
   }
 
@@ -247,7 +247,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
   Future<List<Descriptor>> getDescriptors(String characteristicId) {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Descriptor>>.oneArg((e) => listify(e, _createDescriptor));
+    var completer = new ChromeCompleter<List<Descriptor>>.oneArg((e) => toList(e, _createDescriptor));
     _bluetoothLowEnergy.callMethod('getDescriptors', [characteristicId, completer.callback]);
     return completer.future;
   }
@@ -280,7 +280,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothLowEnergy.callMethod('writeCharacteristicValue', [characteristicId, jsify(value), completer.callback]);
+    _bluetoothLowEnergy.callMethod('writeCharacteristicValue', [characteristicId, toJS(value), completer.callback]);
     return completer.future;
   }
 
@@ -297,7 +297,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothLowEnergy.callMethod('startCharacteristicNotifications', [characteristicId, jsify(properties), completer.callback]);
+    _bluetoothLowEnergy.callMethod('startCharacteristicNotifications', [characteristicId, toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -334,7 +334,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothLowEnergy.callMethod('notifyCharacteristicValueChanged', [characteristicId, jsify(notification), completer.callback]);
+    _bluetoothLowEnergy.callMethod('notifyCharacteristicValueChanged', [characteristicId, toJS(notification), completer.callback]);
     return completer.future;
   }
 
@@ -368,7 +368,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothLowEnergy.callMethod('writeDescriptorValue', [descriptorId, jsify(value), completer.callback]);
+    _bluetoothLowEnergy.callMethod('writeDescriptorValue', [descriptorId, toJS(value), completer.callback]);
     return completer.future;
   }
 
@@ -445,7 +445,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<int>.oneArg();
-    _bluetoothLowEnergy.callMethod('registerAdvertisement', [jsify(advertisement), completer.callback]);
+    _bluetoothLowEnergy.callMethod('registerAdvertisement', [toJS(advertisement), completer.callback]);
     return completer.future;
   }
 
@@ -475,7 +475,7 @@ class ChromeBluetoothLowEnergy extends ChromeApi {
   void sendRequestResponse(Response response) {
     if (_bluetoothLowEnergy == null) _throwNotAvailable();
 
-    _bluetoothLowEnergy.callMethod('sendRequestResponse', [jsify(response)]);
+    _bluetoothLowEnergy.callMethod('sendRequestResponse', [toJS(response)]);
   }
 
   void _throwNotAvailable() {
@@ -641,16 +641,16 @@ class Characteristic extends ChromeObject {
   set uuid(String value) => jsProxy['uuid'] = value;
 
   Service get service => _createService(jsProxy['service']);
-  set service(Service value) => jsProxy['service'] = jsify(value);
+  set service(Service value) => jsProxy['service'] = toJS(value);
 
-  List<CharacteristicProperty> get properties => listify(jsProxy['properties'], _createCharacteristicProperty);
-  set properties(List<CharacteristicProperty> value) => jsProxy['properties'] = jsify(value);
+  List<CharacteristicProperty> get properties => toList(jsProxy['properties'], _createCharacteristicProperty);
+  set properties(List<CharacteristicProperty> value) => jsProxy['properties'] = toJS(value);
 
   String get instanceId => jsProxy['instanceId'];
   set instanceId(String value) => jsProxy['instanceId'] = value;
 
   ArrayBuffer get value => _createArrayBuffer(jsProxy['value']);
-  set value(ArrayBuffer value) => jsProxy['value'] = jsify(value);
+  set value(ArrayBuffer value) => jsProxy['value'] = toJS(value);
 }
 
 /**
@@ -671,16 +671,16 @@ class Descriptor extends ChromeObject {
   set uuid(String value) => jsProxy['uuid'] = value;
 
   Characteristic get characteristic => _createCharacteristic(jsProxy['characteristic']);
-  set characteristic(Characteristic value) => jsProxy['characteristic'] = jsify(value);
+  set characteristic(Characteristic value) => jsProxy['characteristic'] = toJS(value);
 
-  List<DescriptorPermission> get permissions => listify(jsProxy['permissions'], _createDescriptorPermission);
-  set permissions(List<DescriptorPermission> value) => jsProxy['permissions'] = jsify(value);
+  List<DescriptorPermission> get permissions => toList(jsProxy['permissions'], _createDescriptorPermission);
+  set permissions(List<DescriptorPermission> value) => jsProxy['permissions'] = toJS(value);
 
   String get instanceId => jsProxy['instanceId'];
   set instanceId(String value) => jsProxy['instanceId'] = value;
 
   ArrayBuffer get value => _createArrayBuffer(jsProxy['value']);
-  set value(ArrayBuffer value) => jsProxy['value'] = jsify(value);
+  set value(ArrayBuffer value) => jsProxy['value'] = toJS(value);
 }
 
 /**
@@ -724,8 +724,8 @@ class ManufacturerData extends ChromeObject {
   int get id => jsProxy['id'];
   set id(int value) => jsProxy['id'] = value;
 
-  List<int> get data => listify(jsProxy['data']);
-  set data(List<int> value) => jsProxy['data'] = jsify(value);
+  List<int> get data => toList(jsProxy['data']);
+  set data(List<int> value) => jsProxy['data'] = toJS(value);
 }
 
 /**
@@ -742,8 +742,8 @@ class ServiceData extends ChromeObject {
   String get uuid => jsProxy['uuid'];
   set uuid(String value) => jsProxy['uuid'] = value;
 
-  List<int> get data => listify(jsProxy['data']);
-  set data(List<int> value) => jsProxy['data'] = jsify(value);
+  List<int> get data => toList(jsProxy['data']);
+  set data(List<int> value) => jsProxy['data'] = toJS(value);
 }
 
 /**
@@ -760,19 +760,19 @@ class Advertisement extends ChromeObject {
   Advertisement.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   AdvertisementType get type => _createAdvertisementType(jsProxy['type']);
-  set type(AdvertisementType value) => jsProxy['type'] = jsify(value);
+  set type(AdvertisementType value) => jsProxy['type'] = toJS(value);
 
-  List<String> get serviceUuids => listify(jsProxy['serviceUuids']);
-  set serviceUuids(List<String> value) => jsProxy['serviceUuids'] = jsify(value);
+  List<String> get serviceUuids => toList(jsProxy['serviceUuids']);
+  set serviceUuids(List<String> value) => jsProxy['serviceUuids'] = toJS(value);
 
-  List<ManufacturerData> get manufacturerData => listify(jsProxy['manufacturerData'], _createManufacturerData);
-  set manufacturerData(List<ManufacturerData> value) => jsProxy['manufacturerData'] = jsify(value);
+  List<ManufacturerData> get manufacturerData => toList(jsProxy['manufacturerData'], _createManufacturerData);
+  set manufacturerData(List<ManufacturerData> value) => jsProxy['manufacturerData'] = toJS(value);
 
-  List<String> get solicitUuids => listify(jsProxy['solicitUuids']);
-  set solicitUuids(List<String> value) => jsProxy['solicitUuids'] = jsify(value);
+  List<String> get solicitUuids => toList(jsProxy['solicitUuids']);
+  set solicitUuids(List<String> value) => jsProxy['solicitUuids'] = toJS(value);
 
-  List<ServiceData> get serviceData => listify(jsProxy['serviceData'], _createServiceData);
-  set serviceData(List<ServiceData> value) => jsProxy['serviceData'] = jsify(value);
+  List<ServiceData> get serviceData => toList(jsProxy['serviceData'], _createServiceData);
+  set serviceData(List<ServiceData> value) => jsProxy['serviceData'] = toJS(value);
 }
 
 /**
@@ -790,10 +790,10 @@ class Request extends ChromeObject {
   set requestId(int value) => jsProxy['requestId'] = value;
 
   Device get device => _createDevice(jsProxy['device']);
-  set device(Device value) => jsProxy['device'] = jsify(value);
+  set device(Device value) => jsProxy['device'] = toJS(value);
 
   ArrayBuffer get value => _createArrayBuffer(jsProxy['value']);
-  set value(ArrayBuffer value) => jsProxy['value'] = jsify(value);
+  set value(ArrayBuffer value) => jsProxy['value'] = toJS(value);
 }
 
 /**
@@ -814,7 +814,7 @@ class Response extends ChromeObject {
   set isError(bool value) => jsProxy['isError'] = value;
 
   ArrayBuffer get value => _createArrayBuffer(jsProxy['value']);
-  set value(ArrayBuffer value) => jsProxy['value'] = jsify(value);
+  set value(ArrayBuffer value) => jsProxy['value'] = toJS(value);
 }
 
 /**
@@ -828,7 +828,7 @@ class Notification extends ChromeObject {
   Notification.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   ArrayBuffer get value => _createArrayBuffer(jsProxy['value']);
-  set value(ArrayBuffer value) => jsProxy['value'] = jsify(value);
+  set value(ArrayBuffer value) => jsProxy['value'] = toJS(value);
 
   bool get shouldIndicate => jsProxy['shouldIndicate'];
   set shouldIndicate(bool value) => jsProxy['shouldIndicate'] = value;

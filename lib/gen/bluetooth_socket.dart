@@ -51,7 +51,7 @@ class ChromeBluetoothSocket extends ChromeApi {
     if (_bluetoothSocket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<BluetoothCreateInfo>.oneArg(_createCreateInfo);
-    _bluetoothSocket.callMethod('create', [jsify(properties), completer.callback]);
+    _bluetoothSocket.callMethod('create', [toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -65,7 +65,7 @@ class ChromeBluetoothSocket extends ChromeApi {
     if (_bluetoothSocket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothSocket.callMethod('update', [socketId, jsify(properties), completer.callback]);
+    _bluetoothSocket.callMethod('update', [socketId, toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -99,7 +99,7 @@ class ChromeBluetoothSocket extends ChromeApi {
     if (_bluetoothSocket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothSocket.callMethod('listenUsingRfcomm', [socketId, uuid, jsify(options), completer.callback]);
+    _bluetoothSocket.callMethod('listenUsingRfcomm', [socketId, uuid, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -114,7 +114,7 @@ class ChromeBluetoothSocket extends ChromeApi {
     if (_bluetoothSocket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _bluetoothSocket.callMethod('listenUsingL2cap', [socketId, uuid, jsify(options), completer.callback]);
+    _bluetoothSocket.callMethod('listenUsingL2cap', [socketId, uuid, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -181,7 +181,7 @@ class ChromeBluetoothSocket extends ChromeApi {
     if (_bluetoothSocket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<int>.oneArg();
-    _bluetoothSocket.callMethod('send', [socketId, jsify(data), completer.callback]);
+    _bluetoothSocket.callMethod('send', [socketId, toJS(data), completer.callback]);
     return completer.future;
   }
 
@@ -213,7 +213,7 @@ class ChromeBluetoothSocket extends ChromeApi {
   Future<List<BluetoothSocketInfo>> getSockets() {
     if (_bluetoothSocket == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BluetoothSocketInfo>>.oneArg((e) => listify(e, _createSocketInfo));
+    var completer = new ChromeCompleter<List<BluetoothSocketInfo>>.oneArg((e) => toList(e, _createSocketInfo));
     _bluetoothSocket.callMethod('getSockets', [completer.callback]);
     return completer.future;
   }
@@ -378,7 +378,7 @@ class BluetoothAcceptErrorInfo extends ChromeObject {
   set errorMessage(String value) => jsProxy['errorMessage'] = value;
 
   AcceptError get error => _createAcceptError(jsProxy['error']);
-  set error(AcceptError value) => jsProxy['error'] = jsify(value);
+  set error(AcceptError value) => jsProxy['error'] = toJS(value);
 }
 
 /**
@@ -395,7 +395,7 @@ class BluetoothReceiveInfo extends ChromeObject {
   set socketId(int value) => jsProxy['socketId'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 }
 
 /**
@@ -416,7 +416,7 @@ class BluetoothReceiveErrorInfo extends ChromeObject {
   set errorMessage(String value) => jsProxy['errorMessage'] = value;
 
   BluetoothReceiveError get error => _createReceiveError(jsProxy['error']);
-  set error(BluetoothReceiveError value) => jsProxy['error'] = jsify(value);
+  set error(BluetoothReceiveError value) => jsProxy['error'] = toJS(value);
 }
 
 BluetoothAcceptInfo _createAcceptInfo(JsObject jsProxy) => jsProxy == null ? null : new BluetoothAcceptInfo.fromProxy(jsProxy);

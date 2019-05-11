@@ -121,13 +121,13 @@ class PrintJob extends ChromeObject {
   set title(String value) => jsProxy['title'] = value;
 
   dynamic get ticket => jsProxy['ticket'];
-  set ticket(var value) => jsProxy['ticket'] = jsify(value);
+  set ticket(var value) => jsProxy['ticket'] = toJS(value);
 
   String get contentType => jsProxy['contentType'];
   set contentType(String value) => jsProxy['contentType'] = value;
 
   Blob get document => _createBlob(jsProxy['document']);
-  set document(Blob value) => jsProxy['document'] = jsify(value);
+  set document(Blob value) => jsProxy['document'] = toJS(value);
 }
 
 PrintersCallback _createPrintersCallback(JsObject jsProxy) => jsProxy == null ? null : new PrintersCallback.fromProxy(jsProxy);

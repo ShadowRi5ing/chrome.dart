@@ -119,7 +119,7 @@ class ChromeFileSystemProvider extends ChromeApi {
     if (_fileSystemProvider == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fileSystemProvider.callMethod('mount', [jsify(options), completer.callback]);
+    _fileSystemProvider.callMethod('mount', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -136,7 +136,7 @@ class ChromeFileSystemProvider extends ChromeApi {
     if (_fileSystemProvider == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fileSystemProvider.callMethod('unmount', [jsify(options), completer.callback]);
+    _fileSystemProvider.callMethod('unmount', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -149,7 +149,7 @@ class ChromeFileSystemProvider extends ChromeApi {
   Future<List<FileSystemInfo>> getAll() {
     if (_fileSystemProvider == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<FileSystemInfo>>.oneArg((e) => listify(e, _createFileSystemInfo));
+    var completer = new ChromeCompleter<List<FileSystemInfo>>.oneArg((e) => toList(e, _createFileSystemInfo));
     _fileSystemProvider.callMethod('getAll', [completer.callback]);
     return completer.future;
   }
@@ -199,7 +199,7 @@ class ChromeFileSystemProvider extends ChromeApi {
     if (_fileSystemProvider == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _fileSystemProvider.callMethod('notify', [jsify(options), completer.callback]);
+    _fileSystemProvider.callMethod('notify', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -497,10 +497,10 @@ class EntryMetadata extends ChromeObject {
   set name(String value) => jsProxy['name'] = value;
 
   num get size => jsProxy['size'];
-  set size(num value) => jsProxy['size'] = jsify(value);
+  set size(num value) => jsProxy['size'] = toJS(value);
 
   dynamic get modificationTime => jsProxy['modificationTime'];
-  set modificationTime(var value) => jsProxy['modificationTime'] = jsify(value);
+  set modificationTime(var value) => jsProxy['modificationTime'] = toJS(value);
 
   String get mimeType => jsProxy['mimeType'];
   set mimeType(String value) => jsProxy['mimeType'] = value;
@@ -548,7 +548,7 @@ class OpenedFile extends ChromeObject {
   set filePath(String value) => jsProxy['filePath'] = value;
 
   OpenFileMode get mode => _createOpenFileMode(jsProxy['mode']);
-  set mode(OpenFileMode value) => jsProxy['mode'] = jsify(value);
+  set mode(OpenFileMode value) => jsProxy['mode'] = toJS(value);
 }
 
 /**
@@ -578,14 +578,14 @@ class FileSystemInfo extends ChromeObject {
   int get openedFilesLimit => jsProxy['openedFilesLimit'];
   set openedFilesLimit(int value) => jsProxy['openedFilesLimit'] = value;
 
-  List<OpenedFile> get openedFiles => listify(jsProxy['openedFiles'], _createOpenedFile);
-  set openedFiles(List<OpenedFile> value) => jsProxy['openedFiles'] = jsify(value);
+  List<OpenedFile> get openedFiles => toList(jsProxy['openedFiles'], _createOpenedFile);
+  set openedFiles(List<OpenedFile> value) => jsProxy['openedFiles'] = toJS(value);
 
   bool get supportsNotifyTag => jsProxy['supportsNotifyTag'];
   set supportsNotifyTag(bool value) => jsProxy['supportsNotifyTag'] = value;
 
-  List<Watcher> get watchers => listify(jsProxy['watchers'], _createWatcher);
-  set watchers(List<Watcher> value) => jsProxy['watchers'] = jsify(value);
+  List<Watcher> get watchers => toList(jsProxy['watchers'], _createWatcher);
+  set watchers(List<Watcher> value) => jsProxy['watchers'] = toJS(value);
 }
 
 /**
@@ -713,8 +713,8 @@ class GetActionsRequestedOptions extends ChromeObject {
   int get requestId => jsProxy['requestId'];
   set requestId(int value) => jsProxy['requestId'] = value;
 
-  List<String> get entryPaths => listify(jsProxy['entryPaths']);
-  set entryPaths(List<String> value) => jsProxy['entryPaths'] = jsify(value);
+  List<String> get entryPaths => toList(jsProxy['entryPaths']);
+  set entryPaths(List<String> value) => jsProxy['entryPaths'] = toJS(value);
 }
 
 /**
@@ -784,7 +784,7 @@ class OpenFileRequestedOptions extends ChromeObject {
   set filePath(String value) => jsProxy['filePath'] = value;
 
   OpenFileMode get mode => _createOpenFileMode(jsProxy['mode']);
-  set mode(OpenFileMode value) => jsProxy['mode'] = jsify(value);
+  set mode(OpenFileMode value) => jsProxy['mode'] = toJS(value);
 }
 
 /**
@@ -831,10 +831,10 @@ class ReadFileRequestedOptions extends ChromeObject {
   set openRequestId(int value) => jsProxy['openRequestId'] = value;
 
   num get offset => jsProxy['offset'];
-  set offset(num value) => jsProxy['offset'] = jsify(value);
+  set offset(num value) => jsProxy['offset'] = toJS(value);
 
   num get length => jsProxy['length'];
-  set length(num value) => jsProxy['length'] = jsify(value);
+  set length(num value) => jsProxy['length'] = toJS(value);
 }
 
 /**
@@ -980,7 +980,7 @@ class TruncateRequestedOptions extends ChromeObject {
   set filePath(String value) => jsProxy['filePath'] = value;
 
   num get length => jsProxy['length'];
-  set length(num value) => jsProxy['length'] = jsify(value);
+  set length(num value) => jsProxy['length'] = toJS(value);
 }
 
 /**
@@ -1006,10 +1006,10 @@ class WriteFileRequestedOptions extends ChromeObject {
   set openRequestId(int value) => jsProxy['openRequestId'] = value;
 
   num get offset => jsProxy['offset'];
-  set offset(num value) => jsProxy['offset'] = jsify(value);
+  set offset(num value) => jsProxy['offset'] = toJS(value);
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 }
 
 /**
@@ -1118,8 +1118,8 @@ class ExecuteActionRequestedOptions extends ChromeObject {
   int get requestId => jsProxy['requestId'];
   set requestId(int value) => jsProxy['requestId'] = value;
 
-  List<String> get entryPaths => listify(jsProxy['entryPaths']);
-  set entryPaths(List<String> value) => jsProxy['entryPaths'] = jsify(value);
+  List<String> get entryPaths => toList(jsProxy['entryPaths']);
+  set entryPaths(List<String> value) => jsProxy['entryPaths'] = toJS(value);
 
   String get actionId => jsProxy['actionId'];
   set actionId(String value) => jsProxy['actionId'] = value;
@@ -1140,7 +1140,7 @@ class Change extends ChromeObject {
   set entryPath(String value) => jsProxy['entryPath'] = value;
 
   ChangeType get changeType => _createChangeType(jsProxy['changeType']);
-  set changeType(ChangeType value) => jsProxy['changeType'] = jsify(value);
+  set changeType(ChangeType value) => jsProxy['changeType'] = toJS(value);
 }
 
 /**
@@ -1167,10 +1167,10 @@ class NotifyOptions extends ChromeObject {
   set recursive(bool value) => jsProxy['recursive'] = value;
 
   ChangeType get changeType => _createChangeType(jsProxy['changeType']);
-  set changeType(ChangeType value) => jsProxy['changeType'] = jsify(value);
+  set changeType(ChangeType value) => jsProxy['changeType'] = toJS(value);
 
-  List<Change> get changes => listify(jsProxy['changes'], _createChange);
-  set changes(List<Change> value) => jsProxy['changes'] = jsify(value);
+  List<Change> get changes => toList(jsProxy['changes'], _createChange);
+  set changes(List<Change> value) => jsProxy['changes'] = toJS(value);
 
   String get tag => jsProxy['tag'];
   set tag(String value) => jsProxy['tag'] = value;

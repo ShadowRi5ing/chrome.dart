@@ -42,8 +42,8 @@ class ChromeUsb extends ChromeApi {
   Future<List<UsbDevice>> getDevices(EnumerateDevicesOptions options) {
     if (_usb == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<UsbDevice>>.oneArg((e) => listify(e, _createDevice));
-    _usb.callMethod('getDevices', [jsify(options), completer.callback]);
+    var completer = new ChromeCompleter<List<UsbDevice>>.oneArg((e) => toList(e, _createDevice));
+    _usb.callMethod('getDevices', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -58,8 +58,8 @@ class ChromeUsb extends ChromeApi {
   Future<List<UsbDevice>> getUserSelectedDevices(UsbDevicePromptOptions options) {
     if (_usb == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<UsbDevice>>.oneArg((e) => listify(e, _createDevice));
-    _usb.callMethod('getUserSelectedDevices', [jsify(options), completer.callback]);
+    var completer = new ChromeCompleter<List<UsbDevice>>.oneArg((e) => toList(e, _createDevice));
+    _usb.callMethod('getUserSelectedDevices', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -70,8 +70,8 @@ class ChromeUsb extends ChromeApi {
   Future<List<ConfigDescriptor>> getConfigurations(UsbDevice device) {
     if (_usb == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<ConfigDescriptor>>.oneArg((e) => listify(e, _createConfigDescriptor));
-    _usb.callMethod('getConfigurations', [jsify(device), completer.callback]);
+    var completer = new ChromeCompleter<List<ConfigDescriptor>>.oneArg((e) => toList(e, _createConfigDescriptor));
+    _usb.callMethod('getConfigurations', [toJS(device), completer.callback]);
     return completer.future;
   }
 
@@ -86,7 +86,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _usb.callMethod('requestAccess', [jsify(device), interfaceId, completer.callback]);
+    _usb.callMethod('requestAccess', [toJS(device), interfaceId, completer.callback]);
     return completer.future;
   }
 
@@ -98,7 +98,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ConnectionHandle>.oneArg(_createConnectionHandle);
-    _usb.callMethod('openDevice', [jsify(device), completer.callback]);
+    _usb.callMethod('openDevice', [toJS(device), completer.callback]);
     return completer.future;
   }
 
@@ -117,8 +117,8 @@ class ChromeUsb extends ChromeApi {
   Future<List<ConnectionHandle>> findDevices(EnumerateDevicesAndRequestAccessOptions options) {
     if (_usb == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<ConnectionHandle>>.oneArg((e) => listify(e, _createConnectionHandle));
-    _usb.callMethod('findDevices', [jsify(options), completer.callback]);
+    var completer = new ChromeCompleter<List<ConnectionHandle>>.oneArg((e) => toList(e, _createConnectionHandle));
+    _usb.callMethod('findDevices', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -131,7 +131,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _usb.callMethod('closeDevice', [jsify(handle), completer.callback]);
+    _usb.callMethod('closeDevice', [toJS(handle), completer.callback]);
     return completer.future;
   }
 
@@ -148,7 +148,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _usb.callMethod('setConfiguration', [jsify(handle), configurationValue, completer.callback]);
+    _usb.callMethod('setConfiguration', [toJS(handle), configurationValue, completer.callback]);
     return completer.future;
   }
 
@@ -160,7 +160,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ConfigDescriptor>.oneArg(_createConfigDescriptor);
-    _usb.callMethod('getConfiguration', [jsify(handle), completer.callback]);
+    _usb.callMethod('getConfiguration', [toJS(handle), completer.callback]);
     return completer.future;
   }
 
@@ -171,8 +171,8 @@ class ChromeUsb extends ChromeApi {
   Future<List<InterfaceDescriptor>> listInterfaces(ConnectionHandle handle) {
     if (_usb == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<InterfaceDescriptor>>.oneArg((e) => listify(e, _createInterfaceDescriptor));
-    _usb.callMethod('listInterfaces', [jsify(handle), completer.callback]);
+    var completer = new ChromeCompleter<List<InterfaceDescriptor>>.oneArg((e) => toList(e, _createInterfaceDescriptor));
+    _usb.callMethod('listInterfaces', [toJS(handle), completer.callback]);
     return completer.future;
   }
 
@@ -191,7 +191,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _usb.callMethod('claimInterface', [jsify(handle), interfaceNumber, completer.callback]);
+    _usb.callMethod('claimInterface', [toJS(handle), interfaceNumber, completer.callback]);
     return completer.future;
   }
 
@@ -204,7 +204,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _usb.callMethod('releaseInterface', [jsify(handle), interfaceNumber, completer.callback]);
+    _usb.callMethod('releaseInterface', [toJS(handle), interfaceNumber, completer.callback]);
     return completer.future;
   }
 
@@ -219,7 +219,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _usb.callMethod('setInterfaceAlternateSetting', [jsify(handle), interfaceNumber, alternateSetting, completer.callback]);
+    _usb.callMethod('setInterfaceAlternateSetting', [toJS(handle), interfaceNumber, alternateSetting, completer.callback]);
     return completer.future;
   }
 
@@ -235,7 +235,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<TransferResultInfo>.oneArg(_createTransferResultInfo);
-    _usb.callMethod('controlTransfer', [jsify(handle), jsify(transferInfo), completer.callback]);
+    _usb.callMethod('controlTransfer', [toJS(handle), toJS(transferInfo), completer.callback]);
     return completer.future;
   }
 
@@ -248,7 +248,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<TransferResultInfo>.oneArg(_createTransferResultInfo);
-    _usb.callMethod('bulkTransfer', [jsify(handle), jsify(transferInfo), completer.callback]);
+    _usb.callMethod('bulkTransfer', [toJS(handle), toJS(transferInfo), completer.callback]);
     return completer.future;
   }
 
@@ -261,7 +261,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<TransferResultInfo>.oneArg(_createTransferResultInfo);
-    _usb.callMethod('interruptTransfer', [jsify(handle), jsify(transferInfo), completer.callback]);
+    _usb.callMethod('interruptTransfer', [toJS(handle), toJS(transferInfo), completer.callback]);
     return completer.future;
   }
 
@@ -273,7 +273,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<TransferResultInfo>.oneArg(_createTransferResultInfo);
-    _usb.callMethod('isochronousTransfer', [jsify(handle), jsify(transferInfo), completer.callback]);
+    _usb.callMethod('isochronousTransfer', [toJS(handle), toJS(transferInfo), completer.callback]);
     return completer.future;
   }
 
@@ -289,7 +289,7 @@ class ChromeUsb extends ChromeApi {
     if (_usb == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _usb.callMethod('resetDevice', [jsify(handle), completer.callback]);
+    _usb.callMethod('resetDevice', [toJS(handle), completer.callback]);
     return completer.future;
   }
 
@@ -439,25 +439,25 @@ class EndpointDescriptor extends ChromeObject {
   set address(int value) => jsProxy['address'] = value;
 
   TransferType get type => _createTransferType(jsProxy['type']);
-  set type(TransferType value) => jsProxy['type'] = jsify(value);
+  set type(TransferType value) => jsProxy['type'] = toJS(value);
 
   Direction get direction => _createDirection(jsProxy['direction']);
-  set direction(Direction value) => jsProxy['direction'] = jsify(value);
+  set direction(Direction value) => jsProxy['direction'] = toJS(value);
 
   int get maximumPacketSize => jsProxy['maximumPacketSize'];
   set maximumPacketSize(int value) => jsProxy['maximumPacketSize'] = value;
 
   SynchronizationType get synchronization => _createSynchronizationType(jsProxy['synchronization']);
-  set synchronization(SynchronizationType value) => jsProxy['synchronization'] = jsify(value);
+  set synchronization(SynchronizationType value) => jsProxy['synchronization'] = toJS(value);
 
   UsageType get usage => _createUsageType(jsProxy['usage']);
-  set usage(UsageType value) => jsProxy['usage'] = jsify(value);
+  set usage(UsageType value) => jsProxy['usage'] = toJS(value);
 
   int get pollingInterval => jsProxy['pollingInterval'];
   set pollingInterval(int value) => jsProxy['pollingInterval'] = value;
 
   ArrayBuffer get extra_data => _createArrayBuffer(jsProxy['extra_data']);
-  set extra_data(ArrayBuffer value) => jsProxy['extra_data'] = jsify(value);
+  set extra_data(ArrayBuffer value) => jsProxy['extra_data'] = toJS(value);
 }
 
 class InterfaceDescriptor extends ChromeObject {
@@ -491,11 +491,11 @@ class InterfaceDescriptor extends ChromeObject {
   String get description => jsProxy['description'];
   set description(String value) => jsProxy['description'] = value;
 
-  List<EndpointDescriptor> get endpoints => listify(jsProxy['endpoints'], _createEndpointDescriptor);
-  set endpoints(List<EndpointDescriptor> value) => jsProxy['endpoints'] = jsify(value);
+  List<EndpointDescriptor> get endpoints => toList(jsProxy['endpoints'], _createEndpointDescriptor);
+  set endpoints(List<EndpointDescriptor> value) => jsProxy['endpoints'] = toJS(value);
 
   ArrayBuffer get extra_data => _createArrayBuffer(jsProxy['extra_data']);
-  set extra_data(ArrayBuffer value) => jsProxy['extra_data'] = jsify(value);
+  set extra_data(ArrayBuffer value) => jsProxy['extra_data'] = toJS(value);
 }
 
 class ConfigDescriptor extends ChromeObject {
@@ -529,11 +529,11 @@ class ConfigDescriptor extends ChromeObject {
   int get maxPower => jsProxy['maxPower'];
   set maxPower(int value) => jsProxy['maxPower'] = value;
 
-  List<InterfaceDescriptor> get interfaces => listify(jsProxy['interfaces'], _createInterfaceDescriptor);
-  set interfaces(List<InterfaceDescriptor> value) => jsProxy['interfaces'] = jsify(value);
+  List<InterfaceDescriptor> get interfaces => toList(jsProxy['interfaces'], _createInterfaceDescriptor);
+  set interfaces(List<InterfaceDescriptor> value) => jsProxy['interfaces'] = toJS(value);
 
   ArrayBuffer get extra_data => _createArrayBuffer(jsProxy['extra_data']);
-  set extra_data(ArrayBuffer value) => jsProxy['extra_data'] = jsify(value);
+  set extra_data(ArrayBuffer value) => jsProxy['extra_data'] = toJS(value);
 }
 
 class ControlTransferInfo extends ChromeObject {
@@ -551,13 +551,13 @@ class ControlTransferInfo extends ChromeObject {
   ControlTransferInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   Direction get direction => _createDirection(jsProxy['direction']);
-  set direction(Direction value) => jsProxy['direction'] = jsify(value);
+  set direction(Direction value) => jsProxy['direction'] = toJS(value);
 
   Recipient get recipient => _createRecipient(jsProxy['recipient']);
-  set recipient(Recipient value) => jsProxy['recipient'] = jsify(value);
+  set recipient(Recipient value) => jsProxy['recipient'] = toJS(value);
 
   RequestType get requestType => _createRequestType(jsProxy['requestType']);
-  set requestType(RequestType value) => jsProxy['requestType'] = jsify(value);
+  set requestType(RequestType value) => jsProxy['requestType'] = toJS(value);
 
   int get request => jsProxy['request'];
   set request(int value) => jsProxy['request'] = value;
@@ -572,7 +572,7 @@ class ControlTransferInfo extends ChromeObject {
   set length(int value) => jsProxy['length'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 
   int get timeout => jsProxy['timeout'];
   set timeout(int value) => jsProxy['timeout'] = value;
@@ -589,7 +589,7 @@ class GenericTransferInfo extends ChromeObject {
   GenericTransferInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   Direction get direction => _createDirection(jsProxy['direction']);
-  set direction(Direction value) => jsProxy['direction'] = jsify(value);
+  set direction(Direction value) => jsProxy['direction'] = toJS(value);
 
   int get endpoint => jsProxy['endpoint'];
   set endpoint(int value) => jsProxy['endpoint'] = value;
@@ -598,7 +598,7 @@ class GenericTransferInfo extends ChromeObject {
   set length(int value) => jsProxy['length'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 
   int get timeout => jsProxy['timeout'];
   set timeout(int value) => jsProxy['timeout'] = value;
@@ -613,7 +613,7 @@ class IsochronousTransferInfo extends ChromeObject {
   IsochronousTransferInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   GenericTransferInfo get transferInfo => _createGenericTransferInfo(jsProxy['transferInfo']);
-  set transferInfo(GenericTransferInfo value) => jsProxy['transferInfo'] = jsify(value);
+  set transferInfo(GenericTransferInfo value) => jsProxy['transferInfo'] = toJS(value);
 
   int get packets => jsProxy['packets'];
   set packets(int value) => jsProxy['packets'] = value;
@@ -633,7 +633,7 @@ class TransferResultInfo extends ChromeObject {
   set resultCode(int value) => jsProxy['resultCode'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 }
 
 class UsbDeviceFilter extends ChromeObject {
@@ -676,8 +676,8 @@ class EnumerateDevicesOptions extends ChromeObject {
   int get productId => jsProxy['productId'];
   set productId(int value) => jsProxy['productId'] = value;
 
-  List<UsbDeviceFilter> get filters => listify(jsProxy['filters'], _createDeviceFilter);
-  set filters(List<UsbDeviceFilter> value) => jsProxy['filters'] = jsify(value);
+  List<UsbDeviceFilter> get filters => toList(jsProxy['filters'], _createDeviceFilter);
+  set filters(List<UsbDeviceFilter> value) => jsProxy['filters'] = toJS(value);
 }
 
 class EnumerateDevicesAndRequestAccessOptions extends ChromeObject {
@@ -708,8 +708,8 @@ class UsbDevicePromptOptions extends ChromeObject {
   bool get multiple => jsProxy['multiple'];
   set multiple(bool value) => jsProxy['multiple'] = value;
 
-  List<UsbDeviceFilter> get filters => listify(jsProxy['filters'], _createDeviceFilter);
-  set filters(List<UsbDeviceFilter> value) => jsProxy['filters'] = jsify(value);
+  List<UsbDeviceFilter> get filters => toList(jsProxy['filters'], _createDeviceFilter);
+  set filters(List<UsbDeviceFilter> value) => jsProxy['filters'] = toJS(value);
 }
 
 UsbDevice _createDevice(JsObject jsProxy) => jsProxy == null ? null : new UsbDevice.fromProxy(jsProxy);

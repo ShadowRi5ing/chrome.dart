@@ -32,7 +32,7 @@ class ChromeBrowser extends ChromeApi {
     if (_browser == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _browser.callMethod('openTab', [jsify(options), completer.callback]);
+    _browser.callMethod('openTab', [toJS(options), completer.callback]);
     return completer.future;
   }
 

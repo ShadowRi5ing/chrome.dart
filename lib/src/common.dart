@@ -2,15 +2,9 @@
 library chrome.src.common;
 
 import 'dart:convert';
-
 import 'dart:async';
-export 'dart:async';
-
 import 'dart:js';
-export 'dart:js';
-
 import 'common_exp.dart';
-export 'common_exp.dart';
 
 final JsObject _jsJSON = context['JSON'];
 
@@ -22,7 +16,7 @@ String get lastError {
   return error != null ? error['message'] : null;
 }
 
-List listify(JsObject obj, [Function transformer = null]) {
+List toList(JsObject obj, [Function transformer = null]) {
   if (obj == null) {
     return null;
   } else {
@@ -40,12 +34,12 @@ List listify(JsObject obj, [Function transformer = null]) {
   }
 }
 
-Map mapify(JsObject obj) {
+Map toMap(JsObject obj) {
   if (obj == null) return null;
-  return JSON.decode(_jsJSON.callMethod('stringify', [obj]));
+  return jsonDecode(_jsJSON.callMethod('stringify', [obj]));
 }
 
-dynamic jsify(dynamic obj) {
+dynamic toJS(dynamic obj) {
   if (obj == null || obj is num || obj is String) {
     return obj;
   } else if (obj is ChromeObject) {
@@ -56,12 +50,12 @@ dynamic jsify(dynamic obj) {
     // Do a deep convert.
     Map m = {};
     for (var key in obj.keys) {
-      m[key] = jsify(obj[key]);
+      m[key] = toJS(obj[key]);
     }
     return new JsObject.jsify(m);
   } else if (obj is Iterable) {
     // Do a deep convert.
-    return new JsArray.from(obj).map(jsify);
+    return new JsArray.from(obj).map(toJS);
   } else {
     return obj;
   }

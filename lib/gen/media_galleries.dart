@@ -38,8 +38,8 @@ class ChromeMediaGalleries extends ChromeApi {
   Future<List<FileSystem>> getMediaFileSystems([MediaFileSystemsDetails details]) {
     if (_mediaGalleries == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<FileSystem>>.oneArg((e) => listify(e, _createDOMFileSystem));
-    _mediaGalleries.callMethod('getMediaFileSystems', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<List<FileSystem>>.oneArg((e) => toList(e, _createDOMFileSystem));
+    _mediaGalleries.callMethod('getMediaFileSystems', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -103,7 +103,7 @@ class ChromeMediaGalleries extends ChromeApi {
   Future<List<FileSystem>> addScanResults() {
     if (_mediaGalleries == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<FileSystem>>.oneArg((e) => listify(e, _createDOMFileSystem));
+    var completer = new ChromeCompleter<List<FileSystem>>.oneArg((e) => toList(e, _createDOMFileSystem));
     _mediaGalleries.callMethod('addScanResults', [completer.callback]);
     return completer.future;
   }
@@ -114,7 +114,7 @@ class ChromeMediaGalleries extends ChromeApi {
   MediaFileSystemMetadata getMediaFileSystemMetadata(FileSystem mediaFileSystem) {
     if (_mediaGalleries == null) _throwNotAvailable();
 
-    return _createMediaFileSystemMetadata(_mediaGalleries.callMethod('getMediaFileSystemMetadata', [jsify(mediaFileSystem)]));
+    return _createMediaFileSystemMetadata(_mediaGalleries.callMethod('getMediaFileSystemMetadata', [toJS(mediaFileSystem)]));
   }
 
   /**
@@ -123,7 +123,7 @@ class ChromeMediaGalleries extends ChromeApi {
   Future<List<MediaFileSystemMetadata>> getAllMediaFileSystemMetadata() {
     if (_mediaGalleries == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<MediaFileSystemMetadata>>.oneArg((e) => listify(e, _createMediaFileSystemMetadata));
+    var completer = new ChromeCompleter<List<MediaFileSystemMetadata>>.oneArg((e) => toList(e, _createMediaFileSystemMetadata));
     _mediaGalleries.callMethod('getAllMediaFileSystemMetadata', [completer.callback]);
     return completer.future;
   }
@@ -136,7 +136,7 @@ class ChromeMediaGalleries extends ChromeApi {
     if (_mediaGalleries == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<MediaMetadata>.oneArg(_createMediaMetadata);
-    _mediaGalleries.callMethod('getMetadata', [jsify(mediaFile), jsify(options), completer.callback]);
+    _mediaGalleries.callMethod('getMetadata', [toJS(mediaFile), toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -167,7 +167,7 @@ class ChromeMediaGalleries extends ChromeApi {
   Future<List<String>> getAllGalleryWatch() {
     if (_mediaGalleries == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<String>>.oneArg(listify);
+    var completer = new ChromeCompleter<List<String>>.oneArg(toList);
     _mediaGalleries.callMethod('getAllGalleryWatch', [completer.callback]);
     return completer.future;
   }
@@ -234,7 +234,7 @@ class GalleryChangeDetails extends ChromeObject {
   GalleryChangeDetails.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   GalleryChangeType get type => _createGalleryChangeType(jsProxy['type']);
-  set type(GalleryChangeType value) => jsProxy['type'] = jsify(value);
+  set type(GalleryChangeType value) => jsProxy['type'] = toJS(value);
 
   String get galleryId => jsProxy['galleryId'];
   set galleryId(String value) => jsProxy['galleryId'] = value;
@@ -247,7 +247,7 @@ class MediaFileSystemsDetails extends ChromeObject {
   MediaFileSystemsDetails.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   GetMediaFileSystemsInteractivity get interactive => _createGetMediaFileSystemsInteractivity(jsProxy['interactive']);
-  set interactive(GetMediaFileSystemsInteractivity value) => jsProxy['interactive'] = jsify(value);
+  set interactive(GetMediaFileSystemsInteractivity value) => jsProxy['interactive'] = toJS(value);
 }
 
 class MediaMetadataOptions extends ChromeObject {
@@ -257,7 +257,7 @@ class MediaMetadataOptions extends ChromeObject {
   MediaMetadataOptions.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   GetMetadataType get metadataType => _createGetMetadataType(jsProxy['metadataType']);
-  set metadataType(GetMetadataType value) => jsProxy['metadataType'] = jsify(value);
+  set metadataType(GetMetadataType value) => jsProxy['metadataType'] = toJS(value);
 }
 
 class MediaFileSystemMetadata extends ChromeObject {
@@ -301,7 +301,7 @@ class ScanProgressDetails extends ChromeObject {
   ScanProgressDetails.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   ScanProgressType get type => _createScanProgressType(jsProxy['type']);
-  set type(ScanProgressType value) => jsProxy['type'] = jsify(value);
+  set type(ScanProgressType value) => jsProxy['type'] = toJS(value);
 
   int get galleryCount => jsProxy['galleryCount'];
   set galleryCount(int value) => jsProxy['galleryCount'] = value;
@@ -327,7 +327,7 @@ class StreamInfo extends ChromeObject {
   set type(String value) => jsProxy['type'] = value;
 
   dynamic get tags => jsProxy['tags'];
-  set tags(var value) => jsProxy['tags'] = jsify(value);
+  set tags(var value) => jsProxy['tags'] = toJS(value);
 }
 
 class MediaMetadata extends ChromeObject {
@@ -361,7 +361,7 @@ class MediaMetadata extends ChromeObject {
   set width(int value) => jsProxy['width'] = value;
 
   num get duration => jsProxy['duration'];
-  set duration(num value) => jsProxy['duration'] = jsify(value);
+  set duration(num value) => jsProxy['duration'] = toJS(value);
 
   int get rotation => jsProxy['rotation'];
   set rotation(int value) => jsProxy['rotation'] = value;
@@ -393,11 +393,11 @@ class MediaMetadata extends ChromeObject {
   int get track => jsProxy['track'];
   set track(int value) => jsProxy['track'] = value;
 
-  List<StreamInfo> get rawTags => listify(jsProxy['rawTags'], _createStreamInfo);
-  set rawTags(List<StreamInfo> value) => jsProxy['rawTags'] = jsify(value);
+  List<StreamInfo> get rawTags => toList(jsProxy['rawTags'], _createStreamInfo);
+  set rawTags(List<StreamInfo> value) => jsProxy['rawTags'] = toJS(value);
 
-  List<dynamic> get attachedImages => listify(jsProxy['attachedImages']);
-  set attachedImages(List<dynamic> value) => jsProxy['attachedImages'] = jsify(value);
+  List<dynamic> get attachedImages => toList(jsProxy['attachedImages']);
+  set attachedImages(List<dynamic> value) => jsProxy['attachedImages'] = toJS(value);
 }
 
 /**
@@ -422,7 +422,7 @@ class AddGalleryWatchResult extends ChromeObject {
  */
 class AddUserSelectedFolderResult {
   static AddUserSelectedFolderResult _create(mediaFileSystems, selectedFileSystemName) {
-    return new AddUserSelectedFolderResult._(listify(mediaFileSystems, _createDOMFileSystem), selectedFileSystemName);
+    return new AddUserSelectedFolderResult._(toList(mediaFileSystems, _createDOMFileSystem), selectedFileSystemName);
   }
 
   List<FileSystem> mediaFileSystems;

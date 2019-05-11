@@ -74,7 +74,7 @@ class ChromeTtsEngine extends ChromeApi {
   void updateVoices(List<TtsVoice> voices) {
     if (_ttsEngine == null) _throwNotAvailable();
 
-    _ttsEngine.callMethod('updateVoices', [jsify(voices)]);
+    _ttsEngine.callMethod('updateVoices', [toJS(voices)]);
   }
 
   /**
@@ -86,7 +86,7 @@ class ChromeTtsEngine extends ChromeApi {
   void sendTtsEvent(int requestId, TtsEvent event) {
     if (_ttsEngine == null) _throwNotAvailable();
 
-    _ttsEngine.callMethod('sendTtsEvent', [requestId, jsify(event)]);
+    _ttsEngine.callMethod('sendTtsEvent', [requestId, toJS(event)]);
   }
 
   void _throwNotAvailable() {
@@ -133,4 +133,4 @@ class VoiceGender extends ChromeEnum {
 }
 
 OnSpeakEvent _createOnSpeakEvent(String utterance, JsObject options, JsObject sendTtsEvent) =>
-    new OnSpeakEvent(utterance, mapify(options), sendTtsEvent);
+    new OnSpeakEvent(utterance, toMap(options), sendTtsEvent);

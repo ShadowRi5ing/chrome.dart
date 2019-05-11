@@ -117,10 +117,10 @@ class ChromeRuntime extends ChromeApi {
   ChromeRuntime._() {
     var getApi = () => _runtime;
     _onStartup = new ChromeStreamController.noArgs(getApi, 'onStartup');
-    _onInstalled = new ChromeStreamController<Map>.oneArg(getApi, 'onInstalled', mapify);
+    _onInstalled = new ChromeStreamController<Map>.oneArg(getApi, 'onInstalled', toMap);
     _onSuspend = new ChromeStreamController.noArgs(getApi, 'onSuspend');
     _onSuspendCanceled = new ChromeStreamController.noArgs(getApi, 'onSuspendCanceled');
-    _onUpdateAvailable = new ChromeStreamController<Map<String, dynamic>>.oneArg(getApi, 'onUpdateAvailable', mapify);
+    _onUpdateAvailable = new ChromeStreamController<Map<String, dynamic>>.oneArg(getApi, 'onUpdateAvailable', toMap);
     _onBrowserUpdateAvailable = new ChromeStreamController.noArgs(getApi, 'onBrowserUpdateAvailable');
     _onConnect = new ChromeStreamController<Port>.oneArg(getApi, 'onConnect', _createPort);
     _onConnectExternal = new ChromeStreamController<Port>.oneArg(getApi, 'onConnectExternal', _createPort);
@@ -188,7 +188,7 @@ class ChromeRuntime extends ChromeApi {
   Map<String, dynamic> getManifest() {
     if (_runtime == null) _throwNotAvailable();
 
-    return mapify(_runtime.callMethod('getManifest'));
+    return toMap(_runtime.callMethod('getManifest'));
   }
 
   /**
@@ -310,7 +310,7 @@ class ChromeRuntime extends ChromeApi {
   Port connect([String extensionId, RuntimeConnectParams connectInfo]) {
     if (_runtime == null) _throwNotAvailable();
 
-    return _createPort(_runtime.callMethod('connect', [extensionId, jsify(connectInfo)]));
+    return _createPort(_runtime.callMethod('connect', [extensionId, toJS(connectInfo)]));
   }
 
   /**
@@ -355,7 +355,7 @@ class ChromeRuntime extends ChromeApi {
     if (_runtime == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _runtime.callMethod('sendMessage', [extensionId, jsify(message), jsify(options), completer.callback]);
+    _runtime.callMethod('sendMessage', [extensionId, toJS(message), toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -375,7 +375,7 @@ class ChromeRuntime extends ChromeApi {
     if (_runtime == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<dynamic>.oneArg();
-    _runtime.callMethod('sendNativeMessage', [application, jsify(message), completer.callback]);
+    _runtime.callMethod('sendNativeMessage', [application, toJS(message), completer.callback]);
     return completer.future;
   }
 
@@ -579,7 +579,7 @@ class Port extends ChromeObject {
   set name(String value) => jsProxy['name'] = value;
 
   void disconnect([var arg1]) =>
-         jsProxy.callMethod('disconnect', [jsify(arg1)]);
+         jsProxy.callMethod('disconnect', [toJS(arg1)]);
 
   ChromeStreamController _onDisconnect;
   Stream get onDisconnect {
@@ -596,7 +596,7 @@ class Port extends ChromeObject {
   }
 
   void postMessage([var arg1]) =>
-         jsProxy.callMethod('postMessage', [jsify(arg1)]);
+         jsProxy.callMethod('postMessage', [toJS(arg1)]);
 
   /**
    * This property will <b>only</b> be present on ports passed to
@@ -604,7 +604,7 @@ class Port extends ChromeObject {
    * onConnectExternal) listeners.
    */
   MessageSender get sender => _createMessageSender(jsProxy['sender']);
-  set sender(MessageSender value) => jsProxy['sender'] = jsify(value);
+  set sender(MessageSender value) => jsProxy['sender'] = toJS(value);
 }
 
 /**
@@ -627,7 +627,7 @@ class MessageSender extends ChromeObject {
    * content scripts), and *only* if the receiver is an extension, not an app.
    */
   Tab get tab => _createTab(jsProxy['tab']);
-  set tab(Tab value) => jsProxy['tab'] = jsify(value);
+  set tab(Tab value) => jsProxy['tab'] = toJS(value);
 
   /**
    * The [frame](webNavigation#frame_ids) that opened the connection. 0 for
@@ -674,20 +674,20 @@ class PlatformInfo extends ChromeObject {
    * The operating system chrome is running on.
    */
   PlatformOs get os => _createPlatformOs(jsProxy['os']);
-  set os(PlatformOs value) => jsProxy['os'] = jsify(value);
+  set os(PlatformOs value) => jsProxy['os'] = toJS(value);
 
   /**
    * The machine's processor architecture.
    */
   PlatformArch get arch => _createPlatformArch(jsProxy['arch']);
-  set arch(PlatformArch value) => jsProxy['arch'] = jsify(value);
+  set arch(PlatformArch value) => jsProxy['arch'] = toJS(value);
 
   /**
    * The native client architecture. This may be different from arch on some
    * platforms.
    */
   PlatformNaclArch get nacl_arch => _createPlatformNaclArch(jsProxy['nacl_arch']);
-  set nacl_arch(PlatformNaclArch value) => jsProxy['nacl_arch'] = jsify(value);
+  set nacl_arch(PlatformNaclArch value) => jsProxy['nacl_arch'] = toJS(value);
 }
 
 class RuntimeConnectParams extends ChromeObject {
@@ -731,7 +731,7 @@ class RuntimeSendMessageParams extends ChromeObject {
  */
 class RequestUpdateCheckResult {
   static RequestUpdateCheckResult _create(status, details) {
-    return new RequestUpdateCheckResult._(_createRequestUpdateCheckStatus(status), mapify(details));
+    return new RequestUpdateCheckResult._(_createRequestUpdateCheckStatus(status), toMap(details));
   }
 
   RequestUpdateCheckStatus status;

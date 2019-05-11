@@ -96,8 +96,8 @@ class ChromeBookmarks extends ChromeApi {
   Future<List<BookmarkTreeNode>> get(dynamic idOrIdList) {
     if (_bookmarks == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => listify(e, _createBookmarkTreeNode));
-    _bookmarks.callMethod('get', [jsify(idOrIdList), completer.callback]);
+    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => toList(e, _createBookmarkTreeNode));
+    _bookmarks.callMethod('get', [toJS(idOrIdList), completer.callback]);
     return completer.future;
   }
 
@@ -107,7 +107,7 @@ class ChromeBookmarks extends ChromeApi {
   Future<List<BookmarkTreeNode>> getChildren(String id) {
     if (_bookmarks == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => listify(e, _createBookmarkTreeNode));
+    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => toList(e, _createBookmarkTreeNode));
     _bookmarks.callMethod('getChildren', [id, completer.callback]);
     return completer.future;
   }
@@ -120,7 +120,7 @@ class ChromeBookmarks extends ChromeApi {
   Future<List<BookmarkTreeNode>> getRecent(int numberOfItems) {
     if (_bookmarks == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => listify(e, _createBookmarkTreeNode));
+    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => toList(e, _createBookmarkTreeNode));
     _bookmarks.callMethod('getRecent', [numberOfItems, completer.callback]);
     return completer.future;
   }
@@ -131,7 +131,7 @@ class ChromeBookmarks extends ChromeApi {
   Future<List<BookmarkTreeNode>> getTree() {
     if (_bookmarks == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => listify(e, _createBookmarkTreeNode));
+    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => toList(e, _createBookmarkTreeNode));
     _bookmarks.callMethod('getTree', [completer.callback]);
     return completer.future;
   }
@@ -144,7 +144,7 @@ class ChromeBookmarks extends ChromeApi {
   Future<List<BookmarkTreeNode>> getSubTree(String id) {
     if (_bookmarks == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => listify(e, _createBookmarkTreeNode));
+    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => toList(e, _createBookmarkTreeNode));
     _bookmarks.callMethod('getSubTree', [id, completer.callback]);
     return completer.future;
   }
@@ -161,8 +161,8 @@ class ChromeBookmarks extends ChromeApi {
   Future<List<BookmarkTreeNode>> search(dynamic query) {
     if (_bookmarks == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => listify(e, _createBookmarkTreeNode));
-    _bookmarks.callMethod('search', [jsify(query), completer.callback]);
+    var completer = new ChromeCompleter<List<BookmarkTreeNode>>.oneArg((e) => toList(e, _createBookmarkTreeNode));
+    _bookmarks.callMethod('search', [toJS(query), completer.callback]);
     return completer.future;
   }
 
@@ -174,7 +174,7 @@ class ChromeBookmarks extends ChromeApi {
     if (_bookmarks == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<BookmarkTreeNode>.oneArg(_createBookmarkTreeNode);
-    _bookmarks.callMethod('create', [jsify(bookmark), completer.callback]);
+    _bookmarks.callMethod('create', [toJS(bookmark), completer.callback]);
     return completer.future;
   }
 
@@ -185,7 +185,7 @@ class ChromeBookmarks extends ChromeApi {
     if (_bookmarks == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<BookmarkTreeNode>.oneArg(_createBookmarkTreeNode);
-    _bookmarks.callMethod('move', [id, jsify(destination), completer.callback]);
+    _bookmarks.callMethod('move', [id, toJS(destination), completer.callback]);
     return completer.future;
   }
 
@@ -198,7 +198,7 @@ class ChromeBookmarks extends ChromeApi {
     if (_bookmarks == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<BookmarkTreeNode>.oneArg(_createBookmarkTreeNode);
-    _bookmarks.callMethod('update', [id, jsify(changes), completer.callback]);
+    _bookmarks.callMethod('update', [id, toJS(changes), completer.callback]);
     return completer.future;
   }
 
@@ -377,14 +377,14 @@ class BookmarkTreeNode extends ChromeObject {
    * Date(dateAdded)`).
    */
   dynamic get dateAdded => jsProxy['dateAdded'];
-  set dateAdded(var value) => jsProxy['dateAdded'] = jsify(value);
+  set dateAdded(var value) => jsProxy['dateAdded'] = toJS(value);
 
   /**
    * When the contents of this folder last changed, in milliseconds since the
    * epoch.
    */
   dynamic get dateGroupModified => jsProxy['dateGroupModified'];
-  set dateGroupModified(var value) => jsProxy['dateGroupModified'] = jsify(value);
+  set dateGroupModified(var value) => jsProxy['dateGroupModified'] = toJS(value);
 
   /**
    * Indicates the reason why this node is unmodifiable. The [managed] value
@@ -393,13 +393,13 @@ class BookmarkTreeNode extends ChromeObject {
    * the user and the extension (default).
    */
   BookmarkTreeNodeUnmodifiable get unmodifiable => _createBookmarkTreeNodeUnmodifiable(jsProxy['unmodifiable']);
-  set unmodifiable(BookmarkTreeNodeUnmodifiable value) => jsProxy['unmodifiable'] = jsify(value);
+  set unmodifiable(BookmarkTreeNodeUnmodifiable value) => jsProxy['unmodifiable'] = toJS(value);
 
   /**
    * An ordered list of children of this node.
    */
-  List<BookmarkTreeNode> get children => listify(jsProxy['children'], _createBookmarkTreeNode);
-  set children(List<BookmarkTreeNode> value) => jsProxy['children'] = jsify(value);
+  List<BookmarkTreeNode> get children => toList(jsProxy['children'], _createBookmarkTreeNode);
+  set children(List<BookmarkTreeNode> value) => jsProxy['children'] = toJS(value);
 }
 
 /**
@@ -461,12 +461,12 @@ class BookmarksUpdateParams extends ChromeObject {
 OnCreatedEvent _createOnCreatedEvent(String id, JsObject bookmark) =>
     new OnCreatedEvent(id, _createBookmarkTreeNode(bookmark));
 BookmarksOnRemovedEvent _createOnRemovedEvent(String id, JsObject removeInfo) =>
-    new BookmarksOnRemovedEvent(id, mapify(removeInfo));
+    new BookmarksOnRemovedEvent(id, toMap(removeInfo));
 BookmarksOnChangedEvent _createOnChangedEvent(String id, JsObject changeInfo) =>
-    new BookmarksOnChangedEvent(id, mapify(changeInfo));
+    new BookmarksOnChangedEvent(id, toMap(changeInfo));
 BookmarksOnMovedEvent _createOnMovedEvent(String id, JsObject moveInfo) =>
-    new BookmarksOnMovedEvent(id, mapify(moveInfo));
+    new BookmarksOnMovedEvent(id, toMap(moveInfo));
 OnChildrenReorderedEvent _createOnChildrenReorderedEvent(String id, JsObject reorderInfo) =>
-    new OnChildrenReorderedEvent(id, mapify(reorderInfo));
+    new OnChildrenReorderedEvent(id, toMap(reorderInfo));
 BookmarkTreeNode _createBookmarkTreeNode(JsObject jsProxy) => jsProxy == null ? null : new BookmarkTreeNode.fromProxy(jsProxy);
 BookmarkTreeNodeUnmodifiable _createBookmarkTreeNodeUnmodifiable(String value) => BookmarkTreeNodeUnmodifiable.VALUES.singleWhere((ChromeEnum e) => e.value == value);

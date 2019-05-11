@@ -43,7 +43,7 @@ class ChromeCertificateProvider extends ChromeApi {
   void requestPin(RequestPinDetails details, RequestPinCallback requestCallback) {
     if (_certificateProvider == null) _throwNotAvailable();
 
-    _certificateProvider.callMethod('requestPin', [jsify(details), jsify(requestCallback)]);
+    _certificateProvider.callMethod('requestPin', [toJS(details), toJS(requestCallback)]);
   }
 
   /**
@@ -56,7 +56,7 @@ class ChromeCertificateProvider extends ChromeApi {
   void stopPinRequest(StopPinRequestDetails details, StopPinRequestCallback requestCallback) {
     if (_certificateProvider == null) _throwNotAvailable();
 
-    _certificateProvider.callMethod('stopPinRequest', [jsify(details), jsify(requestCallback)]);
+    _certificateProvider.callMethod('stopPinRequest', [toJS(details), toJS(requestCallback)]);
   }
 
   void _throwNotAvailable() {
@@ -119,10 +119,10 @@ class CertificateInfo extends ChromeObject {
   CertificateInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   ArrayBuffer get certificate => _createArrayBuffer(jsProxy['certificate']);
-  set certificate(ArrayBuffer value) => jsProxy['certificate'] = jsify(value);
+  set certificate(ArrayBuffer value) => jsProxy['certificate'] = toJS(value);
 
-  List<Hash> get supportedHashes => listify(jsProxy['supportedHashes'], _createHash);
-  set supportedHashes(List<Hash> value) => jsProxy['supportedHashes'] = jsify(value);
+  List<Hash> get supportedHashes => toList(jsProxy['supportedHashes'], _createHash);
+  set supportedHashes(List<Hash> value) => jsProxy['supportedHashes'] = toJS(value);
 }
 
 class SignRequest extends ChromeObject {
@@ -138,13 +138,13 @@ class SignRequest extends ChromeObject {
   set signRequestId(int value) => jsProxy['signRequestId'] = value;
 
   ArrayBuffer get digest => _createArrayBuffer(jsProxy['digest']);
-  set digest(ArrayBuffer value) => jsProxy['digest'] = jsify(value);
+  set digest(ArrayBuffer value) => jsProxy['digest'] = toJS(value);
 
   Hash get hash => _createHash(jsProxy['hash']);
-  set hash(Hash value) => jsProxy['hash'] = jsify(value);
+  set hash(Hash value) => jsProxy['hash'] = toJS(value);
 
   ArrayBuffer get certificate => _createArrayBuffer(jsProxy['certificate']);
-  set certificate(ArrayBuffer value) => jsProxy['certificate'] = jsify(value);
+  set certificate(ArrayBuffer value) => jsProxy['certificate'] = toJS(value);
 }
 
 class RequestPinDetails extends ChromeObject {
@@ -160,10 +160,10 @@ class RequestPinDetails extends ChromeObject {
   set signRequestId(int value) => jsProxy['signRequestId'] = value;
 
   PinRequestType get requestType => _createPinRequestType(jsProxy['requestType']);
-  set requestType(PinRequestType value) => jsProxy['requestType'] = jsify(value);
+  set requestType(PinRequestType value) => jsProxy['requestType'] = toJS(value);
 
   PinRequestErrorType get errorType => _createPinRequestErrorType(jsProxy['errorType']);
-  set errorType(PinRequestErrorType value) => jsProxy['errorType'] = jsify(value);
+  set errorType(PinRequestErrorType value) => jsProxy['errorType'] = toJS(value);
 
   int get attemptsLeft => jsProxy['attemptsLeft'];
   set attemptsLeft(int value) => jsProxy['attemptsLeft'] = value;
@@ -180,7 +180,7 @@ class StopPinRequestDetails extends ChromeObject {
   set signRequestId(int value) => jsProxy['signRequestId'] = value;
 
   PinRequestErrorType get errorType => _createPinRequestErrorType(jsProxy['errorType']);
-  set errorType(PinRequestErrorType value) => jsProxy['errorType'] = jsify(value);
+  set errorType(PinRequestErrorType value) => jsProxy['errorType'] = toJS(value);
 }
 
 class PinResponseDetails extends ChromeObject {

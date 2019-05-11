@@ -67,7 +67,7 @@ class ChromeWindows extends ChromeApi {
     if (_windows == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Window>.oneArg(_createWindow);
-    _windows.callMethod('get', [windowId, jsify(getInfo), completer.callback]);
+    _windows.callMethod('get', [windowId, toJS(getInfo), completer.callback]);
     return completer.future;
   }
 
@@ -80,7 +80,7 @@ class ChromeWindows extends ChromeApi {
     if (_windows == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Window>.oneArg(_createWindow);
-    _windows.callMethod('getCurrent', [jsify(getInfo), completer.callback]);
+    _windows.callMethod('getCurrent', [toJS(getInfo), completer.callback]);
     return completer.future;
   }
 
@@ -94,7 +94,7 @@ class ChromeWindows extends ChromeApi {
     if (_windows == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Window>.oneArg(_createWindow);
-    _windows.callMethod('getLastFocused', [jsify(getInfo), completer.callback]);
+    _windows.callMethod('getLastFocused', [toJS(getInfo), completer.callback]);
     return completer.future;
   }
 
@@ -106,8 +106,8 @@ class ChromeWindows extends ChromeApi {
   Future<List<Window>> getAll([WindowsGetAllParams getInfo]) {
     if (_windows == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Window>>.oneArg((e) => listify(e, _createWindow));
-    _windows.callMethod('getAll', [jsify(getInfo), completer.callback]);
+    var completer = new ChromeCompleter<List<Window>>.oneArg((e) => toList(e, _createWindow));
+    _windows.callMethod('getAll', [toJS(getInfo), completer.callback]);
     return completer.future;
   }
 
@@ -122,7 +122,7 @@ class ChromeWindows extends ChromeApi {
     if (_windows == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Window>.oneArg(_createWindow);
-    _windows.callMethod('create', [jsify(createData), completer.callback]);
+    _windows.callMethod('create', [toJS(createData), completer.callback]);
     return completer.future;
   }
 
@@ -134,7 +134,7 @@ class ChromeWindows extends ChromeApi {
     if (_windows == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Window>.oneArg(_createWindow);
-    _windows.callMethod('update', [windowId, jsify(updateInfo), completer.callback]);
+    _windows.callMethod('update', [windowId, toJS(updateInfo), completer.callback]);
     return completer.future;
   }
 
@@ -307,8 +307,8 @@ class Window extends ChromeObject {
   /**
    * Array of [tabs.Tab] objects representing the current tabs in the window.
    */
-  List<Tab> get tabs => listify(jsProxy['tabs'], _createTab);
-  set tabs(List<Tab> value) => jsProxy['tabs'] = jsify(value);
+  List<Tab> get tabs => toList(jsProxy['tabs'], _createTab);
+  set tabs(List<Tab> value) => jsProxy['tabs'] = toJS(value);
 
   /**
    * Whether the window is incognito.
@@ -320,13 +320,13 @@ class Window extends ChromeObject {
    * The type of browser window this is.
    */
   WindowWindowType get type => _createWindowType(jsProxy['type']);
-  set type(WindowWindowType value) => jsProxy['type'] = jsify(value);
+  set type(WindowWindowType value) => jsProxy['type'] = toJS(value);
 
   /**
    * The state of this browser window.
    */
   WindowState get state => _createWindowState(jsProxy['state']);
-  set state(WindowState value) => jsProxy['state'] = jsify(value);
+  set state(WindowState value) => jsProxy['state'] = toJS(value);
 
   /**
    * Whether the window is set to be always on top.
@@ -362,8 +362,8 @@ class WindowsGetParams extends ChromeObject {
    * If set, the [windows.Window] returned will be filtered based on its type.
    * If unset the default filter is set to `['normal', 'popup']`.
    */
-  List<WindowWindowType> get windowTypes => listify(jsProxy['windowTypes'], _createWindowType);
-  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = jsify(value);
+  List<WindowWindowType> get windowTypes => toList(jsProxy['windowTypes'], _createWindowType);
+  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = toJS(value);
 }
 
 class WindowsGetCurrentParams extends ChromeObject {
@@ -386,8 +386,8 @@ class WindowsGetCurrentParams extends ChromeObject {
    * If set, the [windows.Window] returned will be filtered based on its type.
    * If unset the default filter is set to `['normal', 'popup']`.
    */
-  List<WindowWindowType> get windowTypes => listify(jsProxy['windowTypes'], _createWindowType);
-  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = jsify(value);
+  List<WindowWindowType> get windowTypes => toList(jsProxy['windowTypes'], _createWindowType);
+  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = toJS(value);
 }
 
 class WindowsGetLastFocusedParams extends ChromeObject {
@@ -410,8 +410,8 @@ class WindowsGetLastFocusedParams extends ChromeObject {
    * If set, the [windows.Window] returned will be filtered based on its type.
    * If unset the default filter is set to `['normal', 'popup']`.
    */
-  List<WindowWindowType> get windowTypes => listify(jsProxy['windowTypes'], _createWindowType);
-  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = jsify(value);
+  List<WindowWindowType> get windowTypes => toList(jsProxy['windowTypes'], _createWindowType);
+  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = toJS(value);
 }
 
 class WindowsGetAllParams extends ChromeObject {
@@ -434,8 +434,8 @@ class WindowsGetAllParams extends ChromeObject {
    * If set, the [windows.Window] returned will be filtered based on its type.
    * If unset the default filter is set to `['normal', 'popup']`.
    */
-  List<WindowWindowType> get windowTypes => listify(jsProxy['windowTypes'], _createWindowType);
-  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = jsify(value);
+  List<WindowWindowType> get windowTypes => toList(jsProxy['windowTypes'], _createWindowType);
+  set windowTypes(List<WindowWindowType> value) => jsProxy['windowTypes'] = toJS(value);
 }
 
 class WindowsCreateParams extends ChromeObject {
@@ -461,7 +461,7 @@ class WindowsCreateParams extends ChromeObject {
    * Defaults to the New Tab Page.
    */
   dynamic get url => jsProxy['url'];
-  set url(var value) => jsProxy['url'] = jsify(value);
+  set url(var value) => jsProxy['url'] = toJS(value);
 
   /**
    * The id of the tab for which you want to adopt to the new window.
@@ -515,7 +515,7 @@ class WindowsCreateParams extends ChromeObject {
    * Specifies what type of browser window to create.
    */
   CreateType get type => _createCreateType(jsProxy['type']);
-  set type(CreateType value) => jsProxy['type'] = jsify(value);
+  set type(CreateType value) => jsProxy['type'] = toJS(value);
 
   /**
    * The initial state of the window. The 'minimized', 'maximized' and
@@ -523,7 +523,7 @@ class WindowsCreateParams extends ChromeObject {
    * 'height'.
    */
   WindowState get state => _createWindowState(jsProxy['state']);
-  set state(WindowState value) => jsProxy['state'] = jsify(value);
+  set state(WindowState value) => jsProxy['state'] = toJS(value);
 
   /**
    * If 'setSelfAsOpener' is true, then the newly created window will have its
@@ -598,7 +598,7 @@ class WindowsUpdateParams extends ChromeObject {
    * states cannot be combined with 'left', 'top', 'width' or 'height'.
    */
   WindowState get state => _createWindowState(jsProxy['state']);
-  set state(WindowState value) => jsProxy['state'] = jsify(value);
+  set state(WindowState value) => jsProxy['state'] = toJS(value);
 }
 
 Window _createWindow(JsObject jsProxy) => jsProxy == null ? null : new Window.fromProxy(jsProxy);

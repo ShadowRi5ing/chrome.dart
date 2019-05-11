@@ -126,7 +126,7 @@ class ChromeEnterprisePlatformKeys extends ChromeApi {
   Future<List<Token>> getTokens() {
     if (_enterprise_platformKeys == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Token>>.oneArg((e) => listify(e, _createToken));
+    var completer = new ChromeCompleter<List<Token>>.oneArg((e) => toList(e, _createToken));
     _enterprise_platformKeys.callMethod('getTokens', [completer.callback]);
     return completer.future;
   }
@@ -146,7 +146,7 @@ class ChromeEnterprisePlatformKeys extends ChromeApi {
   Future<List<ArrayBuffer>> getCertificates(String tokenId) {
     if (_enterprise_platformKeys == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<ArrayBuffer>>.oneArg((e) => listify(e, _createArrayBuffer));
+    var completer = new ChromeCompleter<List<ArrayBuffer>>.oneArg((e) => toList(e, _createArrayBuffer));
     _enterprise_platformKeys.callMethod('getCertificates', [tokenId, completer.callback]);
     return completer.future;
   }
@@ -164,7 +164,7 @@ class ChromeEnterprisePlatformKeys extends ChromeApi {
     if (_enterprise_platformKeys == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _enterprise_platformKeys.callMethod('importCertificate', [tokenId, jsify(certificate), completer.callback]);
+    _enterprise_platformKeys.callMethod('importCertificate', [tokenId, toJS(certificate), completer.callback]);
     return completer.future;
   }
 
@@ -181,7 +181,7 @@ class ChromeEnterprisePlatformKeys extends ChromeApi {
     if (_enterprise_platformKeys == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _enterprise_platformKeys.callMethod('removeCertificate', [tokenId, jsify(certificate), completer.callback]);
+    _enterprise_platformKeys.callMethod('removeCertificate', [tokenId, toJS(certificate), completer.callback]);
     return completer.future;
   }
 
@@ -219,7 +219,7 @@ class ChromeEnterprisePlatformKeys extends ChromeApi {
     if (_enterprise_platformKeys == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ArrayBuffer>.oneArg(_createArrayBuffer);
-    _enterprise_platformKeys.callMethod('challengeMachineKey', [jsify(challenge), registerKey, completer.callback]);
+    _enterprise_platformKeys.callMethod('challengeMachineKey', [toJS(challenge), registerKey, completer.callback]);
     return completer.future;
   }
 
@@ -257,7 +257,7 @@ class ChromeEnterprisePlatformKeys extends ChromeApi {
     if (_enterprise_platformKeys == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ArrayBuffer>.oneArg(_createArrayBuffer);
-    _enterprise_platformKeys.callMethod('challengeUserKey', [jsify(challenge), registerKey, completer.callback]);
+    _enterprise_platformKeys.callMethod('challengeUserKey', [toJS(challenge), registerKey, completer.callback]);
     return completer.future;
   }
 
@@ -277,7 +277,7 @@ class Token extends ChromeObject {
   set id(String value) => jsProxy['id'] = value;
 
   SubtleCrypto get subtleCrypto => _createSubtleCrypto(jsProxy['subtleCrypto']);
-  set subtleCrypto(SubtleCrypto value) => jsProxy['subtleCrypto'] = jsify(value);
+  set subtleCrypto(SubtleCrypto value) => jsProxy['subtleCrypto'] = toJS(value);
 }
 
 Token _createToken(JsObject jsProxy) => jsProxy == null ? null : new Token.fromProxy(jsProxy);

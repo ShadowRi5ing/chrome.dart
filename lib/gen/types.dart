@@ -78,8 +78,8 @@ class ChromeSetting extends ChromeObject {
    * Details of the currently effective value.
    */
   Future<Map> get(TypesGetParams details) {
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    jsProxy.callMethod('get', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    jsProxy.callMethod('get', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -90,7 +90,7 @@ class ChromeSetting extends ChromeObject {
    */
   Future set(TypesSetParams details) {
     var completer = new ChromeCompleter.noArgs();
-    jsProxy.callMethod('set', [jsify(details), completer.callback]);
+    jsProxy.callMethod('set', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -101,7 +101,7 @@ class ChromeSetting extends ChromeObject {
    */
   Future clear(TypesClearParams details) {
     var completer = new ChromeCompleter.noArgs();
-    jsProxy.callMethod('clear', [jsify(details), completer.callback]);
+    jsProxy.callMethod('clear', [toJS(details), completer.callback]);
     return completer.future;
   }
 }
@@ -133,13 +133,13 @@ class TypesSetParams extends ChromeObject {
    * _not_ set a value of a different type.
    */
   dynamic get value => jsProxy['value'];
-  set value(var value) => jsProxy['value'] = jsify(value);
+  set value(var value) => jsProxy['value'] = toJS(value);
 
   /**
    * Where to set the setting (default: regular).
    */
   ChromeSettingScope get scope => _createChromeSettingScope(jsProxy['scope']);
-  set scope(ChromeSettingScope value) => jsProxy['scope'] = jsify(value);
+  set scope(ChromeSettingScope value) => jsProxy['scope'] = toJS(value);
 }
 
 class TypesClearParams extends ChromeObject {
@@ -152,7 +152,7 @@ class TypesClearParams extends ChromeObject {
    * Where to clear the setting (default: regular).
    */
   ChromeSettingScope get scope => _createChromeSettingScope(jsProxy['scope']);
-  set scope(ChromeSettingScope value) => jsProxy['scope'] = jsify(value);
+  set scope(ChromeSettingScope value) => jsProxy['scope'] = toJS(value);
 }
 
 ChromeSettingScope _createChromeSettingScope(String value) => ChromeSettingScope.VALUES.singleWhere((ChromeEnum e) => e.value == value);

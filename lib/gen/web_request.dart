@@ -83,15 +83,15 @@ class ChromeWebRequest extends ChromeApi {
 
   ChromeWebRequest._() {
     var getApi = () => _webRequest;
-    _onBeforeRequest = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeRequest', mapify);
-    _onBeforeSendHeaders = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeSendHeaders', mapify);
-    _onSendHeaders = new ChromeStreamController<Map>.oneArg(getApi, 'onSendHeaders', mapify);
-    _onHeadersReceived = new ChromeStreamController<Map>.oneArg(getApi, 'onHeadersReceived', mapify);
+    _onBeforeRequest = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeRequest', toMap);
+    _onBeforeSendHeaders = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeSendHeaders', toMap);
+    _onSendHeaders = new ChromeStreamController<Map>.oneArg(getApi, 'onSendHeaders', toMap);
+    _onHeadersReceived = new ChromeStreamController<Map>.oneArg(getApi, 'onHeadersReceived', toMap);
     _onAuthRequired = new ChromeStreamController<OnAuthRequiredEvent>.twoArgs(getApi, 'onAuthRequired', _createOnAuthRequiredEvent);
-    _onResponseStarted = new ChromeStreamController<Map>.oneArg(getApi, 'onResponseStarted', mapify);
-    _onBeforeRedirect = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeRedirect', mapify);
-    _onCompleted = new ChromeStreamController<Map>.oneArg(getApi, 'onCompleted', mapify);
-    _onErrorOccurred = new ChromeStreamController<Map>.oneArg(getApi, 'onErrorOccurred', mapify);
+    _onResponseStarted = new ChromeStreamController<Map>.oneArg(getApi, 'onResponseStarted', toMap);
+    _onBeforeRedirect = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeRedirect', toMap);
+    _onCompleted = new ChromeStreamController<Map>.oneArg(getApi, 'onCompleted', toMap);
+    _onErrorOccurred = new ChromeStreamController<Map>.oneArg(getApi, 'onErrorOccurred', toMap);
   }
 
   bool get available => _webRequest != null;
@@ -264,15 +264,15 @@ class RequestFilter extends ChromeObject {
    * A list of URLs or URL patterns. Requests that cannot match any of the URLs
    * will be filtered out.
    */
-  List<String> get urls => listify(jsProxy['urls']);
-  set urls(List<String> value) => jsProxy['urls'] = jsify(value);
+  List<String> get urls => toList(jsProxy['urls']);
+  set urls(List<String> value) => jsProxy['urls'] = toJS(value);
 
   /**
    * A list of request types. Requests that cannot match any of the types will
    * be filtered out.
    */
-  List<ResourceType> get types => listify(jsProxy['types'], _createResourceType);
-  set types(List<ResourceType> value) => jsProxy['types'] = jsify(value);
+  List<ResourceType> get types => toList(jsProxy['types'], _createResourceType);
+  set types(List<ResourceType> value) => jsProxy['types'] = toJS(value);
 
   int get tabId => jsProxy['tabId'];
   set tabId(int value) => jsProxy['tabId'] = value;
@@ -330,7 +330,7 @@ class BlockingResponse extends ChromeObject {
    * request is made with these request headers instead.
    */
   HttpHeaders get requestHeaders => _createHttpHeaders(jsProxy['requestHeaders']);
-  set requestHeaders(HttpHeaders value) => jsProxy['requestHeaders'] = jsify(value);
+  set requestHeaders(HttpHeaders value) => jsProxy['requestHeaders'] = toJS(value);
 
   /**
    * Only used as a response to the onHeadersReceived event. If set, the server
@@ -340,14 +340,14 @@ class BlockingResponse extends ChromeObject {
    * `responseHeaders` for each request).
    */
   HttpHeaders get responseHeaders => _createHttpHeaders(jsProxy['responseHeaders']);
-  set responseHeaders(HttpHeaders value) => jsProxy['responseHeaders'] = jsify(value);
+  set responseHeaders(HttpHeaders value) => jsProxy['responseHeaders'] = toJS(value);
 
   /**
    * Only used as a response to the onAuthRequired event. If set, the request is
    * made using the supplied credentials.
    */
   AuthCredentialsWebRequest get authCredentials => _createAuthCredentialsWebRequest(jsProxy['authCredentials']);
-  set authCredentials(AuthCredentialsWebRequest value) => jsProxy['authCredentials'] = jsify(value);
+  set authCredentials(AuthCredentialsWebRequest value) => jsProxy['authCredentials'] = toJS(value);
 }
 
 /**
@@ -364,7 +364,7 @@ class UploadData extends ChromeObject {
    * An ArrayBuffer with a copy of the data.
    */
   dynamic get bytes => jsProxy['bytes'];
-  set bytes(var value) => jsProxy['bytes'] = jsify(value);
+  set bytes(var value) => jsProxy['bytes'] = toJS(value);
 
   /**
    * A string with the file's path and name.
@@ -406,16 +406,16 @@ class RequestBodyWebRequest extends ChromeObject {
    * media type, or if it is malformed, the dictionary is not present. An
    * example value of this dictionary is {'key': ['value1', 'value2']}.
    */
-  Map get formData => mapify(jsProxy['formData']);
-  set formData(Map value) => jsProxy['formData'] = jsify(value);
+  Map get formData => toMap(jsProxy['formData']);
+  set formData(Map value) => jsProxy['formData'] = toJS(value);
 
   /**
    * If the request method is PUT or POST, and the body is not already parsed in
    * formData, then the unparsed request body elements are contained in this
    * array.
    */
-  List<UploadData> get raw => listify(jsProxy['raw'], _createUploadData);
-  set raw(List<UploadData> value) => jsProxy['raw'] = jsify(value);
+  List<UploadData> get raw => toList(jsProxy['raw'], _createUploadData);
+  set raw(List<UploadData> value) => jsProxy['raw'] = toJS(value);
 }
 
 class ChallengerWebRequest extends ChromeObject {
@@ -433,7 +433,7 @@ class ChallengerWebRequest extends ChromeObject {
 }
 
 OnAuthRequiredEvent _createOnAuthRequiredEvent(JsObject details, JsObject asyncCallback) =>
-    new OnAuthRequiredEvent(mapify(details), asyncCallback);
+    new OnAuthRequiredEvent(toMap(details), asyncCallback);
 ResourceType _createResourceType(String value) => ResourceType.VALUES.singleWhere((ChromeEnum e) => e.value == value);
 HttpHeaders _createHttpHeaders(JsObject jsProxy) => jsProxy == null ? null : new HttpHeaders.fromProxy(jsProxy);
 AuthCredentialsWebRequest _createAuthCredentialsWebRequest(JsObject jsProxy) => jsProxy == null ? null : new AuthCredentialsWebRequest.fromProxy(jsProxy);

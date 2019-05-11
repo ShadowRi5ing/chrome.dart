@@ -47,7 +47,7 @@ class ChromeFileSystem extends ChromeApi {
     if (_fileSystem == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _fileSystem.callMethod('getDisplayPath', [jsify(entry), completer.callback]);
+    _fileSystem.callMethod('getDisplayPath', [toJS(entry), completer.callback]);
     return completer.future;
   }
 
@@ -61,7 +61,7 @@ class ChromeFileSystem extends ChromeApi {
     if (_fileSystem == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Entry>.oneArg(_createEntry);
-    _fileSystem.callMethod('getWritableEntry', [jsify(entry), completer.callback]);
+    _fileSystem.callMethod('getWritableEntry', [toJS(entry), completer.callback]);
     return completer.future;
   }
 
@@ -72,7 +72,7 @@ class ChromeFileSystem extends ChromeApi {
     if (_fileSystem == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _fileSystem.callMethod('isWritableEntry', [jsify(entry), completer.callback]);
+    _fileSystem.callMethod('isWritableEntry', [toJS(entry), completer.callback]);
     return completer.future;
   }
 
@@ -87,7 +87,7 @@ class ChromeFileSystem extends ChromeApi {
     if (_fileSystem == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ChooseEntryResult>.twoArgs(ChooseEntryResult._create);
-    _fileSystem.callMethod('chooseEntry', [jsify(options), completer.callback]);
+    _fileSystem.callMethod('chooseEntry', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -126,7 +126,7 @@ class ChromeFileSystem extends ChromeApi {
   String retainEntry(Entry entry) {
     if (_fileSystem == null) _throwNotAvailable();
 
-    return _fileSystem.callMethod('retainEntry', [jsify(entry)]);
+    return _fileSystem.callMethod('retainEntry', [toJS(entry)]);
   }
 
   /**
@@ -143,7 +143,7 @@ class ChromeFileSystem extends ChromeApi {
     if (_fileSystem == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<FileSystem>.oneArg(_createFileSystem);
-    _fileSystem.callMethod('requestFileSystem', [jsify(options), completer.callback]);
+    _fileSystem.callMethod('requestFileSystem', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -157,7 +157,7 @@ class ChromeFileSystem extends ChromeApi {
   Future<List<Volume>> getVolumeList() {
     if (_fileSystem == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Volume>>.oneArg((e) => listify(e, _createVolume));
+    var completer = new ChromeCompleter<List<Volume>>.oneArg((e) => toList(e, _createVolume));
     _fileSystem.callMethod('getVolumeList', [completer.callback]);
     return completer.future;
   }
@@ -179,7 +179,7 @@ class ChromeFileSystem extends ChromeApi {
   void observeDirectory(DirectoryEntry entry, [bool recursive]) {
     if (_fileSystem == null) _throwNotAvailable();
 
-    _fileSystem.callMethod('observeDirectory', [jsify(entry), recursive]);
+    _fileSystem.callMethod('observeDirectory', [toJS(entry), recursive]);
   }
 
   /**
@@ -188,7 +188,7 @@ class ChromeFileSystem extends ChromeApi {
   void unobserveEntry(Entry entry) {
     if (_fileSystem == null) _throwNotAvailable();
 
-    _fileSystem.callMethod('unobserveEntry', [jsify(entry)]);
+    _fileSystem.callMethod('unobserveEntry', [toJS(entry)]);
   }
 
   /**
@@ -197,7 +197,7 @@ class ChromeFileSystem extends ChromeApi {
   Future<List<Entry>> getObservedEntries() {
     if (_fileSystem == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Entry>>.oneArg((e) => listify(e, _createEntry));
+    var completer = new ChromeCompleter<List<Entry>>.oneArg((e) => toList(e, _createEntry));
     _fileSystem.callMethod('getObservedEntries', [completer.callback]);
     return completer.future;
   }
@@ -242,11 +242,11 @@ class AcceptOption extends ChromeObject {
   String get description => jsProxy['description'];
   set description(String value) => jsProxy['description'] = value;
 
-  List<String> get mimeTypes => listify(jsProxy['mimeTypes']);
-  set mimeTypes(List<String> value) => jsProxy['mimeTypes'] = jsify(value);
+  List<String> get mimeTypes => toList(jsProxy['mimeTypes']);
+  set mimeTypes(List<String> value) => jsProxy['mimeTypes'] = toJS(value);
 
-  List<String> get extensions => listify(jsProxy['extensions']);
-  set extensions(List<String> value) => jsProxy['extensions'] = jsify(value);
+  List<String> get extensions => toList(jsProxy['extensions']);
+  set extensions(List<String> value) => jsProxy['extensions'] = toJS(value);
 }
 
 class ChooseEntryOptions extends ChromeObject {
@@ -260,13 +260,13 @@ class ChooseEntryOptions extends ChromeObject {
   ChooseEntryOptions.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   ChooseEntryType get type => _createChooseEntryType(jsProxy['type']);
-  set type(ChooseEntryType value) => jsProxy['type'] = jsify(value);
+  set type(ChooseEntryType value) => jsProxy['type'] = toJS(value);
 
   String get suggestedName => jsProxy['suggestedName'];
   set suggestedName(String value) => jsProxy['suggestedName'] = value;
 
-  List<AcceptOption> get accepts => listify(jsProxy['accepts'], _createAcceptOption);
-  set accepts(List<AcceptOption> value) => jsProxy['accepts'] = jsify(value);
+  List<AcceptOption> get accepts => toList(jsProxy['accepts'], _createAcceptOption);
+  set accepts(List<AcceptOption> value) => jsProxy['accepts'] = toJS(value);
 
   bool get acceptsAllTypes => jsProxy['acceptsAllTypes'];
   set acceptsAllTypes(bool value) => jsProxy['acceptsAllTypes'] = value;
@@ -318,10 +318,10 @@ class ChildChange extends ChromeObject {
   ChildChange.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   Entry get entry => _createEntry(jsProxy['entry']);
-  set entry(Entry value) => jsProxy['entry'] = jsify(value);
+  set entry(Entry value) => jsProxy['entry'] = toJS(value);
 
   ChildChangeType get type => _createChildChangeType(jsProxy['type']);
-  set type(ChildChangeType value) => jsProxy['type'] = jsify(value);
+  set type(ChildChangeType value) => jsProxy['type'] = toJS(value);
 }
 
 /**
@@ -333,8 +333,8 @@ class VolumeListChangedEvent extends ChromeObject {
   }
   VolumeListChangedEvent.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<Volume> get volumes => listify(jsProxy['volumes'], _createVolume);
-  set volumes(List<Volume> value) => jsProxy['volumes'] = jsify(value);
+  List<Volume> get volumes => toList(jsProxy['volumes'], _createVolume);
+  set volumes(List<Volume> value) => jsProxy['volumes'] = toJS(value);
 }
 
 /**
@@ -349,10 +349,10 @@ class EntryChangedEvent extends ChromeObject {
   EntryChangedEvent.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   Entry get target => _createEntry(jsProxy['target']);
-  set target(Entry value) => jsProxy['target'] = jsify(value);
+  set target(Entry value) => jsProxy['target'] = toJS(value);
 
-  List<ChildChange> get childChanges => listify(jsProxy['childChanges'], _createChildChange);
-  set childChanges(List<ChildChange> value) => jsProxy['childChanges'] = jsify(value);
+  List<ChildChange> get childChanges => toList(jsProxy['childChanges'], _createChildChange);
+  set childChanges(List<ChildChange> value) => jsProxy['childChanges'] = toJS(value);
 }
 
 /**
@@ -365,7 +365,7 @@ class EntryRemovedEvent extends ChromeObject {
   EntryRemovedEvent.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   Entry get target => _createEntry(jsProxy['target']);
-  set target(Entry value) => jsProxy['target'] = jsify(value);
+  set target(Entry value) => jsProxy['target'] = toJS(value);
 }
 
 /**
@@ -373,7 +373,7 @@ class EntryRemovedEvent extends ChromeObject {
  */
 class ChooseEntryResult {
   static ChooseEntryResult _create(entry, fileEntries) {
-    return new ChooseEntryResult._(_createEntry(entry), listify(fileEntries, _createFileEntry));
+    return new ChooseEntryResult._(_createEntry(entry), toList(fileEntries, _createFileEntry));
   }
 
   Entry entry;

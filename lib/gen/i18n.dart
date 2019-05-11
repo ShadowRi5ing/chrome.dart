@@ -30,7 +30,7 @@ class ChromeI18N extends ChromeApi {
   Future<List<LanguageCode>> getAcceptLanguages() {
     if (_i18n == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<LanguageCode>>.oneArg((e) => listify(e, _createLanguageCode));
+    var completer = new ChromeCompleter<List<LanguageCode>>.oneArg((e) => toList(e, _createLanguageCode));
     _i18n.callMethod('getAcceptLanguages', [completer.callback]);
     return completer.future;
   }
@@ -53,7 +53,7 @@ class ChromeI18N extends ChromeApi {
   String getMessage(String messageName, [dynamic substitutions]) {
     if (_i18n == null) _throwNotAvailable();
 
-    return _i18n.callMethod('getMessage', [messageName, jsify(substitutions)]);
+    return _i18n.callMethod('getMessage', [messageName, toJS(substitutions)]);
   }
 
   /**
@@ -81,7 +81,7 @@ class ChromeI18N extends ChromeApi {
   Future<Map> detectLanguage(String text) {
     if (_i18n == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
     _i18n.callMethod('detectLanguage', [text, completer.callback]);
     return completer.future;
   }

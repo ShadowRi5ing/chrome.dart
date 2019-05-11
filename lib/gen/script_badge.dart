@@ -38,7 +38,7 @@ class ChromeScriptBadge extends ChromeApi {
   void setPopup(ScriptBadgeSetPopupParams details) {
     if (_scriptBadge == null) _throwNotAvailable();
 
-    _scriptBadge.callMethod('setPopup', [jsify(details)]);
+    _scriptBadge.callMethod('setPopup', [toJS(details)]);
   }
 
   /**
@@ -48,7 +48,7 @@ class ChromeScriptBadge extends ChromeApi {
     if (_scriptBadge == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _scriptBadge.callMethod('getPopup', [jsify(details), completer.callback]);
+    _scriptBadge.callMethod('getPopup', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -62,7 +62,7 @@ class ChromeScriptBadge extends ChromeApi {
   void getAttention(ScriptBadgeGetAttentionParams details) {
     if (_scriptBadge == null) _throwNotAvailable();
 
-    _scriptBadge.callMethod('getAttention', [jsify(details)]);
+    _scriptBadge.callMethod('getAttention', [toJS(details)]);
   }
 
   void _throwNotAvailable() {

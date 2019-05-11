@@ -85,7 +85,7 @@ class ChromeDevtoolsInspectedWindow extends ChromeApi {
     if (_devtools_inspectedWindow == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<EvalResult>.twoArgs(EvalResult._create);
-    _devtools_inspectedWindow.callMethod('eval', [expression, jsify(options), completer.callback]);
+    _devtools_inspectedWindow.callMethod('eval', [expression, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -95,7 +95,7 @@ class ChromeDevtoolsInspectedWindow extends ChromeApi {
   void reload([DevtoolsInspectedWindowReloadParams reloadOptions]) {
     if (_devtools_inspectedWindow == null) _throwNotAvailable();
 
-    _devtools_inspectedWindow.callMethod('reload', [jsify(reloadOptions)]);
+    _devtools_inspectedWindow.callMethod('reload', [toJS(reloadOptions)]);
   }
 
   /**
@@ -107,7 +107,7 @@ class ChromeDevtoolsInspectedWindow extends ChromeApi {
   Future<List<Resource>> getResources() {
     if (_devtools_inspectedWindow == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Resource>>.oneArg((e) => listify(e, _createResource));
+    var completer = new ChromeCompleter<List<Resource>>.oneArg((e) => toList(e, _createResource));
     _devtools_inspectedWindow.callMethod('getResources', [completer.callback]);
     return completer.future;
   }
@@ -177,7 +177,7 @@ class Resource extends ChromeObject {
    * error otherwise.
    */
   Future<Map<String, dynamic>> setContent(String content, bool commit) {
-    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(mapify);
+    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(toMap);
     jsProxy.callMethod('setContent', [content, commit, completer.callback]);
     return completer.future;
   }
@@ -259,7 +259,7 @@ class DevtoolsInspectedWindowReloadParams extends ChromeObject {
  */
 class EvalResult {
   static EvalResult _create(result, exceptionInfo) {
-    return new EvalResult._(mapify(result), mapify(exceptionInfo));
+    return new EvalResult._(toMap(result), toMap(exceptionInfo));
   }
 
   Map<String, dynamic> result;
@@ -323,7 +323,7 @@ class ChromeDevtoolsNetwork extends ChromeApi {
   Future<Map<String, dynamic>> getHAR() {
     if (_devtools_network == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(mapify);
+    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(toMap);
     _devtools_network.callMethod('getHAR', [completer.callback]);
     return completer.future;
   }

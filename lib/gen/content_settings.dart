@@ -307,7 +307,7 @@ class ContentSetting extends ChromeObject {
    */
   Future clear(ContentSettingsClearParams details) {
     var completer = new ChromeCompleter.noArgs();
-    jsProxy.callMethod('clear', [jsify(details), completer.callback]);
+    jsProxy.callMethod('clear', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -315,8 +315,8 @@ class ContentSetting extends ChromeObject {
    * Gets the current content setting for a given pair of URLs.
    */
   Future<Map> get(ContentSettingsGetParams details) {
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    jsProxy.callMethod('get', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    jsProxy.callMethod('get', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -325,7 +325,7 @@ class ContentSetting extends ChromeObject {
    */
   Future set(ContentSettingsSetParams details) {
     var completer = new ChromeCompleter.noArgs();
-    jsProxy.callMethod('set', [jsify(details), completer.callback]);
+    jsProxy.callMethod('set', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -335,7 +335,7 @@ class ContentSetting extends ChromeObject {
    * this content type does not use resource identifiers.
    */
   Future<List<ResourceIdentifier>> getResourceIdentifiers() {
-    var completer = new ChromeCompleter<List<ResourceIdentifier>>.oneArg((e) => listify(e, _createResourceIdentifier));
+    var completer = new ChromeCompleter<List<ResourceIdentifier>>.oneArg((e) => toList(e, _createResourceIdentifier));
     jsProxy.callMethod('getResourceIdentifiers', [completer.callback]);
     return completer.future;
   }
@@ -351,7 +351,7 @@ class ContentSettingsClearParams extends ChromeObject {
    * Where to clear the setting (default: regular).
    */
   Scope get scope => _createScope(jsProxy['scope']);
-  set scope(Scope value) => jsProxy['scope'] = jsify(value);
+  set scope(Scope value) => jsProxy['scope'] = toJS(value);
 }
 
 class ContentSettingsGetParams extends ChromeObject {
@@ -383,7 +383,7 @@ class ContentSettingsGetParams extends ChromeObject {
    * should be retrieved.
    */
   ResourceIdentifier get resourceIdentifier => _createResourceIdentifier(jsProxy['resourceIdentifier']);
-  set resourceIdentifier(ResourceIdentifier value) => jsProxy['resourceIdentifier'] = jsify(value);
+  set resourceIdentifier(ResourceIdentifier value) => jsProxy['resourceIdentifier'] = toJS(value);
 
   /**
    * Whether to check the content settings for an incognito session. (default
@@ -422,20 +422,20 @@ class ContentSettingsSetParams extends ChromeObject {
    * The resource identifier for the content type.
    */
   ResourceIdentifier get resourceIdentifier => _createResourceIdentifier(jsProxy['resourceIdentifier']);
-  set resourceIdentifier(ResourceIdentifier value) => jsProxy['resourceIdentifier'] = jsify(value);
+  set resourceIdentifier(ResourceIdentifier value) => jsProxy['resourceIdentifier'] = toJS(value);
 
   /**
    * The setting applied by this rule. See the description of the individual
    * ContentSetting objects for the possible values.
    */
   dynamic get setting => jsProxy['setting'];
-  set setting(var value) => jsProxy['setting'] = jsify(value);
+  set setting(var value) => jsProxy['setting'] = toJS(value);
 
   /**
    * Where to set the setting (default: regular).
    */
   Scope get scope => _createScope(jsProxy['scope']);
-  set scope(Scope value) => jsProxy['scope'] = jsify(value);
+  set scope(Scope value) => jsProxy['scope'] = toJS(value);
 }
 
 ContentSetting _createContentSetting(JsObject jsProxy) => jsProxy == null ? null : new ContentSetting.fromProxy(jsProxy);

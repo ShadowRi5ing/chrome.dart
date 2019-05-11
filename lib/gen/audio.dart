@@ -33,7 +33,7 @@ class ChromeAudio extends ChromeApi {
     var getApi = () => _audio;
     _onLevelChanged = new ChromeStreamController<LevelChangedEvent>.oneArg(getApi, 'onLevelChanged', _createLevelChangedEvent);
     _onMuteChanged = new ChromeStreamController<MuteChangedEvent>.oneArg(getApi, 'onMuteChanged', _createMuteChangedEvent);
-    _onDeviceListChanged = new ChromeStreamController<List<AudioDeviceInfo>>.oneArg(getApi, 'onDeviceListChanged', (e) => listify(e, _createAudioDeviceInfo));
+    _onDeviceListChanged = new ChromeStreamController<List<AudioDeviceInfo>>.oneArg(getApi, 'onDeviceListChanged', (e) => toList(e, _createAudioDeviceInfo));
     _onDeviceChanged = new ChromeStreamController.noArgs(getApi, 'onDeviceChanged');
   }
 
@@ -49,8 +49,8 @@ class ChromeAudio extends ChromeApi {
   Future<List<AudioDeviceInfo>> getDevices([DeviceFilter filter]) {
     if (_audio == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<AudioDeviceInfo>>.oneArg((e) => listify(e, _createAudioDeviceInfo));
-    _audio.callMethod('getDevices', [jsify(filter), completer.callback]);
+    var completer = new ChromeCompleter<List<AudioDeviceInfo>>.oneArg((e) => toList(e, _createAudioDeviceInfo));
+    _audio.callMethod('getDevices', [toJS(filter), completer.callback]);
     return completer.future;
   }
 
@@ -68,7 +68,7 @@ class ChromeAudio extends ChromeApi {
     if (_audio == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _audio.callMethod('setActiveDevices', [jsify(ids), completer.callback]);
+    _audio.callMethod('setActiveDevices', [toJS(ids), completer.callback]);
     return completer.future;
   }
 
@@ -79,7 +79,7 @@ class ChromeAudio extends ChromeApi {
     if (_audio == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _audio.callMethod('setProperties', [id, jsify(properties), completer.callback]);
+    _audio.callMethod('setProperties', [id, toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -93,7 +93,7 @@ class ChromeAudio extends ChromeApi {
     if (_audio == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _audio.callMethod('getMute', [jsify(streamType), completer.callback]);
+    _audio.callMethod('getMute', [toJS(streamType), completer.callback]);
     return completer.future;
   }
 
@@ -107,7 +107,7 @@ class ChromeAudio extends ChromeApi {
     if (_audio == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _audio.callMethod('setMute', [jsify(streamType), isMuted, completer.callback]);
+    _audio.callMethod('setMute', [toJS(streamType), isMuted, completer.callback]);
     return completer.future;
   }
 
@@ -191,7 +191,7 @@ class OutputDeviceInfo extends ChromeObject {
   set isMuted(bool value) => jsProxy['isMuted'] = value;
 
   num get volume => jsProxy['volume'];
-  set volume(num value) => jsProxy['volume'] = jsify(value);
+  set volume(num value) => jsProxy['volume'] = toJS(value);
 }
 
 class InputDeviceInfo extends ChromeObject {
@@ -217,7 +217,7 @@ class InputDeviceInfo extends ChromeObject {
   set isMuted(bool value) => jsProxy['isMuted'] = value;
 
   num get gain => jsProxy['gain'];
-  set gain(num value) => jsProxy['gain'] = jsify(value);
+  set gain(num value) => jsProxy['gain'] = toJS(value);
 }
 
 class AudioDeviceInfo extends ChromeObject {
@@ -237,10 +237,10 @@ class AudioDeviceInfo extends ChromeObject {
   set id(String value) => jsProxy['id'] = value;
 
   StreamType get streamType => _createStreamType(jsProxy['streamType']);
-  set streamType(StreamType value) => jsProxy['streamType'] = jsify(value);
+  set streamType(StreamType value) => jsProxy['streamType'] = toJS(value);
 
   DeviceType get deviceType => _createDeviceType(jsProxy['deviceType']);
-  set deviceType(DeviceType value) => jsProxy['deviceType'] = jsify(value);
+  set deviceType(DeviceType value) => jsProxy['deviceType'] = toJS(value);
 
   String get displayName => jsProxy['displayName'];
   set displayName(String value) => jsProxy['displayName'] = value;
@@ -265,8 +265,8 @@ class DeviceFilter extends ChromeObject {
   }
   DeviceFilter.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<StreamType> get streamTypes => listify(jsProxy['streamTypes'], _createStreamType);
-  set streamTypes(List<StreamType> value) => jsProxy['streamTypes'] = jsify(value);
+  List<StreamType> get streamTypes => toList(jsProxy['streamTypes'], _createStreamType);
+  set streamTypes(List<StreamType> value) => jsProxy['streamTypes'] = toJS(value);
 
   bool get isActive => jsProxy['isActive'];
   set isActive(bool value) => jsProxy['isActive'] = value;
@@ -285,10 +285,10 @@ class DeviceProperties extends ChromeObject {
   set isMuted(bool value) => jsProxy['isMuted'] = value;
 
   num get volume => jsProxy['volume'];
-  set volume(num value) => jsProxy['volume'] = jsify(value);
+  set volume(num value) => jsProxy['volume'] = toJS(value);
 
   num get gain => jsProxy['gain'];
-  set gain(num value) => jsProxy['gain'] = jsify(value);
+  set gain(num value) => jsProxy['gain'] = toJS(value);
 
   int get level => jsProxy['level'];
   set level(int value) => jsProxy['level'] = value;
@@ -301,11 +301,11 @@ class DeviceIdLists extends ChromeObject {
   }
   DeviceIdLists.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<String> get input => listify(jsProxy['input']);
-  set input(List<String> value) => jsProxy['input'] = jsify(value);
+  List<String> get input => toList(jsProxy['input']);
+  set input(List<String> value) => jsProxy['input'] = toJS(value);
 
-  List<String> get output => listify(jsProxy['output']);
-  set output(List<String> value) => jsProxy['output'] = jsify(value);
+  List<String> get output => toList(jsProxy['output']);
+  set output(List<String> value) => jsProxy['output'] = toJS(value);
 }
 
 class MuteChangedEvent extends ChromeObject {
@@ -316,7 +316,7 @@ class MuteChangedEvent extends ChromeObject {
   MuteChangedEvent.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   StreamType get streamType => _createStreamType(jsProxy['streamType']);
-  set streamType(StreamType value) => jsProxy['streamType'] = jsify(value);
+  set streamType(StreamType value) => jsProxy['streamType'] = toJS(value);
 
   bool get isMuted => jsProxy['isMuted'];
   set isMuted(bool value) => jsProxy['isMuted'] = value;
@@ -341,7 +341,7 @@ class LevelChangedEvent extends ChromeObject {
  */
 class GetInfoResult {
   static GetInfoResult _create(outputInfo, inputInfo) {
-    return new GetInfoResult._(listify(outputInfo, _createOutputDeviceInfo), listify(inputInfo, _createInputDeviceInfo));
+    return new GetInfoResult._(toList(outputInfo, _createOutputDeviceInfo), toList(inputInfo, _createInputDeviceInfo));
   }
 
   List<OutputDeviceInfo> outputInfo;

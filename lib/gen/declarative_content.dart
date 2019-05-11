@@ -85,7 +85,7 @@ class PageStateMatcher extends ChromeObject {
    * URL of the page.
    */
   UrlFilter get pageUrl => _createUrlFilter(jsProxy['pageUrl']);
-  set pageUrl(UrlFilter value) => jsProxy['pageUrl'] = jsify(value);
+  set pageUrl(UrlFilter value) => jsProxy['pageUrl'] = toJS(value);
 
   /**
    * Matches if all of the CSS selectors in the array match displayed elements
@@ -95,8 +95,8 @@ class PageStateMatcher extends ChromeObject {
    * Note that listing hundreds of CSS selectors or CSS selectors that match
    * hundreds of times per page can still slow down web sites.
    */
-  List<String> get css => listify(jsProxy['css']);
-  set css(List<String> value) => jsProxy['css'] = jsify(value);
+  List<String> get css => toList(jsProxy['css']);
+  set css(List<String> value) => jsProxy['css'] = toJS(value);
 
   /**
    * Matches if the bookmarked state of the page is equal to the specified
@@ -151,7 +151,7 @@ class SetIcon extends ChromeObject {
    * = foo' is equivalent to 'details.imageData = {'16': foo}'
    */
   dynamic get imageData => jsProxy['imageData'];
-  set imageData(var value) => jsProxy['imageData'] = jsify(value);
+  set imageData(var value) => jsProxy['imageData'] = toJS(value);
 }
 
 /**
@@ -170,14 +170,14 @@ class RequestContentScript extends ChromeObject {
   /**
    * Names of CSS files to be injected as a part of the content script.
    */
-  List<String> get css => listify(jsProxy['css']);
-  set css(List<String> value) => jsProxy['css'] = jsify(value);
+  List<String> get css => toList(jsProxy['css']);
+  set css(List<String> value) => jsProxy['css'] = toJS(value);
 
   /**
    * Names of Javascript files to be injected as a part of the content script.
    */
-  List<String> get js => listify(jsProxy['js']);
-  set js(List<String> value) => jsProxy['js'] = jsify(value);
+  List<String> get js => toList(jsProxy['js']);
+  set js(List<String> value) => jsProxy['js'] = toJS(value);
 
   /**
    * Whether the content script runs in all frames of the matching page, or only

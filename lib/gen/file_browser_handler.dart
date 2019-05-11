@@ -46,8 +46,8 @@ class ChromeFileBrowserHandler extends ChromeApi {
   Future<Map> selectFile(FileBrowserHandlerSelectFileParams selectionParams) {
     if (_fileBrowserHandler == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _fileBrowserHandler.callMethod('selectFile', [jsify(selectionParams), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _fileBrowserHandler.callMethod('selectFile', [toJS(selectionParams), completer.callback]);
     return completer.future;
   }
 
@@ -87,8 +87,8 @@ class FileHandlerExecuteEventDetails extends ChromeObject {
    * Array of Entry instances representing files that are targets of this action
    * (selected in ChromeOS file browser).
    */
-  List<dynamic> get entries => listify(jsProxy['entries']);
-  set entries(List<dynamic> value) => jsProxy['entries'] = jsify(value);
+  List<dynamic> get entries => toList(jsProxy['entries']);
+  set entries(List<dynamic> value) => jsProxy['entries'] = toJS(value);
 
   /**
    * The ID of the tab that raised this event. Tab IDs are unique within a
@@ -117,8 +117,8 @@ class FileBrowserHandlerSelectFileParams extends ChromeObject {
    * with the listed extensions are only shown in the dialog. Extensions should
    * not include the leading '.'. Example: ['jpg', 'png']
    */
-  List<String> get allowedFileExtensions => listify(jsProxy['allowedFileExtensions']);
-  set allowedFileExtensions(List<String> value) => jsProxy['allowedFileExtensions'] = jsify(value);
+  List<String> get allowedFileExtensions => toList(jsProxy['allowedFileExtensions']);
+  set allowedFileExtensions(List<String> value) => jsProxy['allowedFileExtensions'] = toJS(value);
 }
 
 OnExecuteEvent _createOnExecuteEvent(String id, JsObject details) =>

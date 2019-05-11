@@ -26,7 +26,7 @@ class ChromeTopSites extends ChromeApi {
   Future<List<MostVisitedURL>> get() {
     if (_topSites == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<MostVisitedURL>>.oneArg((e) => listify(e, _createMostVisitedURL));
+    var completer = new ChromeCompleter<List<MostVisitedURL>>.oneArg((e) => toList(e, _createMostVisitedURL));
     _topSites.callMethod('get', [completer.callback]);
     return completer.future;
   }

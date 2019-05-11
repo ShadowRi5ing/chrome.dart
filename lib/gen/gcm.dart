@@ -40,9 +40,9 @@ class ChromeGcm extends ChromeApi {
 
   ChromeGcm._() {
     var getApi = () => _gcm;
-    _onMessage = new ChromeStreamController<Map>.oneArg(getApi, 'onMessage', mapify);
+    _onMessage = new ChromeStreamController<Map>.oneArg(getApi, 'onMessage', toMap);
     _onMessagesDeleted = new ChromeStreamController.noArgs(getApi, 'onMessagesDeleted');
-    _onSendError = new ChromeStreamController<Map>.oneArg(getApi, 'onSendError', mapify);
+    _onSendError = new ChromeStreamController<Map>.oneArg(getApi, 'onSendError', toMap);
   }
 
   bool get available => _gcm != null;
@@ -68,7 +68,7 @@ class ChromeGcm extends ChromeApi {
     if (_gcm == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _gcm.callMethod('register', [jsify(senderIds), completer.callback]);
+    _gcm.callMethod('register', [toJS(senderIds), completer.callback]);
     return completer.future;
   }
 
@@ -95,7 +95,7 @@ class ChromeGcm extends ChromeApi {
     if (_gcm == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _gcm.callMethod('send', [jsify(message), completer.callback]);
+    _gcm.callMethod('send', [toJS(message), completer.callback]);
     return completer.future;
   }
 
@@ -144,6 +144,6 @@ class GcmSendParams extends ChromeObject {
    * as well as case-sensitive `collapse_key` are disallowed as key prefixes.
    * Sum of all key/value pairs should not exceed [gcm.MAX_MESSAGE_SIZE].
    */
-  Map get data => mapify(jsProxy['data']);
-  set data(Map value) => jsProxy['data'] = jsify(value);
+  Map get data => toMap(jsProxy['data']);
+  set data(Map value) => jsProxy['data'] = toJS(value);
 }

@@ -33,7 +33,7 @@ class ChromeSocket extends ChromeApi {
     if (_socket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<CreateInfo>.oneArg(_createCreateInfo);
-    _socket.callMethod('create', [jsify(type), jsify(options), completer.callback]);
+    _socket.callMethod('create', [toJS(type), toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -116,7 +116,7 @@ class ChromeSocket extends ChromeApi {
     if (_socket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<SocketWriteInfo>.oneArg(_createWriteInfo);
-    _socket.callMethod('write', [socketId, jsify(data), completer.callback]);
+    _socket.callMethod('write', [socketId, toJS(data), completer.callback]);
     return completer.future;
   }
 
@@ -147,7 +147,7 @@ class ChromeSocket extends ChromeApi {
     if (_socket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<SocketWriteInfo>.oneArg(_createWriteInfo);
-    _socket.callMethod('sendTo', [socketId, jsify(data), address, port, completer.callback]);
+    _socket.callMethod('sendTo', [socketId, toJS(data), address, port, completer.callback]);
     return completer.future;
   }
 
@@ -237,7 +237,7 @@ class ChromeSocket extends ChromeApi {
   Future<List<NetworkInterface>> getNetworkList() {
     if (_socket == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<NetworkInterface>>.oneArg((e) => listify(e, _createNetworkInterface));
+    var completer = new ChromeCompleter<List<NetworkInterface>>.oneArg((e) => toList(e, _createNetworkInterface));
     _socket.callMethod('getNetworkList', [completer.callback]);
     return completer.future;
   }
@@ -333,7 +333,7 @@ class ChromeSocket extends ChromeApi {
   Future<List<String>> getJoinedGroups(int socketId) {
     if (_socket == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<String>>.oneArg(listify);
+    var completer = new ChromeCompleter<List<String>>.oneArg(toList);
     _socket.callMethod('getJoinedGroups', [socketId, completer.callback]);
     return completer.future;
   }
@@ -348,7 +348,7 @@ class ChromeSocket extends ChromeApi {
     if (_socket == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<int>.oneArg();
-    _socket.callMethod('secure', [socketId, jsify(options), completer.callback]);
+    _socket.callMethod('secure', [socketId, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -409,7 +409,7 @@ class SocketReadInfo extends ChromeObject {
   set resultCode(int value) => jsProxy['resultCode'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 }
 
 class SocketWriteInfo extends ChromeObject {
@@ -435,7 +435,7 @@ class RecvFromInfo extends ChromeObject {
   set resultCode(int value) => jsProxy['resultCode'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 
   String get address => jsProxy['address'];
   set address(String value) => jsProxy['address'] = value;
@@ -456,7 +456,7 @@ class SocketInfo extends ChromeObject {
   SocketInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   SocketType get socketType => _createSocketType(jsProxy['socketType']);
-  set socketType(SocketType value) => jsProxy['socketType'] = jsify(value);
+  set socketType(SocketType value) => jsProxy['socketType'] = toJS(value);
 
   bool get connected => jsProxy['connected'];
   set connected(bool value) => jsProxy['connected'] = value;
@@ -513,7 +513,7 @@ class SecureOptions extends ChromeObject {
   SecureOptions.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   TLSVersionConstraints get tlsVersion => _createTLSVersionConstraints(jsProxy['tlsVersion']);
-  set tlsVersion(TLSVersionConstraints value) => jsProxy['tlsVersion'] = jsify(value);
+  set tlsVersion(TLSVersionConstraints value) => jsProxy['tlsVersion'] = toJS(value);
 }
 
 CreateInfo _createCreateInfo(JsObject jsProxy) => jsProxy == null ? null : new CreateInfo.fromProxy(jsProxy);

@@ -57,7 +57,7 @@ class ChromeDebugger extends ChromeApi {
     if (_debugger == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _debugger.callMethod('attach', [jsify(target), requiredVersion, completer.callback]);
+    _debugger.callMethod('attach', [toJS(target), requiredVersion, completer.callback]);
     return completer.future;
   }
 
@@ -70,7 +70,7 @@ class ChromeDebugger extends ChromeApi {
     if (_debugger == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _debugger.callMethod('detach', [jsify(target), completer.callback]);
+    _debugger.callMethod('detach', [toJS(target), completer.callback]);
     return completer.future;
   }
 
@@ -94,8 +94,8 @@ class ChromeDebugger extends ChromeApi {
   Future<Map<String, dynamic>> sendCommand(Debuggee target, String method, [Map<String, dynamic> commandParams]) {
     if (_debugger == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(mapify);
-    _debugger.callMethod('sendCommand', [jsify(target), method, jsify(commandParams), completer.callback]);
+    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(toMap);
+    _debugger.callMethod('sendCommand', [toJS(target), method, toJS(commandParams), completer.callback]);
     return completer.future;
   }
 
@@ -108,7 +108,7 @@ class ChromeDebugger extends ChromeApi {
   Future<List<TargetInfo>> getTargets() {
     if (_debugger == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<TargetInfo>>.oneArg((e) => listify(e, _createTargetInfo));
+    var completer = new ChromeCompleter<List<TargetInfo>>.oneArg((e) => toList(e, _createTargetInfo));
     _debugger.callMethod('getTargets', [completer.callback]);
     return completer.future;
   }
@@ -246,7 +246,7 @@ class TargetInfo extends ChromeObject {
    * Target type.
    */
   TargetInfoType get type => _createTargetInfoType(jsProxy['type']);
-  set type(TargetInfoType value) => jsProxy['type'] = jsify(value);
+  set type(TargetInfoType value) => jsProxy['type'] = toJS(value);
 
   /**
    * Target id.
@@ -292,7 +292,7 @@ class TargetInfo extends ChromeObject {
 }
 
 OnEventEvent _createOnEventEvent(JsObject source, String method, JsObject params) =>
-    new OnEventEvent(_createDebuggee(source), method, mapify(params));
+    new OnEventEvent(_createDebuggee(source), method, toMap(params));
 OnDetachEvent _createOnDetachEvent(JsObject source, String reason) =>
     new OnDetachEvent(_createDebuggee(source), _createDetachReason(reason));
 TargetInfo _createTargetInfo(JsObject jsProxy) => jsProxy == null ? null : new TargetInfo.fromProxy(jsProxy);

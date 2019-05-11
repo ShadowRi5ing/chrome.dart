@@ -60,7 +60,7 @@ class ChromeNotifications extends ChromeApi {
     if (_notifications == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _notifications.callMethod('create', [notificationId, jsify(options), completer.callback]);
+    _notifications.callMethod('create', [notificationId, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -77,7 +77,7 @@ class ChromeNotifications extends ChromeApi {
     if (_notifications == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _notifications.callMethod('update', [notificationId, jsify(options), completer.callback]);
+    _notifications.callMethod('update', [notificationId, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -192,7 +192,7 @@ class NotificationBitmap extends ChromeObject {
   set height(int value) => jsProxy['height'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 }
 
 class NotificationButton extends ChromeObject {
@@ -210,7 +210,7 @@ class NotificationButton extends ChromeObject {
   set iconUrl(String value) => jsProxy['iconUrl'] = value;
 
   NotificationBitmap get iconBitmap => _createNotificationBitmap(jsProxy['iconBitmap']);
-  set iconBitmap(NotificationBitmap value) => jsProxy['iconBitmap'] = jsify(value);
+  set iconBitmap(NotificationBitmap value) => jsProxy['iconBitmap'] = toJS(value);
 }
 
 class NotificationOptions extends ChromeObject {
@@ -237,19 +237,19 @@ class NotificationOptions extends ChromeObject {
   NotificationOptions.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   TemplateType get type => _createTemplateType(jsProxy['type']);
-  set type(TemplateType value) => jsProxy['type'] = jsify(value);
+  set type(TemplateType value) => jsProxy['type'] = toJS(value);
 
   String get iconUrl => jsProxy['iconUrl'];
   set iconUrl(String value) => jsProxy['iconUrl'] = value;
 
   NotificationBitmap get iconBitmap => _createNotificationBitmap(jsProxy['iconBitmap']);
-  set iconBitmap(NotificationBitmap value) => jsProxy['iconBitmap'] = jsify(value);
+  set iconBitmap(NotificationBitmap value) => jsProxy['iconBitmap'] = toJS(value);
 
   String get appIconMaskUrl => jsProxy['appIconMaskUrl'];
   set appIconMaskUrl(String value) => jsProxy['appIconMaskUrl'] = value;
 
   NotificationBitmap get appIconMaskBitmap => _createNotificationBitmap(jsProxy['appIconMaskBitmap']);
-  set appIconMaskBitmap(NotificationBitmap value) => jsProxy['appIconMaskBitmap'] = jsify(value);
+  set appIconMaskBitmap(NotificationBitmap value) => jsProxy['appIconMaskBitmap'] = toJS(value);
 
   String get title => jsProxy['title'];
   set title(String value) => jsProxy['title'] = value;
@@ -264,10 +264,10 @@ class NotificationOptions extends ChromeObject {
   set priority(int value) => jsProxy['priority'] = value;
 
   num get eventTime => jsProxy['eventTime'];
-  set eventTime(num value) => jsProxy['eventTime'] = jsify(value);
+  set eventTime(num value) => jsProxy['eventTime'] = toJS(value);
 
-  List<NotificationButton> get buttons => listify(jsProxy['buttons'], _createNotificationButton);
-  set buttons(List<NotificationButton> value) => jsProxy['buttons'] = jsify(value);
+  List<NotificationButton> get buttons => toList(jsProxy['buttons'], _createNotificationButton);
+  set buttons(List<NotificationButton> value) => jsProxy['buttons'] = toJS(value);
 
   String get expandedMessage => jsProxy['expandedMessage'];
   set expandedMessage(String value) => jsProxy['expandedMessage'] = value;
@@ -276,10 +276,10 @@ class NotificationOptions extends ChromeObject {
   set imageUrl(String value) => jsProxy['imageUrl'] = value;
 
   NotificationBitmap get imageBitmap => _createNotificationBitmap(jsProxy['imageBitmap']);
-  set imageBitmap(NotificationBitmap value) => jsProxy['imageBitmap'] = jsify(value);
+  set imageBitmap(NotificationBitmap value) => jsProxy['imageBitmap'] = toJS(value);
 
-  List<NotificationItem> get items => listify(jsProxy['items'], _createNotificationItem);
-  set items(List<NotificationItem> value) => jsProxy['items'] = jsify(value);
+  List<NotificationItem> get items => toList(jsProxy['items'], _createNotificationItem);
+  set items(List<NotificationItem> value) => jsProxy['items'] = toJS(value);
 
   int get progress => jsProxy['progress'];
   set progress(int value) => jsProxy['progress'] = value;

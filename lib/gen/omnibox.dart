@@ -68,7 +68,7 @@ class ChromeOmnibox extends ChromeApi {
   void sendSuggestions(int requestId, List<SuggestResult> suggestResults) {
     if (_omnibox == null) _throwNotAvailable();
 
-    _omnibox.callMethod('sendSuggestions', [requestId, jsify(suggestResults)]);
+    _omnibox.callMethod('sendSuggestions', [requestId, toJS(suggestResults)]);
   }
 
   /**
@@ -82,7 +82,7 @@ class ChromeOmnibox extends ChromeApi {
   void setDefaultSuggestion(DefaultSuggestResult suggestion) {
     if (_omnibox == null) _throwNotAvailable();
 
-    _omnibox.callMethod('setDefaultSuggestion', [jsify(suggestion)]);
+    _omnibox.callMethod('setDefaultSuggestion', [toJS(suggestion)]);
   }
 
   void _throwNotAvailable() {

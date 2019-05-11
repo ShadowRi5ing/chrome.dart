@@ -73,7 +73,7 @@ class ImageDetails extends ChromeObject {
    * The format of the resulting image.  Default is `"jpeg"`.
    */
   ImageFormat get format => _createImageFormat(jsProxy['format']);
-  set format(ImageFormat value) => jsProxy['format'] = jsify(value);
+  set format(ImageFormat value) => jsProxy['format'] = toJS(value);
 
   /**
    * When format is `"jpeg"`, controls the quality of the resulting image.  This
@@ -146,7 +146,7 @@ class InjectDetails extends ChromeObject {
    * Defaults to "document_idle".
    */
   RunAt get runAt => _createRunAt(jsProxy['runAt']);
-  set runAt(RunAt value) => jsProxy['runAt'] = jsify(value);
+  set runAt(RunAt value) => jsProxy['runAt'] = toJS(value);
 
   /**
    * The [origin](https://www.w3.org/TR/css3-cascade/#cascading-origins) of the
@@ -154,7 +154,7 @@ class InjectDetails extends ChromeObject {
    * to `"author"`.
    */
   CSSOrigin get cssOrigin => _createCSSOrigin(jsProxy['cssOrigin']);
-  set cssOrigin(CSSOrigin value) => jsProxy['cssOrigin'] = jsify(value);
+  set cssOrigin(CSSOrigin value) => jsProxy['cssOrigin'] = toJS(value);
 }
 
 ImageFormat _createImageFormat(String value) => ImageFormat.VALUES.singleWhere((ChromeEnum e) => e.value == value);

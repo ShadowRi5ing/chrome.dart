@@ -39,7 +39,7 @@ class ChromeBrowserAction extends ChromeApi {
   void setTitle(BrowserActionSetTitleParams details) {
     if (_browserAction == null) _throwNotAvailable();
 
-    _browserAction.callMethod('setTitle', [jsify(details)]);
+    _browserAction.callMethod('setTitle', [toJS(details)]);
   }
 
   /**
@@ -49,7 +49,7 @@ class ChromeBrowserAction extends ChromeApi {
     if (_browserAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _browserAction.callMethod('getTitle', [jsify(details), completer.callback]);
+    _browserAction.callMethod('getTitle', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -63,7 +63,7 @@ class ChromeBrowserAction extends ChromeApi {
     if (_browserAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _browserAction.callMethod('setIcon', [jsify(details), completer.callback]);
+    _browserAction.callMethod('setIcon', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -74,7 +74,7 @@ class ChromeBrowserAction extends ChromeApi {
   void setPopup(BrowserActionSetPopupParams details) {
     if (_browserAction == null) _throwNotAvailable();
 
-    _browserAction.callMethod('setPopup', [jsify(details)]);
+    _browserAction.callMethod('setPopup', [toJS(details)]);
   }
 
   /**
@@ -84,7 +84,7 @@ class ChromeBrowserAction extends ChromeApi {
     if (_browserAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _browserAction.callMethod('getPopup', [jsify(details), completer.callback]);
+    _browserAction.callMethod('getPopup', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -95,7 +95,7 @@ class ChromeBrowserAction extends ChromeApi {
   void setBadgeText(BrowserActionSetBadgeTextParams details) {
     if (_browserAction == null) _throwNotAvailable();
 
-    _browserAction.callMethod('setBadgeText', [jsify(details)]);
+    _browserAction.callMethod('setBadgeText', [toJS(details)]);
   }
 
   /**
@@ -106,7 +106,7 @@ class ChromeBrowserAction extends ChromeApi {
     if (_browserAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _browserAction.callMethod('getBadgeText', [jsify(details), completer.callback]);
+    _browserAction.callMethod('getBadgeText', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -116,7 +116,7 @@ class ChromeBrowserAction extends ChromeApi {
   void setBadgeBackgroundColor(BrowserActionSetBadgeBackgroundColorParams details) {
     if (_browserAction == null) _throwNotAvailable();
 
-    _browserAction.callMethod('setBadgeBackgroundColor', [jsify(details)]);
+    _browserAction.callMethod('setBadgeBackgroundColor', [toJS(details)]);
   }
 
   /**
@@ -126,7 +126,7 @@ class ChromeBrowserAction extends ChromeApi {
     if (_browserAction == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ColorArray>.oneArg(_createColorArray);
-    _browserAction.callMethod('getBadgeBackgroundColor', [jsify(details), completer.callback]);
+    _browserAction.callMethod('getBadgeBackgroundColor', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -164,7 +164,7 @@ class ChromeBrowserAction extends ChromeApi {
   Future<Map<String, dynamic>> openPopup() {
     if (_browserAction == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(mapify);
+    var completer = new ChromeCompleter<Map<String, dynamic>>.oneArg(toMap);
     _browserAction.callMethod('openPopup', [completer.callback]);
     return completer.future;
   }
@@ -241,7 +241,7 @@ class BrowserActionSetIconParams extends ChromeObject {
    * = foo' is equivalent to 'details.imageData = {'16': foo}'
    */
   dynamic get imageData => jsProxy['imageData'];
-  set imageData(var value) => jsProxy['imageData'] = jsify(value);
+  set imageData(var value) => jsProxy['imageData'] = toJS(value);
 
   /**
    * Either a relative image path or a dictionary {size -> relative image path}
@@ -253,7 +253,7 @@ class BrowserActionSetIconParams extends ChromeObject {
    * 'details.path = foo' is equivalent to 'details.path = {'16': foo}'
    */
   dynamic get path => jsProxy['path'];
-  set path(var value) => jsProxy['path'] = jsify(value);
+  set path(var value) => jsProxy['path'] = toJS(value);
 
   /**
    * Limits the change to when a particular tab is selected. Automatically
@@ -348,7 +348,7 @@ class BrowserActionSetBadgeBackgroundColorParams extends ChromeObject {
    * string with a CSS value, with opaque red being `#FF0000` or `#F00`.
    */
   dynamic get color => jsProxy['color'];
-  set color(var value) => jsProxy['color'] = jsify(value);
+  set color(var value) => jsProxy['color'] = toJS(value);
 
   /**
    * Limits the change to when a particular tab is selected. Automatically

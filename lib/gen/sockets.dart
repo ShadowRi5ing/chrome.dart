@@ -60,7 +60,7 @@ class ChromeSocketsTcp extends ChromeApi {
     if (_sockets_tcp == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<CreateInfo>.oneArg(_createCreateInfo);
-    _sockets_tcp.callMethod('create', [jsify(properties), completer.callback]);
+    _sockets_tcp.callMethod('create', [toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -74,7 +74,7 @@ class ChromeSocketsTcp extends ChromeApi {
     if (_sockets_tcp == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _sockets_tcp.callMethod('update', [socketId, jsify(properties), completer.callback]);
+    _sockets_tcp.callMethod('update', [socketId, toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -183,7 +183,7 @@ class ChromeSocketsTcp extends ChromeApi {
     if (_sockets_tcp == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<int>.oneArg();
-    _sockets_tcp.callMethod('secure', [socketId, jsify(options), completer.callback]);
+    _sockets_tcp.callMethod('secure', [socketId, toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -201,7 +201,7 @@ class ChromeSocketsTcp extends ChromeApi {
     if (_sockets_tcp == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<SendInfo>.oneArg(_createSendInfo);
-    _sockets_tcp.callMethod('send', [socketId, jsify(data), completer.callback]);
+    _sockets_tcp.callMethod('send', [socketId, toJS(data), completer.callback]);
     return completer.future;
   }
 
@@ -249,7 +249,7 @@ class ChromeSocketsTcp extends ChromeApi {
   Future<List<SocketInfo>> getSockets() {
     if (_sockets_tcp == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<SocketInfo>>.oneArg((e) => listify(e, _createSocketInfo));
+    var completer = new ChromeCompleter<List<SocketInfo>>.oneArg((e) => toList(e, _createSocketInfo));
     _sockets_tcp.callMethod('getSockets', [completer.callback]);
     return completer.future;
   }
@@ -334,7 +334,7 @@ class SecureOptions extends ChromeObject {
   SecureOptions.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   TLSVersionConstraints get tlsVersion => _createTLSVersionConstraints(jsProxy['tlsVersion']);
-  set tlsVersion(TLSVersionConstraints value) => jsProxy['tlsVersion'] = jsify(value);
+  set tlsVersion(TLSVersionConstraints value) => jsProxy['tlsVersion'] = toJS(value);
 }
 
 /**
@@ -400,7 +400,7 @@ class ReceiveInfo extends ChromeObject {
   set socketId(int value) => jsProxy['socketId'] = value;
 
   ArrayBuffer get data => _createArrayBuffer(jsProxy['data']);
-  set data(ArrayBuffer value) => jsProxy['data'] = jsify(value);
+  set data(ArrayBuffer value) => jsProxy['data'] = toJS(value);
 }
 
 /**
@@ -463,7 +463,7 @@ class ChromeSocketsTcpServer extends ChromeApi {
     if (_sockets_tcpServer == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<CreateInfo>.oneArg(_createCreateInfo);
-    _sockets_tcpServer.callMethod('create', [jsify(properties), completer.callback]);
+    _sockets_tcpServer.callMethod('create', [toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -477,7 +477,7 @@ class ChromeSocketsTcpServer extends ChromeApi {
     if (_sockets_tcpServer == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _sockets_tcpServer.callMethod('update', [socketId, jsify(properties), completer.callback]);
+    _sockets_tcpServer.callMethod('update', [socketId, toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -581,7 +581,7 @@ class ChromeSocketsTcpServer extends ChromeApi {
   Future<List<SocketInfo>> getSockets() {
     if (_sockets_tcpServer == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<SocketInfo>>.oneArg((e) => listify(e, _createSocketInfo));
+    var completer = new ChromeCompleter<List<SocketInfo>>.oneArg((e) => toList(e, _createSocketInfo));
     _sockets_tcpServer.callMethod('getSockets', [completer.callback]);
     return completer.future;
   }
@@ -663,7 +663,7 @@ class ChromeSocketsUdp extends ChromeApi {
     if (_sockets_udp == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<CreateInfo>.oneArg(_createCreateInfo);
-    _sockets_udp.callMethod('create', [jsify(properties), completer.callback]);
+    _sockets_udp.callMethod('create', [toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -677,7 +677,7 @@ class ChromeSocketsUdp extends ChromeApi {
     if (_sockets_udp == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _sockets_udp.callMethod('update', [socketId, jsify(properties), completer.callback]);
+    _sockets_udp.callMethod('update', [socketId, toJS(properties), completer.callback]);
     return completer.future;
   }
 
@@ -742,7 +742,7 @@ class ChromeSocketsUdp extends ChromeApi {
     if (_sockets_udp == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<SendInfo>.oneArg(_createSendInfo);
-    _sockets_udp.callMethod('send', [socketId, jsify(data), address, port, completer.callback]);
+    _sockets_udp.callMethod('send', [socketId, toJS(data), address, port, completer.callback]);
     return completer.future;
   }
 
@@ -790,7 +790,7 @@ class ChromeSocketsUdp extends ChromeApi {
   Future<List<SocketInfo>> getSockets() {
     if (_sockets_udp == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<SocketInfo>>.oneArg((e) => listify(e, _createSocketInfo));
+    var completer = new ChromeCompleter<List<SocketInfo>>.oneArg((e) => toList(e, _createSocketInfo));
     _sockets_udp.callMethod('getSockets', [completer.callback]);
     return completer.future;
   }
@@ -907,7 +907,7 @@ class ChromeSocketsUdp extends ChromeApi {
   Future<List<String>> getJoinedGroups(int socketId) {
     if (_sockets_udp == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<String>>.oneArg(listify);
+    var completer = new ChromeCompleter<List<String>>.oneArg(toList);
     _sockets_udp.callMethod('getJoinedGroups', [socketId, completer.callback]);
     return completer.future;
   }

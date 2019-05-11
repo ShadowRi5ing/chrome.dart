@@ -42,8 +42,8 @@ class ChromeHid extends ChromeApi {
   Future<List<HidDeviceInfo>> getDevices(HidGetDevicesOptions options) {
     if (_hid == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<HidDeviceInfo>>.oneArg((e) => listify(e, _createHidDeviceInfo));
-    _hid.callMethod('getDevices', [jsify(options), completer.callback]);
+    var completer = new ChromeCompleter<List<HidDeviceInfo>>.oneArg((e) => toList(e, _createHidDeviceInfo));
+    _hid.callMethod('getDevices', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -59,8 +59,8 @@ class ChromeHid extends ChromeApi {
   Future<List<HidDeviceInfo>> getUserSelectedDevices([HidDevicePromptOptions options]) {
     if (_hid == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<HidDeviceInfo>>.oneArg((e) => listify(e, _createHidDeviceInfo));
-    _hid.callMethod('getUserSelectedDevices', [jsify(options), completer.callback]);
+    var completer = new ChromeCompleter<List<HidDeviceInfo>>.oneArg((e) => toList(e, _createHidDeviceInfo));
+    _hid.callMethod('getUserSelectedDevices', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -118,7 +118,7 @@ class ChromeHid extends ChromeApi {
     if (_hid == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _hid.callMethod('send', [connectionId, reportId, jsify(data), completer.callback]);
+    _hid.callMethod('send', [connectionId, reportId, toJS(data), completer.callback]);
     return completer.future;
   }
 
@@ -153,7 +153,7 @@ class ChromeHid extends ChromeApi {
     if (_hid == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _hid.callMethod('sendFeatureReport', [connectionId, reportId, jsify(data), completer.callback]);
+    _hid.callMethod('sendFeatureReport', [connectionId, reportId, toJS(data), completer.callback]);
     return completer.future;
   }
 
@@ -176,8 +176,8 @@ class HidCollectionInfo extends ChromeObject {
   int get usage => jsProxy['usage'];
   set usage(int value) => jsProxy['usage'] = value;
 
-  List<int> get reportIds => listify(jsProxy['reportIds']);
-  set reportIds(List<int> value) => jsProxy['reportIds'] = jsify(value);
+  List<int> get reportIds => toList(jsProxy['reportIds']);
+  set reportIds(List<int> value) => jsProxy['reportIds'] = toJS(value);
 }
 
 class HidDeviceInfo extends ChromeObject {
@@ -210,8 +210,8 @@ class HidDeviceInfo extends ChromeObject {
   String get serialNumber => jsProxy['serialNumber'];
   set serialNumber(String value) => jsProxy['serialNumber'] = value;
 
-  List<HidCollectionInfo> get collections => listify(jsProxy['collections'], _createHidCollectionInfo);
-  set collections(List<HidCollectionInfo> value) => jsProxy['collections'] = jsify(value);
+  List<HidCollectionInfo> get collections => toList(jsProxy['collections'], _createHidCollectionInfo);
+  set collections(List<HidCollectionInfo> value) => jsProxy['collections'] = toJS(value);
 
   int get maxInputReportSize => jsProxy['maxInputReportSize'];
   set maxInputReportSize(int value) => jsProxy['maxInputReportSize'] = value;
@@ -223,7 +223,7 @@ class HidDeviceInfo extends ChromeObject {
   set maxFeatureReportSize(int value) => jsProxy['maxFeatureReportSize'] = value;
 
   ArrayBuffer get reportDescriptor => _createArrayBuffer(jsProxy['reportDescriptor']);
-  set reportDescriptor(ArrayBuffer value) => jsProxy['reportDescriptor'] = jsify(value);
+  set reportDescriptor(ArrayBuffer value) => jsProxy['reportDescriptor'] = toJS(value);
 }
 
 class HidConnectInfo extends ChromeObject {
@@ -272,8 +272,8 @@ class HidGetDevicesOptions extends ChromeObject {
   int get productId => jsProxy['productId'];
   set productId(int value) => jsProxy['productId'] = value;
 
-  List<HidDeviceFilter> get filters => listify(jsProxy['filters'], _createDeviceFilter);
-  set filters(List<HidDeviceFilter> value) => jsProxy['filters'] = jsify(value);
+  List<HidDeviceFilter> get filters => toList(jsProxy['filters'], _createDeviceFilter);
+  set filters(List<HidDeviceFilter> value) => jsProxy['filters'] = toJS(value);
 }
 
 class HidDevicePromptOptions extends ChromeObject {
@@ -286,8 +286,8 @@ class HidDevicePromptOptions extends ChromeObject {
   bool get multiple => jsProxy['multiple'];
   set multiple(bool value) => jsProxy['multiple'] = value;
 
-  List<HidDeviceFilter> get filters => listify(jsProxy['filters'], _createDeviceFilter);
-  set filters(List<HidDeviceFilter> value) => jsProxy['filters'] = jsify(value);
+  List<HidDeviceFilter> get filters => toList(jsProxy['filters'], _createDeviceFilter);
+  set filters(List<HidDeviceFilter> value) => jsProxy['filters'] = toJS(value);
 }
 
 /**

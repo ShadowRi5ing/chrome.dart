@@ -34,7 +34,7 @@ class ChromeIdentity extends ChromeApi {
   Future<List<AccountInfo>> getAccounts() {
     if (_identity == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<AccountInfo>>.oneArg((e) => listify(e, _createAccountInfo));
+    var completer = new ChromeCompleter<List<AccountInfo>>.oneArg((e) => toList(e, _createAccountInfo));
     _identity.callMethod('getAccounts', [completer.callback]);
     return completer.future;
   }
@@ -63,7 +63,7 @@ class ChromeIdentity extends ChromeApi {
     if (_identity == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _identity.callMethod('getAuthToken', [jsify(details), completer.callback]);
+    _identity.callMethod('getAuthToken', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -97,7 +97,7 @@ class ChromeIdentity extends ChromeApi {
     if (_identity == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _identity.callMethod('removeCachedAuthToken', [jsify(details), completer.callback]);
+    _identity.callMethod('removeCachedAuthToken', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -123,7 +123,7 @@ class ChromeIdentity extends ChromeApi {
     if (_identity == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<String>.oneArg();
-    _identity.callMethod('launchWebAuthFlow', [jsify(details), completer.callback]);
+    _identity.callMethod('launchWebAuthFlow', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -189,10 +189,10 @@ class TokenDetails extends ChromeObject {
   set interactive(bool value) => jsProxy['interactive'] = value;
 
   AccountInfo get account => _createAccountInfo(jsProxy['account']);
-  set account(AccountInfo value) => jsProxy['account'] = jsify(value);
+  set account(AccountInfo value) => jsProxy['account'] = toJS(value);
 
-  List<String> get scopes => listify(jsProxy['scopes']);
-  set scopes(List<String> value) => jsProxy['scopes'] = jsify(value);
+  List<String> get scopes => toList(jsProxy['scopes']);
+  set scopes(List<String> value) => jsProxy['scopes'] = toJS(value);
 }
 
 class InvalidTokenDetails extends ChromeObject {

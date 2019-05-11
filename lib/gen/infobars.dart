@@ -33,7 +33,7 @@ class ChromeInfobars extends ChromeApi {
     if (_infobars == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<Window>.oneArg(_createWindow);
-    _infobars.callMethod('show', [jsify(details), completer.callback]);
+    _infobars.callMethod('show', [toJS(details), completer.callback]);
     return completer.future;
   }
 

@@ -82,15 +82,15 @@ class ChromeWebNavigation extends ChromeApi {
 
   ChromeWebNavigation._() {
     var getApi = () => _webNavigation;
-    _onBeforeNavigate = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeNavigate', mapify);
-    _onCommitted = new ChromeStreamController<Map>.oneArg(getApi, 'onCommitted', mapify);
-    _onDOMContentLoaded = new ChromeStreamController<Map>.oneArg(getApi, 'onDOMContentLoaded', mapify);
-    _onCompleted = new ChromeStreamController<Map>.oneArg(getApi, 'onCompleted', mapify);
-    _onErrorOccurred = new ChromeStreamController<Map>.oneArg(getApi, 'onErrorOccurred', mapify);
-    _onCreatedNavigationTarget = new ChromeStreamController<Map>.oneArg(getApi, 'onCreatedNavigationTarget', mapify);
-    _onReferenceFragmentUpdated = new ChromeStreamController<Map>.oneArg(getApi, 'onReferenceFragmentUpdated', mapify);
-    _onTabReplaced = new ChromeStreamController<Map>.oneArg(getApi, 'onTabReplaced', mapify);
-    _onHistoryStateUpdated = new ChromeStreamController<Map>.oneArg(getApi, 'onHistoryStateUpdated', mapify);
+    _onBeforeNavigate = new ChromeStreamController<Map>.oneArg(getApi, 'onBeforeNavigate', toMap);
+    _onCommitted = new ChromeStreamController<Map>.oneArg(getApi, 'onCommitted', toMap);
+    _onDOMContentLoaded = new ChromeStreamController<Map>.oneArg(getApi, 'onDOMContentLoaded', toMap);
+    _onCompleted = new ChromeStreamController<Map>.oneArg(getApi, 'onCompleted', toMap);
+    _onErrorOccurred = new ChromeStreamController<Map>.oneArg(getApi, 'onErrorOccurred', toMap);
+    _onCreatedNavigationTarget = new ChromeStreamController<Map>.oneArg(getApi, 'onCreatedNavigationTarget', toMap);
+    _onReferenceFragmentUpdated = new ChromeStreamController<Map>.oneArg(getApi, 'onReferenceFragmentUpdated', toMap);
+    _onTabReplaced = new ChromeStreamController<Map>.oneArg(getApi, 'onTabReplaced', toMap);
+    _onHistoryStateUpdated = new ChromeStreamController<Map>.oneArg(getApi, 'onHistoryStateUpdated', toMap);
   }
 
   bool get available => _webNavigation != null;
@@ -108,8 +108,8 @@ class ChromeWebNavigation extends ChromeApi {
   Future<Map> getFrame(WebNavigationGetFrameParams details) {
     if (_webNavigation == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<Map>.oneArg(mapify);
-    _webNavigation.callMethod('getFrame', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<Map>.oneArg(toMap);
+    _webNavigation.callMethod('getFrame', [toJS(details), completer.callback]);
     return completer.future;
   }
 
@@ -124,8 +124,8 @@ class ChromeWebNavigation extends ChromeApi {
   Future<List<Map>> getAllFrames(WebNavigationGetAllFramesParams details) {
     if (_webNavigation == null) _throwNotAvailable();
 
-    var completer = new ChromeCompleter<List<Map>>.oneArg((e) => listify(e, mapify));
-    _webNavigation.callMethod('getAllFrames', [jsify(details), completer.callback]);
+    var completer = new ChromeCompleter<List<Map>>.oneArg((e) => toList(e, toMap));
+    _webNavigation.callMethod('getAllFrames', [toJS(details), completer.callback]);
     return completer.future;
   }
 

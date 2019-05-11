@@ -26,7 +26,7 @@ class ChromeProxy extends ChromeApi {
 
   ChromeProxy._() {
     var getApi = () => _proxy;
-    _onProxyError = new ChromeStreamController<Map>.oneArg(getApi, 'onProxyError', mapify);
+    _onProxyError = new ChromeStreamController<Map>.oneArg(getApi, 'onProxyError', toMap);
   }
 
   bool get available => _proxy != null;
@@ -77,7 +77,7 @@ class ProxyServer extends ChromeObject {
    * The scheme (protocol) of the proxy server itself. Defaults to 'http'.
    */
   Scheme get scheme => _createScheme(this.jsProxy['scheme']);
-  set scheme(Scheme value) => this.jsProxy['scheme'] = jsify(value);
+  set scheme(Scheme value) => this.jsProxy['scheme'] = toJS(value);
 
   /**
    * The URI of the proxy server. This must be an ASCII hostname (in Punycode
@@ -115,38 +115,38 @@ class ProxyRules extends ChromeObject {
    * and ftp).
    */
   ProxyServer get singleProxy => _createProxyServer(this.jsProxy['singleProxy']);
-  set singleProxy(ProxyServer value) => this.jsProxy['singleProxy'] = jsify(value);
+  set singleProxy(ProxyServer value) => this.jsProxy['singleProxy'] = toJS(value);
 
   /**
    * The proxy server to be used for HTTP requests.
    */
   ProxyServer get proxyForHttp => _createProxyServer(this.jsProxy['proxyForHttp']);
-  set proxyForHttp(ProxyServer value) => this.jsProxy['proxyForHttp'] = jsify(value);
+  set proxyForHttp(ProxyServer value) => this.jsProxy['proxyForHttp'] = toJS(value);
 
   /**
    * The proxy server to be used for HTTPS requests.
    */
   ProxyServer get proxyForHttps => _createProxyServer(this.jsProxy['proxyForHttps']);
-  set proxyForHttps(ProxyServer value) => this.jsProxy['proxyForHttps'] = jsify(value);
+  set proxyForHttps(ProxyServer value) => this.jsProxy['proxyForHttps'] = toJS(value);
 
   /**
    * The proxy server to be used for FTP requests.
    */
   ProxyServer get proxyForFtp => _createProxyServer(this.jsProxy['proxyForFtp']);
-  set proxyForFtp(ProxyServer value) => this.jsProxy['proxyForFtp'] = jsify(value);
+  set proxyForFtp(ProxyServer value) => this.jsProxy['proxyForFtp'] = toJS(value);
 
   /**
    * The proxy server to be used for everthing else or if any of the specific
    * proxyFor... is not specified.
    */
   ProxyServer get fallbackProxy => _createProxyServer(this.jsProxy['fallbackProxy']);
-  set fallbackProxy(ProxyServer value) => this.jsProxy['fallbackProxy'] = jsify(value);
+  set fallbackProxy(ProxyServer value) => this.jsProxy['fallbackProxy'] = toJS(value);
 
   /**
    * List of servers to connect to without a proxy server.
    */
-  List<String> get bypassList => listify(this.jsProxy['bypassList']);
-  set bypassList(List<String> value) => this.jsProxy['bypassList'] = jsify(value);
+  List<String> get bypassList => toList(this.jsProxy['bypassList']);
+  set bypassList(List<String> value) => this.jsProxy['bypassList'] = toJS(value);
 }
 
 /**
@@ -197,14 +197,14 @@ class ProxyConfig extends ChromeObject {
    * mode.
    */
   ProxyRules get rules => _createProxyRules(this.jsProxy['rules']);
-  set rules(ProxyRules value) => this.jsProxy['rules'] = jsify(value);
+  set rules(ProxyRules value) => this.jsProxy['rules'] = toJS(value);
 
   /**
    * The proxy auto-config (PAC) script for this configuration. Use this for
    * 'pac_script' mode.
    */
   PacScript get pacScript => _createPacScript(this.jsProxy['pacScript']);
-  set pacScript(PacScript value) => this.jsProxy['pacScript'] = jsify(value);
+  set pacScript(PacScript value) => this.jsProxy['pacScript'] = toJS(value);
 
   /**
    * 'direct' = Never use a proxy<br>'auto_detect' = Auto detect proxy
@@ -212,7 +212,7 @@ class ProxyConfig extends ChromeObject {
    * Manually specify proxy servers<br>'system' = Use system proxy settings
    */
   Mode get mode => _createMode(this.jsProxy['mode']);
-  set mode(Mode value) => this.jsProxy['mode'] = jsify(value);
+  set mode(Mode value) => this.jsProxy['mode'] = toJS(value);
 }
 
 ChromeSetting _createChromeSetting(JsObject jsProxy) => jsProxy == null ? null : new ChromeSetting.fromProxy(jsProxy);

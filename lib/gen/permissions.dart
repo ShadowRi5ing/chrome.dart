@@ -62,7 +62,7 @@ class ChromePermissions extends ChromeApi {
     if (_permissions == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _permissions.callMethod('contains', [jsify(permissions), completer.callback]);
+    _permissions.callMethod('contains', [toJS(permissions), completer.callback]);
     return completer.future;
   }
 
@@ -78,7 +78,7 @@ class ChromePermissions extends ChromeApi {
     if (_permissions == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _permissions.callMethod('request', [jsify(permissions), completer.callback]);
+    _permissions.callMethod('request', [toJS(permissions), completer.callback]);
     return completer.future;
   }
 
@@ -93,7 +93,7 @@ class ChromePermissions extends ChromeApi {
     if (_permissions == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<bool>.oneArg();
-    _permissions.callMethod('remove', [jsify(permissions), completer.callback]);
+    _permissions.callMethod('remove', [toJS(permissions), completer.callback]);
     return completer.future;
   }
 
@@ -113,8 +113,8 @@ class Permissions extends ChromeObject {
    * List of named permissions (does not include hosts or origins).  Anything
    * listed here must appear in the `optional_permissions` list in the manifest.
    */
-  List<String> get permissions => listify(jsProxy['permissions']);
-  set permissions(List<String> value) => jsProxy['permissions'] = jsify(value);
+  List<String> get permissions => toList(jsProxy['permissions']);
+  set permissions(List<String> value) => jsProxy['permissions'] = toJS(value);
 
   /**
    * List of origin permissions. Anything listed here must be a subset of a host
@@ -123,8 +123,8 @@ class Permissions extends ChromeObject {
    * `optional_permissions`, you can request an origin of
    * `http://help.example.com/`. Any path is ignored.
    */
-  List<String> get origins => listify(jsProxy['origins']);
-  set origins(List<String> value) => jsProxy['origins'] = jsify(value);
+  List<String> get origins => toList(jsProxy['origins']);
+  set origins(List<String> value) => jsProxy['origins'] = toJS(value);
 }
 
 Permissions _createPermissions(JsObject jsProxy) => jsProxy == null ? null : new Permissions.fromProxy(jsProxy);

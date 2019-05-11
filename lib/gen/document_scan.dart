@@ -34,7 +34,7 @@ class ChromeDocumentScan extends ChromeApi {
     if (_documentScan == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter<ScanResults>.oneArg(_createScanResults);
-    _documentScan.callMethod('scan', [jsify(options), completer.callback]);
+    _documentScan.callMethod('scan', [toJS(options), completer.callback]);
     return completer.future;
   }
 
@@ -50,8 +50,8 @@ class ScanOptions extends ChromeObject {
   }
   ScanOptions.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<String> get mimeTypes => listify(jsProxy['mimeTypes']);
-  set mimeTypes(List<String> value) => jsProxy['mimeTypes'] = jsify(value);
+  List<String> get mimeTypes => toList(jsProxy['mimeTypes']);
+  set mimeTypes(List<String> value) => jsProxy['mimeTypes'] = toJS(value);
 
   int get maxImages => jsProxy['maxImages'];
   set maxImages(int value) => jsProxy['maxImages'] = value;
@@ -64,8 +64,8 @@ class ScanResults extends ChromeObject {
   }
   ScanResults.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
-  List<String> get dataUrls => listify(jsProxy['dataUrls']);
-  set dataUrls(List<String> value) => jsProxy['dataUrls'] = jsify(value);
+  List<String> get dataUrls => toList(jsProxy['dataUrls']);
+  set dataUrls(List<String> value) => jsProxy['dataUrls'] = toJS(value);
 
   String get mimeType => jsProxy['mimeType'];
   set mimeType(String value) => jsProxy['mimeType'] = value;

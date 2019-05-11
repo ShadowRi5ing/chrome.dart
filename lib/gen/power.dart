@@ -29,7 +29,7 @@ class ChromePower extends ChromeApi {
   void requestKeepAwake(Level level) {
     if (_power == null) _throwNotAvailable();
 
-    _power.callMethod('requestKeepAwake', [jsify(level)]);
+    _power.callMethod('requestKeepAwake', [toJS(level)]);
   }
 
   /**

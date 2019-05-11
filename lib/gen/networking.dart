@@ -43,7 +43,7 @@ class ChromeNetworkingConfig extends ChromeApi {
     if (_networking_config == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _networking_config.callMethod('setNetworkFilter', [jsify(networks), completer.callback]);
+    _networking_config.callMethod('setNetworkFilter', [toJS(networks), completer.callback]);
     return completer.future;
   }
 
@@ -60,7 +60,7 @@ class ChromeNetworkingConfig extends ChromeApi {
     if (_networking_config == null) _throwNotAvailable();
 
     var completer = new ChromeCompleter.noArgs();
-    _networking_config.callMethod('finishAuthentication', [GUID, jsify(result), completer.callback]);
+    _networking_config.callMethod('finishAuthentication', [GUID, toJS(result), completer.callback]);
     return completer.future;
   }
 
@@ -112,7 +112,7 @@ class NetworkInfo extends ChromeObject {
   NetworkInfo.fromProxy(JsObject jsProxy): super.fromProxy(jsProxy);
 
   NetworkType get Type => _createNetworkType(jsProxy['Type']);
-  set Type(NetworkType value) => jsProxy['Type'] = jsify(value);
+  set Type(NetworkType value) => jsProxy['Type'] = toJS(value);
 
   String get GUID => jsProxy['GUID'];
   set GUID(String value) => jsProxy['GUID'] = value;
