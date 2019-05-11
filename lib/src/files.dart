@@ -3,23 +3,7 @@ library chrome.src.files;
 
 import 'dart:async';
 import 'dart:js';
-//import 'dart:html' show EventStreamProvider;
-
-import 'dart:html' show
-    Blob,
-    DirectoryEntry, DirectoryReader, DomException,
-    Entry,
-    File, FileEntry, FileSystem, FileWriter,
-    Metadata;
-
-export 'dart:html' show
-    Blob,
-    DirectoryEntry, DirectoryReader, DomException,
-    Entry, EventTarget,
-    File, FileEntry, FileReader, FileSystem, FileWriter,
-    Metadata,
-    ProgressEvent;
-
+import 'dart:html';
 import 'common.dart';
 
 class CrFileSystem extends ChromeObject implements FileSystem {
@@ -379,7 +363,6 @@ class CrBlob extends ChromeObject implements Blob {
 //  Stream<Event> get onError => errorEvent.forTarget(this);
 //
 //  void readAsText(Blob blob, [String encoding]) {
-//    // TODO: sdkjhsdfkjh
 //
 //  }
 //}
