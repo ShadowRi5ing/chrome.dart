@@ -12,3 +12,6 @@ dev_dependencies:
   args: any
   logging: any
   path: any
+  parsers:
+    git:
+      https://github.com/ShadowRi5ing/parsers.git

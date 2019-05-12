@@ -16,7 +16,7 @@ abstract class JsonObject {
   static bool _isEnumType(Map<String, dynamic> json) =>
       json != null && json.containsKey('enum');
 
-  static bool _isDeclaredType(Map<String, dynamic> json) =>
+  static bool _isDeclaredType(dynamic json) =>
       json != null && !json.containsKey('enum');
 }
 

@@ -1,7 +1,6 @@
 library chrome_idl_parser;
 
 import 'package:parsers/parsers.dart';
-
 import 'chrome_idl_mapping.dart';
 
 final reservedNames = ["enum", "callback", "optional", "object", "static",

@@ -1,12 +1,13 @@
 library chrome_idl_mapping;
 
+import 'package:persistent/persistent.dart';
 import 'chrome_idl_model.dart';
 
 /**
  * Map the namespace declaration parse to a [IDLNamespaceDeclaration]
  */
-IDLNamespaceDeclaration idlNamespaceDeclarationMapping(Option copyrightMaybe, _,
-  List<String> documentation, Option attributeMaybe, __, List<String> name, List body,
+IDLNamespaceDeclaration idlNamespaceDeclarationMapping(var copyrightMaybe, _,
+  var documentation, var attributeMaybe, __, var name, var body,
   ___) {
 
   String nameDotNotation = name.join(".");
@@ -43,24 +44,24 @@ IDLNamespaceDeclaration idlNamespaceDeclarationMapping(Option copyrightMaybe, _,
  * Mapping of callback declaration.
  */
 IDLCallbackDeclaration idlCallbackDeclarationMapping(
-  List<String> documentation, _, __, String name, ___,
-  List<IDLParameter> parameters, ____) =>
+  var documentation, _, __, var name, ___,
+  var parameters, ____) =>
     new IDLCallbackDeclaration(name, parameters, documentation: documentation);
 
-IDLFunctionDeclaration idlFunctionDeclarationMapping(List<String> documentation,
-  Option attributeMaybe, _, __, List<IDLMethod> methods, ___) =>
+IDLFunctionDeclaration idlFunctionDeclarationMapping(var documentation,
+  var attributeMaybe, _, __, var methods, ___) =>
   new IDLFunctionDeclaration(methods,
       attribute: attributeMaybe.isDefined ? attributeMaybe.value : null,
       documentation: documentation);
 
-IDLEventDeclaration idlEventDeclarationMapping(List<String> documentation,
-  Option attributeMaybe, _, __, List<IDLMethod> methods, ___) =>
+IDLEventDeclaration idlEventDeclarationMapping(var documentation,
+  var attributeMaybe, _, __, var methods, ___) =>
   new IDLEventDeclaration(methods,
       attribute: attributeMaybe.isDefined ? attributeMaybe.value : null,
       documentation: documentation);
 
-IDLTypeDeclaration idlTypeDeclarationMapping(List<String> documentation,
-  Option attributeMaybe, _, String name, List body, __)  {
+IDLTypeDeclaration idlTypeDeclarationMapping(var documentation,
+  var attributeMaybe, _, var name, var body, __)  {
   IDLAttributeDeclaration attribute =
       attributeMaybe.isDefined ? attributeMaybe.value : null;
   final List<IDLField> members = body.where((e) => e is IDLField).toList();
@@ -69,9 +70,9 @@ IDLTypeDeclaration idlTypeDeclarationMapping(List<String> documentation,
       attribute: attribute, documentation: documentation);
 }
 
-IDLMethod idlMethodParameterMapping(List<String> documentation,
-  Option<IDLAttributeDeclaration> attribute, _, IDLType type, String name,
-  List<IDLParameter> parameters, ___) =>
+IDLMethod idlMethodParameterMapping(var documentation,
+  var attribute, _, var type, var name,
+  var parameters, ___) =>
     new IDLMethod(name, type, parameters,
         attribute: attribute.isDefined ? attribute.value : null,
         documentation: documentation);
@@ -118,7 +119,7 @@ IDLParameter idlParameterAttributeBasedTypeMapping(String name,
 }
 
 IDLParameter idlOptionalParameterAttributeRemapTypeMapping(
-  IDLAttributeDeclaration attribute, _, IDLType type, name) {
+  var attribute, _, type, name) {
   IDLType t = _idlAttributeTypeMapping(attribute);
   IDLType mixedType = new IDLType(t.name, isArray: type.isArray);
 
@@ -132,8 +133,8 @@ IDLParameter idlOptionalParameterAttributeRemapTypeMapping(
 /**
  * Mapping of field based type specificed.
  */
-IDLField idlFieldBasedTypeMapping(List<String> documentation,
-  Option attributeMaybe, IDLType type, Option<String> optional, String name,
+IDLField idlFieldBasedTypeMapping(var documentation,
+  var attributeMaybe, var type, var optional, var name,
   _) => new IDLField(name, type, isOptional: optional.isDefined,
         documentation: documentation,
         attribute: attributeMaybe.isDefined ? attributeMaybe.value : null);
@@ -141,8 +142,8 @@ IDLField idlFieldBasedTypeMapping(List<String> documentation,
 /**
  * Mapping of field with attribute based type specificed.
  */
-IDLField idlFieldAttributeBasedTypeMapping(List<String> documentation,
-  IDLAttributeDeclaration attribute, __, String name, ___) =>
+IDLField idlFieldAttributeBasedTypeMapping(var documentation,
+  var attribute, __, var name, ___) =>
       new IDLField(name, _idlAttributeTypeMapping(attribute),
           attribute: attribute, documentation: documentation);
 /**
@@ -175,8 +176,8 @@ IDLAttributeTypeEnum _resolveEnum(String name) {
 /**
  * Enum declaration
  */
-IDLEnumDeclaration idlEnumDeclarationMapping(List<String> documentation,
-  Option attribute, _, String name, List<IDLEnumValue> enumValues, __) =>
+IDLEnumDeclaration idlEnumDeclarationMapping(var documentation,
+   attribute, _,  name, enumValues, __) =>
       new IDLEnumDeclaration(name, enumValues,
           attribute: attribute.isDefined ? attribute.value : null,
           documentation: documentation);
@@ -184,7 +185,7 @@ IDLEnumDeclaration idlEnumDeclarationMapping(List<String> documentation,
 /**
  * Enum value
  */
-IDLEnumValue idlEnumValueMapping(List<String> documentation, String name) =>
+IDLEnumValue idlEnumValueMapping(var documentation, name) =>
     new IDLEnumValue(name, documentation: documentation);
 
 /**
@@ -196,21 +197,21 @@ IDLAttributeDeclaration idlAttributeDeclarationMapping(List attributes) =>
 /**
  *  Attribute where [name=value]
  */
-IDLAttribute idlAttributeAssignedValueMapping(String name, _, String value) =>
+IDLAttribute idlAttributeAssignedValueMapping(var name, _, value) =>
     new IDLAttribute(_resolveEnum(name), attributeValue: value);
 
 
 /**
  *  Attribute where [name="string"]
  */
-IDLAttribute idlAttributeAssignedStringLiteral(String name, _, String value) =>
+IDLAttribute idlAttributeAssignedStringLiteral(var name, _, value) =>
     new IDLAttribute(_resolveEnum(name), attributeValue: value);
 
 /**
  *  Attribute where [name=(1,2)]
  */
 IDLAttribute idlAttributeAssignedMultiValueMapping(
-                                           String name, _, List<int> values) =>
+                                           var name, _, values) =>
     new IDLAttribute(_resolveEnum(name), attributeValues: values);
 
 /**

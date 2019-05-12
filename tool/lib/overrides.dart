@@ -63,7 +63,7 @@ class Overrides {
    * name.
    */
   List<List<String>> classRenamesFor(String libraryName) {
-    Iterable<String> keys = renameClassMap.keys.where((String str) => str.startsWith('${libraryName}.'));
+    Iterable<String> keys = renameClassMap.keys.where((dynamic str) => str.startsWith('${libraryName}.'));
 
     return keys.map((key) {
       String newName = renameClassMap[key];
